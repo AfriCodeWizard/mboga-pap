@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import ClientLayoutWithConditionalNavbar from '@/components/ClientLayoutWithConditionalNavbar'
 import Head from "next/head";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   title: 'Mboga Pap',
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ClientLayoutWithConditionalNavbar>
           {children}
         </ClientLayoutWithConditionalNavbar>
+        <SpeedInsights />
       </body>
     </html>
   );
