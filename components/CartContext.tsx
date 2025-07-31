@@ -16,6 +16,10 @@ interface CartContextType {
   removeFromCart: (itemId: number, vendorId: number) => void;
   updateQuantity: (itemId: number, vendorId: number, quantity: number) => void;
   clearCart: () => void;
+  getCartTotal: () => number;
+  getCartSubtotal: () => number;
+  getDeliveryFee: () => number;
+  getLoyaltyPointsEarned: () => number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -76,8 +80,37 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const clearCart = () => setCart([]);
 
+  const getCartSubtotal = () => {
+    return cart.reduce((sum, item) => sum + parseFloat(item.price) * item.quantity, 0);
+  };
+
+  const getDeliveryFee = () => {
+    const subtotal = getCartSubtotal();
+    // Free delivery for orders over KSh 500, otherwise KSh 100
+    return subtotal >= 500 ? 0 : 100;
+  };
+
+  const getCartTotal = () => {
+    return getCartSubtotal() + getDeliveryFee();
+  };
+
+  const getLoyaltyPointsEarned = () => {
+    // 1 point for every KSh 10 spent
+    return Math.floor(getCartSubtotal() / 10);
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}>
+    <CartContext.Provider value={{ 
+      cart, 
+      addToCart, 
+      removeFromCart, 
+      updateQuantity, 
+      clearCart,
+      getCartTotal,
+      getCartSubtotal,
+      getDeliveryFee,
+      getLoyaltyPointsEarned
+    }}>
       {children}
     </CartContext.Provider>
   );
