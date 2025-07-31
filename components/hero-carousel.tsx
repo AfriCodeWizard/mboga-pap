@@ -180,14 +180,14 @@ export default function HeroCarousel({ language }: CarouselProps) {
       {/* Navigation Arrows */}
       <button
         onClick={goToPrevious}
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-4 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-all duration-300 group shadow-2xl"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-4 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-all duration-300 group shadow-2xl hidden sm:block"
         aria-label="Previous slide"
       >
         <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform" />
       </button>
       <button
         onClick={goToNext}
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-4 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-all duration-300 group shadow-2xl"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-4 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-all duration-300 group shadow-2xl hidden sm:block"
         aria-label="Next slide"
       >
         <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform" />
@@ -198,10 +198,10 @@ export default function HeroCarousel({ language }: CarouselProps) {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-1.5 h-1.5 sm:w-3 sm:h-3 md:w-4 md:h-4 rounded-full transition-all duration-300 shadow-lg ${
+            className={`w-1 h-1 sm:w-2 sm:h-2 md:w-3 md:h-3 lg:w-4 lg:h-4 rounded-full transition-all duration-300 ${
               index === currentSlide
-                ? "bg-[color:var(--color-accent)] scale-100 sm:scale-110 md:scale-125 shadow-lg sm:shadow-2xl ring-1 sm:ring-2 ring-[color:var(--color-accent)]/50"
-                : "bg-white/40 hover:bg-white/60 hover:scale-110"
+                ? "bg-[color:var(--color-accent)] scale-100 sm:scale-110 md:scale-125 shadow-sm sm:shadow-lg md:shadow-xl ring-1 sm:ring-2 ring-[color:var(--color-accent)]/50"
+                : "bg-white/30 hover:bg-white/50 hover:scale-110"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />

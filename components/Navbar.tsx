@@ -55,21 +55,10 @@ export default function Navbar() {
     <header className="border-b border-gray-200 bg-white sticky top-0 z-50 shadow-lg">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-3 group flex-shrink-0">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-[color:var(--color-primary)] to-[color:var(--color-primary)] rounded-xl flex items-center justify-center transform rotate-12 shadow-lg group-hover:scale-105 transition-transform border-2 border-[color:var(--color-accent)]">
-            <span className="text-[color:var(--color-accent)] font-bold text-sm sm:text-lg transform -rotate-12">🥬</span>
-          </div>
-          <div className="hidden sm:block">
-            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-primary)] bg-clip-text text-transparent">
-              Mboga Pap
-            </span>
-            <p className="text-xs text-gray-500 -mt-1">Fresh And Fast 🏍️</p>
-          </div>
-          <div className="sm:hidden">
-            <span className="text-lg font-bold bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-primary)] bg-clip-text text-transparent">
-              MP
-            </span>
-          </div>
+        <Link href="/" className="flex items-center space-x-2 text-[color:var(--color-primary)] font-bold text-lg sm:text-xl">
+          <span className="text-[color:var(--color-accent)] font-bold text-sm sm:text-lg transform -rotate-12" aria-label="Mboga Pap logo">🥬</span>
+          <span className="hidden sm:inline">Mboga Pap</span>
+          <span className="sm:hidden">Mboga Pap</span>
         </Link>
 
         {/* Desktop Navigation */}
