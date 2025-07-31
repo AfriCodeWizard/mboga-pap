@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import { ShoppingCart, User, Settings, Menu, X } from "lucide-react";
+import { ShoppingCart, User, Settings, Menu, X, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -16,12 +16,14 @@ import {
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCart } from "@/components/CartContext";
+import { useLoyalty } from "@/components/LoyaltyContext";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 
 export default function CustomerNavbar() {
   const router = useRouter();
   const { cart, removeFromCart, clearCart } = useCart();
+  const { points } = useLoyalty();
   const [cartPreviewOpen, setCartPreviewOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -126,7 +128,10 @@ export default function CustomerNavbar() {
           {/* User Info */}
           <div className="text-right">
             <p className="text-sm font-medium">Jane Customer</p>
-            <p className="text-xs text-gray-600">Customer</p>
+            <div className="flex items-center justify-end space-x-1">
+              <Star className="h-3 w-3 text-yellow-500" />
+              <span className="text-xs text-gray-600">{points} pts</span>
+            </div>
           </div>
           
           {/* Avatar & Dropdown */}
@@ -258,9 +263,12 @@ export default function CustomerNavbar() {
                   <AvatarImage src="/placeholder-user.jpg" alt="Customer" />
                   <AvatarFallback>JC</AvatarFallback>
                 </Avatar>
-                <div>
+                <div className="flex-1">
                   <p className="text-sm font-medium">Jane Customer</p>
-                  <p className="text-xs text-gray-600">customer@demo.com</p>
+                  <div className="flex items-center space-x-1">
+                    <Star className="h-3 w-3 text-yellow-500" />
+                    <span className="text-xs text-gray-600">{points} loyalty points</span>
+                  </div>
                 </div>
               </div>
               
