@@ -116,9 +116,7 @@ export default function HeroCarousel({ language }: CarouselProps) {
   }
 
   return (
-    <section className="relative w-full h-[500px] md:h-[calc(100vh-64px)] overflow-hidden">
-      {" "}
-      {/* Adjusted height for responsiveness */}
+    <section className="relative w-full h-[400px] sm:h-[500px] md:h-[calc(100vh-64px)] overflow-hidden">
       {/* Slides Container */}
       <div
         className="flex transition-transform duration-700 ease-in-out h-full"
@@ -139,34 +137,28 @@ export default function HeroCarousel({ language }: CarouselProps) {
             </div>
 
             {/* Content */}
-            <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
-              {" "}
-              {/* Centered content */}
-              <div className="max-w-2xl text-white">
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight drop-shadow-2xl text-white">
+            <div className="relative z-10 h-full flex items-center justify-center text-center px-4 sm:px-6">
+              <div className="max-w-2xl text-white w-full">
+                <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 leading-tight drop-shadow-2xl text-white px-2">
                   {slide.title}
                 </h1>
 
-                <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6 px-2">
                   <span className="hidden sm:inline-block flex-1 border-t-2 border-dashed border-white/70"></span>
-                  <h2 className="inline-block bg-[color:var(--color-accent)] text-[color:var(--color-primary)] font-bold text-base md:text-lg lg:text-xl px-3 py-1 rounded-md whitespace-nowrap shadow-md">
-                  {slide.subtitle}
-                </h2>
+                  <h2 className="inline-block bg-[color:var(--color-accent)] text-[color:var(--color-primary)] font-bold text-xs sm:text-base md:text-lg lg:text-xl px-2 sm:px-3 py-1 rounded-md whitespace-normal sm:whitespace-nowrap shadow-md max-w-full">
+                    {slide.subtitle}
+                  </h2>
                   <span className="hidden sm:inline-block flex-1 border-t-2 border-dashed border-white/70"></span>
                 </div>
 
-                <p className="text-base md:text-lg mb-8 text-gray-200 leading-relaxed max-w-xl drop-shadow-md mx-auto">
-                  {" "}
-                  {/* Added mx-auto for centering */}
+                <p className="text-sm sm:text-base md:text-lg mb-6 sm:mb-8 text-gray-200 leading-relaxed max-w-xl drop-shadow-md mx-auto px-2">
                   {slide.description}
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  {" "}
-                  {/* Centered buttons */}
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-2">
                   <Button
                     size="lg"
-                    className="bg-[color:var(--color-accent)] text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] px-8 py-4 text-lg font-semibold rounded-xl shadow-2xl transform hover:scale-105 border-2 border-[color:var(--color-primary)]/30 transition-all duration-300 ease-in-out"
+                    className="bg-[color:var(--color-accent)] text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] px-4 sm:px-8 py-3 sm:py-4 text-sm sm:text-lg font-semibold rounded-xl shadow-2xl transform hover:scale-105 border-2 border-[color:var(--color-primary)]/30 transition-all duration-300 ease-in-out"
                     onClick={() => (window.location.href = slide.ctaLink)}
                   >
                     {slide.ctaText}
@@ -174,7 +166,7 @@ export default function HeroCarousel({ language }: CarouselProps) {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-2 border-white/80 text-white hover:bg-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] px-8 py-4 text-lg font-semibold rounded-xl backdrop-blur-md bg-white/10 hover:shadow-2xl transition-all duration-300 ease-in-out"
+                    className="border-2 border-white/80 text-white hover:bg-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] px-4 sm:px-8 py-3 sm:py-4 text-sm sm:text-lg font-semibold rounded-xl backdrop-blur-md bg-white/10 hover:shadow-2xl transition-all duration-300 ease-in-out"
                     onClick={() => (window.location.href = "#jinsi-inavyofanya")}
                   >
                     {language === "en" ? "Learn More" : "Jifunze Zaidi"}
@@ -188,27 +180,27 @@ export default function HeroCarousel({ language }: CarouselProps) {
       {/* Navigation Arrows */}
       <button
         onClick={goToPrevious}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-4 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-all duration-300 group shadow-2xl"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-4 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-all duration-300 group shadow-2xl"
         aria-label="Previous slide"
       >
-        <ChevronLeft className="h-6 w-6 group-hover:scale-110 transition-transform" />
+        <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform" />
       </button>
       <button
         onClick={goToNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-4 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-all duration-300 group shadow-2xl"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-4 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30 transition-all duration-300 group shadow-2xl"
         aria-label="Next slide"
       >
-        <ChevronRight className="h-6 w-6 group-hover:scale-110 transition-transform" />
+        <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform" />
       </button>
       {/* Pagination Dots */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex space-x-3">
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex space-x-2 sm:space-x-3">
         {currentSlides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-4 h-4 rounded-full transition-all duration-300 shadow-lg ${
+            className={`w-2 h-2 sm:w-4 sm:h-4 rounded-full transition-all duration-300 shadow-lg ${
               index === currentSlide
-                ? "bg-[color:var(--color-accent)] scale-125 shadow-2xl ring-2 ring-[color:var(--color-accent)]/50"
+                ? "bg-[color:var(--color-accent)] scale-110 sm:scale-125 shadow-2xl ring-1 sm:ring-2 ring-[color:var(--color-accent)]/50"
                 : "bg-white/50 hover:bg-white/75 hover:scale-110"
             }`}
             aria-label={`Go to slide ${index + 1}`}
@@ -223,8 +215,8 @@ export default function HeroCarousel({ language }: CarouselProps) {
         />
       </div>
       {/* Mobile Swipe Indicators */}
-      <div className="absolute top-6 right-6 z-20 md:hidden">
-        <div className="flex items-center space-x-2 px-4 py-2 bg-black/40 backdrop-blur-md rounded-full text-white text-sm font-medium shadow-xl">
+      <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20 md:hidden">
+        <div className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-1 sm:py-2 bg-black/40 backdrop-blur-md rounded-full text-white text-xs sm:text-sm font-medium shadow-xl">
           <span>{currentSlide + 1}</span>
           <span>/</span>
           <span>{currentSlides.length}</span>
