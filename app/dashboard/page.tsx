@@ -28,8 +28,10 @@ import { useRouter } from "next/navigation"
 import VendorList, { Vendor } from "@/components/VendorList";
 import CartDrawer from "@/components/CartDrawer";
 import { CartProvider, useCart } from "@/components/CartContext";
+import { useLoyalty } from "@/components/LoyaltyContext";
 import { AnimatePresence, motion } from "framer-motion";
 import CustomerNavbar from "@/components/CustomerNavbar";
+import LoyaltyPointsDisplay from "@/components/LoyaltyPointsDisplay";
 
 const mamambogaVendors = [
   {
@@ -176,6 +178,7 @@ function CustomerDashboardContent() {
   const [mpesa, setMpesa] = useState({ number: "", name: "" });
   const router = useRouter();
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+  const { points } = useLoyalty();
   
   // Example items for each vendor (replace with real data/fetch in future)
   const vendorItems: { [vendorId: number]: any[] } = {
@@ -570,6 +573,9 @@ function CustomerDashboardContent() {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Loyalty Points */}
+            <LoyaltyPointsDisplay />
+
             {/* Subscription Status */}
             <Card className="border-2 border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardHeader>
