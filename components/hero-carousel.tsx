@@ -193,15 +193,15 @@ export default function HeroCarousel({ language }: CarouselProps) {
         <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform" />
       </button>
       {/* Pagination Dots */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex space-x-2 sm:space-x-3">
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex space-x-1 sm:space-x-3">
         {currentSlides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 sm:w-4 sm:h-4 rounded-full transition-all duration-300 shadow-lg ${
+            className={`w-1.5 h-1.5 sm:w-3 sm:h-3 md:w-4 md:h-4 rounded-full transition-all duration-300 shadow-lg ${
               index === currentSlide
-                ? "bg-[color:var(--color-accent)] scale-110 sm:scale-125 shadow-2xl ring-1 sm:ring-2 ring-[color:var(--color-accent)]/50"
-                : "bg-white/50 hover:bg-white/75 hover:scale-110"
+                ? "bg-[color:var(--color-accent)] scale-100 sm:scale-110 md:scale-125 shadow-lg sm:shadow-2xl ring-1 sm:ring-2 ring-[color:var(--color-accent)]/50"
+                : "bg-white/40 hover:bg-white/60 hover:scale-110"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
