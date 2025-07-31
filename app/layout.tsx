@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import ClientLayoutWithConditionalNavbar from '@/components/ClientLayoutWithConditionalNavbar'
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { LoyaltyProvider } from '@/components/LoyaltyContext';
 
 export const metadata: Metadata = {
   title: 'Mboga Pap',
@@ -34,9 +35,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         }} />
       </head>
       <body className="no-horizontal-scroll">
-        <ClientLayoutWithConditionalNavbar>
-          {children}
-        </ClientLayoutWithConditionalNavbar>
+        <LoyaltyProvider>
+          <ClientLayoutWithConditionalNavbar>
+            {children}
+          </ClientLayoutWithConditionalNavbar>
+        </LoyaltyProvider>
         <SpeedInsights />
       </body>
     </html>
