@@ -11,16 +11,16 @@ export default function TermsOfServicePage() {
   return (
     <>
       <Head>
-        <title>Terms of Service | Mbonga Pap!</title>
-        <meta name="description" content="Read the terms of service for Mbonga Pap! to understand your rights and responsibilities when using our platform." />
-        <meta property="og:title" content="Terms of Service | Mbonga Pap!" />
-        <meta property="og:description" content="Read the terms of service for Mbonga Pap! to understand your rights and responsibilities when using our platform." />
+        <title>Terms of Service | Mboga Pap!</title>
+        <meta name="description" content="Read the terms of service for Mboga Pap! to understand your rights and responsibilities when using our platform." />
+        <meta property="og:title" content="Terms of Service | Mboga Pap!" />
+        <meta property="og:description" content="Read the terms of service for Mboga Pap! to understand your rights and responsibilities when using our platform." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/terms" />
         <meta property="og:image" content="/placeholder.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Terms of Service | Mbonga Pap!" />
-        <meta name="twitter:description" content="Read the terms of service for Mbonga Pap! to understand your rights and responsibilities when using our platform." />
+        <meta name="twitter:title" content="Terms of Service | Mboga Pap!" />
+        <meta name="twitter:description" content="Read the terms of service for Mboga Pap! to understand your rights and responsibilities when using our platform." />
       </Head>
       
       <div className="min-h-screen bg-gray-50">
@@ -41,7 +41,7 @@ export default function TermsOfServicePage() {
             <CardContent className="p-8">
               <div className="prose prose-lg max-w-none">
                 <p className="text-gray-700 mb-6">
-                  Welcome to Mbonga Pap! These Terms of Service ("Terms") govern your use of the Mbonga Pap! mobile application
+                  Welcome to Mboga Pap! These Terms of Service ("Terms") govern your use of the Mboga Pap! mobile application
                   and website (collectively, the "Services"). By accessing or using the Services, you agree to be bound by these
                   Terms. If you do not agree to these Terms, please do not use the Services.
                 </p>
@@ -181,7 +181,7 @@ export default function TermsOfServicePage() {
                       <h2 className="text-2xl font-bold text-[color:var(--color-primary)]">6. Limitation of Liability</h2>
                     </div>
                     <p className="text-gray-700 mb-4">
-                      To the fullest extent permitted by applicable law, Mbonga Pap! shall not be liable for any indirect,
+                      To the fullest extent permitted by applicable law, Mboga Pap! shall not be liable for any indirect,
                       incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred
                       directly or indirectly, or any loss of data, use, goodwill, or other intangible losses, resulting from (a)
                       your access to or use of or inability to access or use the Services; (b) any conduct or content of any third

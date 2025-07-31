@@ -154,16 +154,16 @@ export default function RiderDashboard() {
   return (
     <>
       <Head>
-        <title>Rider Dashboard | Mbonga Pap!</title>
-        <meta name="description" content="Manage your deliveries, earnings, and profile as a rider on Mbonga Pap!" />
-        <meta property="og:title" content="Rider Dashboard | Mbonga Pap!" />
-        <meta property="og:description" content="Manage your deliveries, earnings, and profile as a rider on Mbonga Pap!" />
+        <title>Rider Dashboard | Mboga Pap!</title>
+        <meta name="description" content="Manage your deliveries, earnings, and profile as a rider on Mboga Pap!" />
+        <meta property="og:title" content="Rider Dashboard | Mboga Pap!" />
+        <meta property="og:description" content="Manage your deliveries, earnings, and profile as a rider on Mboga Pap!" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/rider-dashboard" />
         <meta property="og:image" content="/placeholder.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Rider Dashboard | Mbonga Pap!" />
-        <meta name="twitter:description" content="Manage your deliveries, earnings, and profile as a rider on Mbonga Pap!" />
+        <meta name="twitter:title" content="Rider Dashboard | Mboga Pap!" />
+        <meta name="twitter:description" content="Manage your deliveries, earnings, and profile as a rider on Mboga Pap!" />
       </Head>
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-[color:var(--color-accent)]/10">
         {/* Header */}
@@ -177,7 +177,7 @@ export default function RiderDashboard() {
                   </div>
                   <div>
                     <span className="text-2xl font-bold bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-primary)] bg-clip-text text-transparent">
-                      Mbonga Pap
+                      Mboga Pap
                     </span>
                     <p className="text-xs text-gray-500 -mt-1">Fresh And Fast 🏍️</p>
                   </div>

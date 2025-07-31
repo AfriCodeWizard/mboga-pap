@@ -10,16 +10,16 @@ export default function CommunityGuidelinesPage() {
   return (
     <>
       <Head>
-        <title>Community Guidelines | Mbonga Pap!</title>
-        <meta name="description" content="Read the community guidelines for Mbonga Pap! to ensure a safe, respectful, and thriving environment for everyone." />
-        <meta property="og:title" content="Community Guidelines | Mbonga Pap!" />
-        <meta property="og:description" content="Read the community guidelines for Mbonga Pap! to ensure a safe, respectful, and thriving environment for everyone." />
+        <title>Community Guidelines | Mboga Pap!</title>
+        <meta name="description" content="Read the community guidelines for Mboga Pap! to ensure a safe, respectful, and thriving environment for everyone." />
+        <meta property="og:title" content="Community Guidelines | Mboga Pap!" />
+        <meta property="og:description" content="Read the community guidelines for Mboga Pap! to ensure a safe, respectful, and thriving environment for everyone." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/community" />
         <meta property="og:image" content="/placeholder.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Community Guidelines | Mbonga Pap!" />
-        <meta name="twitter:description" content="Read the community guidelines for Mbonga Pap! to ensure a safe, respectful, and thriving environment for everyone." />
+        <meta name="twitter:title" content="Community Guidelines | Mboga Pap!" />
+        <meta name="twitter:description" content="Read the community guidelines for Mboga Pap! to ensure a safe, respectful, and thriving environment for everyone." />
       </Head>
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8 max-w-3xl">

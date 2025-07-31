@@ -192,7 +192,7 @@ export default function VendorDashboard() {
                 </div>
                 <div>
                 <span className="text-2xl font-bold bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-primary)] bg-clip-text text-transparent">
-                    Mbonga Pap
+                    Mboga Pap
                   </span>
                   <p className="text-xs text-gray-500 -mt-1">Fresh And Fast 🏍️</p>
                 </div>

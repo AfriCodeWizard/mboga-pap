@@ -11,16 +11,16 @@ export default function RiderResourcesPage() {
   return (
     <>
       <Head>
-        <title>Rider Resources | Mbonga Pap!</title>
-        <meta name="description" content="Find all the information and resources you need to be a successful Mbonga Pap! rider. Guides, payments, safety, and support." />
-        <meta property="og:title" content="Rider Resources | Mbonga Pap!" />
-        <meta property="og:description" content="Find all the information and resources you need to be a successful Mbonga Pap! rider. Guides, payments, safety, and support." />
+        <title>Rider Resources | Mboga Pap!</title>
+        <meta name="description" content="Find all the information and resources you need to be a successful Mboga Pap! rider. Guides, payments, safety, and support." />
+        <meta property="og:title" content="Rider Resources | Mboga Pap!" />
+        <meta property="og:description" content="Find all the information and resources you need to be a successful Mboga Pap! rider. Guides, payments, safety, and support." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/rider-resources" />
         <meta property="og:image" content="/placeholder.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Rider Resources | Mbonga Pap!" />
-        <meta name="twitter:description" content="Find all the information and resources you need to be a successful Mbonga Pap! rider. Guides, payments, safety, and support." />
+        <meta name="twitter:title" content="Rider Resources | Mboga Pap!" />
+        <meta name="twitter:description" content="Find all the information and resources you need to be a successful Mboga Pap! rider. Guides, payments, safety, and support." />
       </Head>
       
       <div className="min-h-screen bg-gray-50">
@@ -41,7 +41,7 @@ export default function RiderResourcesPage() {
             </div>
             <h1 className="text-4xl font-bold text-[color:var(--color-primary)] mb-4">Rider Resources</h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Everything you need to succeed as a Mbonga Pap rider. Guides, tools, and support to help you thrive.
+              Everything you need to succeed as a Mboga Pap rider. Guides, tools, and support to help you thrive.
             </p>
           </div>
 
@@ -53,7 +53,7 @@ export default function RiderResourcesPage() {
                 <h2 className="text-3xl font-bold text-[color:var(--color-primary)] mb-4">Your Success is Our Priority</h2>
               </div>
               <p className="text-lg text-gray-700 leading-relaxed text-center max-w-4xl mx-auto">
-                As a Mbonga Pap rider, you're not just delivering groceries – you're connecting communities, 
+                As a Mboga Pap rider, you're not just delivering groceries – you're connecting communities, 
                 supporting local businesses, and building a sustainable future. We provide comprehensive resources, 
                 training, and support to ensure your success and growth in our platform.
           </p>
@@ -139,7 +139,7 @@ export default function RiderResourcesPage() {
             <CardContent className="p-8">
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold mb-4">Rider Success Stories</h2>
-                <p className="text-lg opacity-90">Join thousands of successful riders earning with Mbonga Pap</p>
+                <p className="text-lg opacity-90">Join thousands of successful riders earning with Mboga Pap</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="text-center">

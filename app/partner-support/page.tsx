@@ -26,7 +26,7 @@ export default function PartnerSupportPage() {
           </div>
           <h1 className="text-4xl font-bold text-[color:var(--color-primary)] mb-4">Partner Support</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            We're here to help our vendors and riders succeed. Get the support you need to grow your business with Mbonga Pap
+            We're here to help our vendors and riders succeed. Get the support you need to grow your business with Mboga Pap
           </p>
         </div>
 

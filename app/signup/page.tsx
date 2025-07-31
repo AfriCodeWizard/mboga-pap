@@ -98,10 +98,10 @@ export default function SignUpPage() {
   return (
     <>
       <Head>
-        <title>Sign Up - Mbonga Pap!</title>
-        <meta name="description" content="Create your Mbonga Pap! account to shop, sell, or deliver fresh groceries in your community." />
-        <meta property="og:title" content="Sign Up - Mbonga Pap!" />
-        <meta property="og:description" content="Create your Mbonga Pap! account to shop, sell, or deliver fresh groceries in your community." />
+        <title>Sign Up - Mboga Pap!</title>
+        <meta name="description" content="Create your Mboga Pap! account to shop, sell, or deliver fresh groceries in your community." />
+        <meta property="og:title" content="Sign Up - Mboga Pap!" />
+        <meta property="og:description" content="Create your Mboga Pap! account to shop, sell, or deliver fresh groceries in your community." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/signup" />
         <meta property="og:image" content="/placeholder.jpg" />
@@ -114,7 +114,7 @@ export default function SignUpPage() {
               <div className="text-center mb-8 md:mb-12">
                 <div className="mb-8">
                   <h1 className="text-4xl md:text-5xl font-bold text-[color:var(--color-primary)] mb-4">
-                    Join Mbonga Pap
+                    Join Mboga Pap
                   </h1>
                   <p className="text-xl md:text-2xl text-gray-600 mb-2">
                     Choose how you'd like to be part of our community
@@ -232,7 +232,7 @@ export default function SignUpPage() {
                       Create Your {roleOptions.find((r) => r.id === selectedRole)?.title} Account
                     </CardTitle>
                     <CardDescription className="text-lg">
-                      Join Mbonga Pap as a {selectedRole} and start your journey
+                      Join Mboga Pap as a {selectedRole} and start your journey
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="p-8">

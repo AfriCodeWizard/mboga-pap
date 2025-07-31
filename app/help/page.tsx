@@ -12,16 +12,16 @@ export default function HelpCenterPage() {
   return (
     <>
       <Head>
-        <title>Help Center | Mbonga Pap!</title>
-        <meta name="description" content="Find answers to your questions and get support at the Mbonga Pap! Help Center. Browse FAQs, guides, and contact support." />
-        <meta property="og:title" content="Help Center | Mbonga Pap!" />
-        <meta property="og:description" content="Find answers to your questions and get support at the Mbonga Pap! Help Center. Browse FAQs, guides, and contact support." />
+        <title>Help Center | Mboga Pap!</title>
+        <meta name="description" content="Find answers to your questions and get support at the Mboga Pap! Help Center. Browse FAQs, guides, and contact support." />
+        <meta property="og:title" content="Help Center | Mboga Pap!" />
+        <meta property="og:description" content="Find answers to your questions and get support at the Mboga Pap! Help Center. Browse FAQs, guides, and contact support." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://mbongapap.co.ke/help" />
+        <meta property="og:url" content="https://mbogapap.co.ke/help" />
         <meta property="og:image" content="/placeholder.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Help Center | Mbonga Pap!" />
-        <meta name="twitter:description" content="Find answers to your questions and get support at the Mbonga Pap! Help Center. Browse FAQs, guides, and contact support." />
+        <meta name="twitter:title" content="Help Center | Mboga Pap!" />
+        <meta name="twitter:description" content="Get help with your Mboga Pap! account. Find answers to common questions, contact support, and access helpful resources." />
       </Head>
       
       <div className="min-h-screen bg-gray-50">
@@ -108,7 +108,7 @@ export default function HelpCenterPage() {
                 </div>
                 <h3 className="text-lg font-semibold text-[color:var(--color-primary)] mb-2">Email Support</h3>
                 <p className="text-gray-600 text-sm mb-3">Send us a detailed message</p>
-                <p className="text-[color:var(--color-accent)] font-medium">hello@mbongapap.co.ke</p>
+                <p className="text-[color:var(--color-accent)] font-medium">hello@mbogapap.co.ke</p>
               </CardContent>
             </Card>
             

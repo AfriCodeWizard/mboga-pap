@@ -1,4 +1,4 @@
-# 🥬 Mbonga Pap! - Fresh And Fast 🏍️
+# 🥬 Mboga Pap! - Fresh And Fast 🏍️
 
 A modern, full-stack e-commerce platform connecting local vegetable vendors with customers through efficient delivery services. Built with Next.js, TypeScript, and Tailwind CSS.
 
@@ -19,7 +19,7 @@ A modern, full-stack e-commerce platform connecting local vegetable vendors with
 
 ## 🎯 Overview
 
-Mbonga Pap! is a comprehensive e-commerce platform designed to bridge the gap between local vegetable vendors and customers in Kenya. The platform features three distinct user roles: **Customers**, **Vendors**, and **Riders**, each with tailored dashboards and functionalities.
+Mboga Pap! is a comprehensive e-commerce platform designed to bridge the gap between local vegetable vendors and customers in Kenya. The platform features three distinct user roles: **Customers**, **Vendors**, and **Riders**, each with tailored dashboards and functionalities.
 
 ### Core Mission
 - **Empower Local Vendors**: Provide digital tools for small-scale vegetable vendors
