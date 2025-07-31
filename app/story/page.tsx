@@ -10,16 +10,16 @@ export default function OurStoryPage() {
   return (
     <>
       <Head>
-        <title>Our Story | Mbonga Pap!</title>
-        <meta name="description" content="Discover the journey of Mbonga Pap! From a simple idea to a thriving, community-driven platform connecting customers, vendors, and riders in Nairobi." />
-        <meta property="og:title" content="Our Story | Mbonga Pap!" />
-        <meta property="og:description" content="Discover the journey of Mbonga Pap! From a simple idea to a thriving, community-driven platform connecting customers, vendors, and riders in Nairobi." />
+        <title>Our Story | Mboga Pap!</title>
+        <meta name="description" content="Discover the journey of Mboga Pap! From a simple idea to a thriving, community-driven platform connecting customers, vendors, and riders in Nairobi." />
+        <meta property="og:title" content="Our Story | Mboga Pap!" />
+        <meta property="og:description" content="Discover the journey of Mboga Pap! From a simple idea to a thriving, community-driven platform connecting customers, vendors, and riders in Nairobi." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/story" />
         <meta property="og:image" content="/placeholder.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Our Story | Mbonga Pap!" />
-        <meta name="twitter:description" content="Discover the journey of Mbonga Pap! From a simple idea to a thriving, community-driven platform connecting customers, vendors, and riders in Nairobi." />
+        <meta name="twitter:title" content="Our Story | Mboga Pap!" />
+        <meta name="twitter:description" content="Discover the journey of Mboga Pap! From a simple idea to a thriving, community-driven platform connecting customers, vendors, and riders in Nairobi." />
       </Head>
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8 max-w-3xl">
@@ -31,7 +31,7 @@ export default function OurStoryPage() {
           {/* Hero Section */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-[color:var(--color-primary)] mb-4">Our Story</h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">How Mbonga Pap started and grew.</p>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">How Mboga Pap started and grew.</p>
           </div>
 
           {/* Story Timeline */}
@@ -44,7 +44,7 @@ export default function OurStoryPage() {
                     <h2 className="text-2xl font-bold text-[color:var(--color-primary)]">The Genesis (2022)</h2>
                   </div>
                   <div className="md:w-2/3 text-gray-700 leading-relaxed">
-                    Mbonga Pap was born from a simple observation: the incredible dedication of local MamaMbogas and the
+                    Mboga Pap was born from a simple observation: the incredible dedication of local MamaMbogas and the
                     growing demand for convenient access to fresh produce in urban areas. Our founder, a Nairobi resident,
                     noticed the challenges both vendors and customers faced – limited reach for vendors and time constraints
                     for customers. The idea was simple: bridge this gap with technology.
@@ -71,7 +71,7 @@ export default function OurStoryPage() {
                     <h2 className="text-2xl font-bold text-[color:var(--color-primary)]">The Future (Today & Beyond)</h2>
                   </div>
                   <div className="md:w-2/3 text-gray-700 leading-relaxed">
-                    Today, Mbonga Pap is a thriving ecosystem connecting thousands of customers with hundreds of MamaMbogas
+                    Today, Mboga Pap is a thriving ecosystem connecting thousands of customers with hundreds of MamaMbogas
                     and riders across Nairobi. We are constantly innovating, aiming to expand our reach, introduce new
                     features, and continue empowering local economies. Our heart remains in the community, and we are
                     dedicated to making fresh, local groceries accessible to everyone, while creating sustainable livelihoods.

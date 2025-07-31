@@ -225,10 +225,10 @@ export default function AdminDashboard() {
   return (
     <>
       <Head>
-        <title>Admin Dashboard - Mbonga Pap!</title>
-        <meta name="description" content="Admin dashboard for managing vendors, riders, and platform analytics on Mbonga Pap!" />
-        <meta property="og:title" content="Admin Dashboard - Mbonga Pap!" />
-        <meta property="og:description" content="Admin dashboard for managing vendors, riders, and platform analytics on Mbonga Pap!" />
+        <title>Admin Dashboard - Mboga Pap!</title>
+        <meta name="description" content="Admin dashboard for managing vendors, riders, and platform analytics on Mboga Pap!" />
+        <meta property="og:title" content="Admin Dashboard - Mboga Pap!" />
+        <meta property="og:description" content="Admin dashboard for managing vendors, riders, and platform analytics on Mboga Pap!" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/admin" />
         <meta property="og:image" content="/placeholder.jpg" />
@@ -249,7 +249,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="max-w-[120px] sm:max-w-none truncate">
                   <span className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-primary)] bg-clip-text text-transparent">
-                    Mbonga Pap!
+                    Mboga Pap!
                   </span>
                 </div>
               </div>

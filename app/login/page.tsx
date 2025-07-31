@@ -66,10 +66,10 @@ export default function LoginPage() {
   return (
     <>
       <Head>
-        <title>Login - Mbonga Pap!</title>
-        <meta name="description" content="Sign in to your Mbonga Pap! account to order fresh groceries, manage your shop, or deliver as a rider." />
-        <meta property="og:title" content="Login - Mbonga Pap!" />
-        <meta property="og:description" content="Sign in to your Mbonga Pap! account to order fresh groceries, manage your shop, or deliver as a rider." />
+        <title>Login - Mboga Pap!</title>
+        <meta name="description" content="Sign in to your Mboga Pap! account to order fresh groceries, manage your shop, or deliver as a rider." />
+        <meta property="og:title" content="Login - Mboga Pap!" />
+        <meta property="og:description" content="Sign in to your Mboga Pap! account to order fresh groceries, manage your shop, or deliver as a rider." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/login" />
         <meta property="og:image" content="/placeholder.jpg" />
@@ -84,7 +84,7 @@ export default function LoginPage() {
             <Card className="border border-[color:var(--color-primary)] bg-gradient-to-br from-green-50 to-white shadow-xl">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl text-[color:var(--color-primary)]">Welcome Back</CardTitle>
-                <CardDescription>Sign in to your Mbonga Pap! account</CardDescription>
+                <CardDescription>Sign in to your Mboga Pap! account</CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">

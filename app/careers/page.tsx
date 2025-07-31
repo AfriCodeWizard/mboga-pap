@@ -10,16 +10,16 @@ export default function CareersPage() {
   return (
     <>
       <Head>
-        <title>Careers at Mbonga Pap!</title>
-        <meta name="description" content="Join the Mbonga Pap! team and help us build a better future for local communities. See open positions and learn about our culture." />
-        <meta property="og:title" content="Careers at Mbonga Pap!" />
-        <meta property="og:description" content="Join the Mbonga Pap! team and help us build a better future for local communities. See open positions and learn about our culture." />
+        <title>Careers at Mboga Pap!</title>
+        <meta name="description" content="Join the Mboga Pap! team and help us build a better future for local communities. See open positions and learn about our culture." />
+        <meta property="og:title" content="Careers at Mboga Pap!" />
+        <meta property="og:description" content="Join the Mboga Pap! team and help us build a better future for local communities. See open positions and learn about our culture." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/careers" />
         <meta property="og:image" content="/placeholder.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Careers at Mbonga Pap!" />
-        <meta name="twitter:description" content="Join the Mbonga Pap! team and help us build a better future for local communities. See open positions and learn about our culture." />
+        <meta name="twitter:title" content="Careers at Mboga Pap!" />
+        <meta name="twitter:description" content="Join the Mboga Pap! team and help us build a better future for local communities. See open positions and learn about our culture." />
       </Head>
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8 max-w-3xl">
@@ -30,7 +30,7 @@ export default function CareersPage() {
 
           {/* Hero Section */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-[color:var(--color-primary)] mb-4">Careers at Mbonga Pap!</h1>
+            <h1 className="text-4xl font-bold text-[color:var(--color-primary)] mb-4">Careers at Mboga Pap!</h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Join our passionate team and help us build a better future for local communities.
             </p>

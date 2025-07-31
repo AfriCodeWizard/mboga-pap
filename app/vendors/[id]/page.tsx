@@ -283,16 +283,16 @@ export default function VendorItemsPage() {
   return (
     <>
       <Head>
-        <title>{vendor ? `${vendor.name} | Mbonga Pap!` : 'Vendor | Mbonga Pap!'}</title>
-        <meta name="description" content={vendor ? `Order fresh produce from ${vendor.name} on Mbonga Pap! See available items, prices, and specialties.` : 'Order fresh produce from local vendors on Mbonga Pap!'} />
-        <meta property="og:title" content={vendor ? `${vendor.name} | Mbonga Pap!` : 'Vendor | Mbonga Pap!'} />
-        <meta property="og:description" content={vendor ? `Order fresh produce from ${vendor.name} on Mbonga Pap! See available items, prices, and specialties.` : 'Order fresh produce from local vendors on Mbonga Pap!'} />
+        <title>{vendor ? `${vendor.name} | Mboga Pap!` : 'Vendor | Mboga Pap!'}</title>
+        <meta name="description" content={vendor ? `Order fresh produce from ${vendor.name} on Mboga Pap! See available items, prices, and specialties.` : 'Order fresh produce from local vendors on Mboga Pap!'} />
+        <meta property="og:title" content={vendor ? `${vendor.name} | Mboga Pap!` : 'Vendor | Mboga Pap!'} />
+        <meta property="og:description" content={vendor ? `Order fresh produce from ${vendor.name} on Mboga Pap! See available items, prices, and specialties.` : 'Order fresh produce from local vendors on Mboga Pap!'} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://mbongapap.co.ke/vendors/${vendorId}`} />
         <meta property="og:image" content={vendor?.image || '/placeholder.jpg'} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={vendor ? `${vendor.name} | Mbonga Pap!` : 'Vendor | Mbonga Pap!'} />
-        <meta name="twitter:description" content={vendor ? `Order fresh produce from ${vendor.name} on Mbonga Pap! See available items, prices, and specialties.` : 'Order fresh produce from local vendors on Mbonga Pap!'} />
+        <meta name="twitter:title" content={vendor ? `${vendor.name} | Mboga Pap!` : 'Vendor | Mboga Pap!'} />
+        <meta name="twitter:description" content={vendor ? `Order fresh produce from ${vendor.name} on Mboga Pap! See available items, prices, and specialties.` : 'Order fresh produce from local vendors on Mboga Pap!'} />
       </Head>
       {fromDashboard ? <CustomerNavbar /> : <Navbar />}
       

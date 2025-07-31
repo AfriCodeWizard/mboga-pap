@@ -163,7 +163,7 @@ const content = {
       subtitle: "Real stories from real people in our community",
       testimonials: [
         {
-          text: "Mbonga Pap has made grocery shopping so convenient! Fresh vegetables delivered right to my door. Asante sana!",
+          text: "Mboga Pap has made grocery shopping so convenient! Fresh vegetables delivered right to my door. Asante sana!",
           name: "Sarah Muthoni",
           role: "Customer • Westlands",
         },
@@ -234,7 +234,7 @@ const content = {
         { number: "150+", label: "Vendors" },
         { number: "200+", label: "Riders" },
       ],
-      copyright: "© 2025 Mbonga Pap All rights reserved.",
+              copyright: "© 2025 Mboga Pap All rights reserved.",
     },
   },
   sw: {
@@ -360,7 +360,7 @@ const content = {
       subtitle: "Hadithi za kweli kutoka kwa watu wa kweli katika jamii yetu",
       testimonials: [
         {
-          text: "Mbonga Pap imefanya ununuzi wa mboga kuwa rahisi sana! Mboga safi zinaletwa hadi mlangoni mwangu. Asante sana!",
+          text: "Mboga Pap imefanya ununuzi wa mboga kuwa rahisi sana! Mboga safi zinaletwa hadi mlangoni mwangu. Asante sana!",
           name: "Sarah Muthoni",
           role: "Mteja • Westlands",
         },
@@ -431,7 +431,7 @@ const content = {
         { number: "150+", label: "Wachuuzi" },
         { number: "200+", label: "Madereva" },
       ],
-      copyright: "© 2025 Mbonga Pap Haki zote zimehifadhiwa.",
+              copyright: "© 2025 Mboga Pap Haki zote zimehifadhiwa.",
     },
   },
 }
@@ -526,23 +526,23 @@ export default function HomePage() {
     <div className="min-h-screen bg-white">
       <Head>
         <title>Mboga Pap</title>
-        <meta name="description" content="Order fresh groceries from local vendors and get fast delivery with Mbonga Pap! Supporting community, vendors, and riders across Nairobi." />
+        <meta name="description" content="Order fresh groceries from local vendors and get fast delivery with Mboga Pap! Supporting community, vendors, and riders across Nairobi." />
         <link rel="canonical" href="https://mbogapap.co.ke/" />
         <meta property="og:title" content="Mboga Pap - Fresh Groceries, Local Vendors, Fast Delivery" />
-        <meta property="og:description" content="Order fresh groceries from local vendors and get fast delivery with Mbonga Pap! Supporting community, vendors, and riders across Nairobi." />
+        <meta property="og:description" content="Order fresh groceries from local vendors and get fast delivery with Mboga Pap! Supporting community, vendors, and riders across Nairobi." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbogapap.co.ke/" />
         <meta property="og:image" content="/placeholder.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Mboga Pap - Fresh Groceries, Local Vendors, Fast Delivery" />
-        <meta name="twitter:description" content="Order fresh groceries from local vendors and get fast delivery with Mbonga Pap! Supporting community, vendors, and riders across Nairobi." />
+        <meta name="twitter:description" content="Order fresh groceries from local vendors and get fast delivery with Mboga Pap! Supporting community, vendors, and riders across Nairobi." />
         <meta name="twitter:image" content="/placeholder.jpg" />
         <script type="application/ld+json">{`
           {
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "Mboga Pap",
-            "url": "https://mbogapap.com/",
+            "url": "https://mbogapap.co.ke/",
             "logo": "/placeholder-logo.png",
             "sameAs": [
               "https://facebook.com/mbogapap",
@@ -556,12 +556,12 @@ export default function HomePage() {
       <div className="-mt-px bg-white">
         <HeroCarousel language={language} />
       </div>
-      {/* Why Mbonga Pap */}
+      {/* Why Mboga Pap */}
       <section className="py-10 sm:py-20 bg-white">
         <div className="container mx-auto px-2 sm:px-4 relative z-10">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[color:var(--color-primary)] mb-4">
-              {t.whySection.title} <span>Mbonga Pap?</span>
+              {t.whySection.title} <span>Mboga Pap?</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">{t.whySection.subtitle}</p>
           </div>
@@ -921,7 +921,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <span className="text-3xl font-bold bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-primary)] bg-clip-text text-transparent">
-                    Mbonga Pap
+                    Mboga Pap
                   </span>
                   <p className="text-xs text-gray-400 -mt-1">Fresh And Fast 🏍️</p>
                 </div>

@@ -10,16 +10,16 @@ export default function PressPage() {
   return (
     <>
       <Head>
-        <title>Press & Media | Mbonga Pap!</title>
-        <meta name="description" content="Read the latest news, press releases, and media mentions about Mbonga Pap! Download our media kit and contact our press team." />
-        <meta property="og:title" content="Press & Media | Mbonga Pap!" />
-        <meta property="og:description" content="Read the latest news, press releases, and media mentions about Mbonga Pap! Download our media kit and contact our press team." />
+        <title>Press & Media | Mboga Pap!</title>
+        <meta name="description" content="Read the latest news, press releases, and media mentions about Mboga Pap! Download our media kit and contact our press team." />
+        <meta property="og:title" content="Press & Media | Mboga Pap!" />
+        <meta property="og:description" content="Read the latest news, press releases, and media mentions about Mboga Pap! Download our media kit and contact our press team." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/press" />
         <meta property="og:image" content="/placeholder.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Press & Media | Mbonga Pap!" />
-        <meta name="twitter:description" content="Read the latest news, press releases, and media mentions about Mbonga Pap! Download our media kit and contact our press team." />
+        <meta name="twitter:title" content="Press & Media | Mboga Pap!" />
+        <meta name="twitter:description" content="Read the latest news, press releases, and media mentions about Mboga Pap! Download our media kit and contact our press team." />
       </Head>
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8 max-w-3xl">
@@ -36,7 +36,7 @@ export default function PressPage() {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-[color:var(--color-primary)] mb-4">Press & Media</h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Latest news, press releases, and media mentions about Mbonga Pap!
+              Latest news, press releases, and media mentions about Mboga Pap!
             </p>
           </div>
 
@@ -50,7 +50,7 @@ export default function PressPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 mb-4">Official announcements and updates from Mbonga Pap!</p>
+                <p className="text-gray-600 mb-4">Official announcements and updates from Mboga Pap!</p>
                 <Link href="/press/releases" className="text-[color:var(--color-accent)] hover:underline text-sm font-medium">
                   View All Releases →
                 </Link>

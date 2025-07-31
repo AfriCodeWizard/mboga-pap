@@ -36,4 +36,139 @@
     --foreground: 240 10% 3.9%;
     --radius: 0.5rem; /* This was missing */
   }
+}
+
+/* Mobile responsiveness improvements */
+@layer utilities {
+  /* Ensure proper text wrapping on mobile */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Better touch targets for mobile */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent horizontal scroll on mobile */
+  .no-horizontal-scroll {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  
+  /* Better mobile spacing */
+  .mobile-spacing {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Mobile-first grid improvements */
+  .mobile-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6;
+  }
+  
+  /* Better mobile typography */
+  .mobile-text {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+  
+  .mobile-heading {
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl;
+  }
+  
+  /* Mobile-friendly buttons */
+  .mobile-button {
+    @apply px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base;
+  }
+  
+  /* Better mobile card layouts */
+  .mobile-card {
+    @apply p-4 sm:p-6 lg:p-8;
+  }
+  
+  /* Mobile-friendly navigation */
+  .mobile-nav {
+    @apply flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4;
+  }
+  
+  /* Prevent text overflow on mobile */
+  .text-ellipsis-mobile {
+    @apply truncate sm:text-clip;
+  }
+  
+  /* Better mobile form elements */
+  .mobile-input {
+    @apply w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base;
+  }
+  
+  /* Mobile-friendly spacing */
+  .mobile-section {
+    @apply py-8 sm:py-12 lg:py-16;
+  }
+  
+  /* Better mobile images */
+  .mobile-image {
+    @apply w-full h-auto object-cover;
+  }
+  
+  /* Mobile-friendly containers */
+  .mobile-container {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Ensure proper viewport handling */
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Better mobile scrolling */
+@media (max-width: 768px) {
+  .smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Mobile-specific improvements for buttons */
+@media (max-width: 640px) {
+  button, .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Ensure buttons don't get cut off */
+  .btn-mobile {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Better mobile form handling */
+@media (max-width: 640px) {
+  input, select, textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Mobile-friendly shadows and effects */
+@media (max-width: 768px) {
+  .mobile-shadow {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mobile-hover {
+    transition: transform 0.2s ease;
+  }
+  
+  .mobile-hover:active {
+    transform: scale(0.98);
+  }
 } 

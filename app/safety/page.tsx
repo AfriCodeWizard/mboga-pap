@@ -14,7 +14,7 @@ export default function SafetyPage() {
             </Button>
           </Link>
         </div>
-        <h1 className="text-4xl font-bold text-gray-900 text-center mb-4">Safety at Mbonga Pap!</h1>
+        <h1 className="text-4xl font-bold text-gray-900 text-center mb-4">Safety at Mboga Pap!</h1>
         <p className="text-xl text-gray-600 text-center mb-8">
           Your safety is our top priority. Learn how we keep you safe.
         </p>
@@ -22,7 +22,7 @@ export default function SafetyPage() {
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Commitment to Your Safety</h2>
           <p className="text-gray-700 leading-relaxed">
-            At Mbonga Pap!, we are dedicated to creating a safe and secure environment for all our users – customers,
+            At Mboga Pap!, we are dedicated to creating a safe and secure environment for all our users – customers,
             MamaMbogas, and riders. We continuously implement and update our safety measures to ensure peace of mind
             with every interaction and delivery.
           </p>

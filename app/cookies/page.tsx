@@ -8,16 +8,16 @@ export default function CookiesPage() {
   return (
     <>
       <Head>
-        <title>Cookie Policy | Mbonga Pap!</title>
-        <meta name="description" content="Learn how Mbonga Pap! uses cookies to enhance your experience. Read about essential, analytical, and marketing cookies, and your choices." />
-        <meta property="og:title" content="Cookie Policy | Mbonga Pap!" />
-        <meta property="og:description" content="Learn how Mbonga Pap! uses cookies to enhance your experience. Read about essential, analytical, and marketing cookies, and your choices." />
+        <title>Cookie Policy | Mboga Pap!</title>
+        <meta name="description" content="Learn how Mboga Pap! uses cookies to enhance your experience. Read about essential, analytical, and marketing cookies, and your choices." />
+        <meta property="og:title" content="Cookie Policy | Mboga Pap!" />
+        <meta property="og:description" content="Learn how Mboga Pap! uses cookies to enhance your experience. Read about essential, analytical, and marketing cookies, and your choices." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/cookies" />
         <meta property="og:image" content="/placeholder.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Cookie Policy | Mbonga Pap!" />
-        <meta name="twitter:description" content="Learn how Mbonga Pap! uses cookies to enhance your experience. Read about essential, analytical, and marketing cookies, and your choices." />
+        <meta name="twitter:title" content="Cookie Policy | Mboga Pap!" />
+        <meta name="twitter:description" content="Learn how Mboga Pap! uses cookies to enhance your experience. Read about essential, analytical, and marketing cookies, and your choices." />
       </Head>
       <div className="min-h-screen bg-gradient-to-b from-orange-100 via-green-100 to-yellow-100 py-12">
         <div className="container mx-auto px-4 max-w-3xl bg-white p-8 rounded-lg shadow-xl">

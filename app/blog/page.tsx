@@ -12,7 +12,7 @@ export default function BlogPage() {
       title: "The Rise of MamaMbogas: Empowering Local Economies",
       date: "July 10, 2024",
       category: "Community",
-      excerpt: "Discover how local vegetable vendors are transforming urban food supply chains with Mbonga Pap!.",
+      excerpt: "Discover how local vegetable vendors are transforming urban food supply chains with Mboga Pap!.",
       href: "/blog/post-1",
       image: "/placeholder.svg?height=200&width=300",
     },
@@ -38,10 +38,10 @@ export default function BlogPage() {
   return (
     <>
       <Head>
-        <title>Mbonga Pap! Blog - Community, Fresh Food, and Stories</title>
-        <meta name="description" content="Read the latest stories, tips, and news from the Mbonga Pap! community. Discover how local vendors, riders, and customers are making a difference." />
-        <meta property="og:title" content="Mbonga Pap! Blog - Community, Fresh Food, and Stories" />
-        <meta property="og:description" content="Read the latest stories, tips, and news from the Mbonga Pap! community. Discover how local vendors, riders, and customers are making a difference." />
+        <title>Mboga Pap! Blog - Community, Fresh Food, and Stories</title>
+        <meta name="description" content="Read the latest stories, tips, and news from the Mboga Pap! community. Discover how local vendors, riders, and customers are making a difference." />
+        <meta property="og:title" content="Mboga Pap! Blog - Community, Fresh Food, and Stories" />
+        <meta property="og:description" content="Read the latest stories, tips, and news from the Mboga Pap! community. Discover how local vendors, riders, and customers are making a difference." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/blog" />
         <meta property="og:image" content="/placeholder.jpg" />
@@ -61,7 +61,7 @@ export default function BlogPage() {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-[color:var(--color-primary)] mb-4">Our Blog</h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Insights, stories, and updates from the Mbonga Pap! community.
+              Insights, stories, and updates from the Mboga Pap! community.
             </p>
           </div>
 

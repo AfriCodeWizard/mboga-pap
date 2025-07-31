@@ -11,16 +11,16 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <Head>
-        <title>Privacy Policy | Mbonga Pap!</title>
-        <meta name="description" content="Read the privacy policy for Mbonga Pap! to learn how we collect, use, and protect your information." />
-        <meta property="og:title" content="Privacy Policy | Mbonga Pap!" />
-        <meta property="og:description" content="Read the privacy policy for Mbonga Pap! to learn how we collect, use, and protect your information." />
+        <title>Privacy Policy | Mboga Pap!</title>
+        <meta name="description" content="Read the privacy policy for Mboga Pap! to learn how we collect, use, and protect your information." />
+        <meta property="og:title" content="Privacy Policy | Mboga Pap!" />
+        <meta property="og:description" content="Read the privacy policy for Mboga Pap! to learn how we collect, use, and protect your information." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/privacy" />
         <meta property="og:image" content="/placeholder.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Privacy Policy | Mbonga Pap!" />
-        <meta name="twitter:description" content="Read the privacy policy for Mbonga Pap! to learn how we collect, use, and protect your information." />
+        <meta name="twitter:title" content="Privacy Policy | Mboga Pap!" />
+        <meta name="twitter:description" content="Read the privacy policy for Mboga Pap! to learn how we collect, use, and protect your information." />
       </Head>
       
       <div className="min-h-screen bg-gray-50">
@@ -41,7 +41,7 @@ export default function PrivacyPolicyPage() {
             <CardContent className="p-8">
               <div className="prose prose-lg max-w-none">
                 <p className="text-gray-700 mb-6">
-                  At Mbonga Pap!, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use,
+                  At Mboga Pap!, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use,
                   disclose, and safeguard your information when you visit our mobile application (the "App") and our website
                   (collectively, the "Services"). Please read this privacy policy carefully. If you do not agree with the terms
                   of this privacy policy, please do not access the Services.

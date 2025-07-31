@@ -11,10 +11,10 @@ export default function AboutUsPage() {
   return (
     <>
       <Head>
-        <title>About Mbonga Pap! - Our Mission & Community</title>
-        <meta name="description" content="Learn about Mbonga Pap! and our mission to connect communities through fresh, local groceries and empower small businesses." />
-        <meta property="og:title" content="About Mbonga Pap! - Our Mission & Community" />
-        <meta property="og:description" content="Learn about Mbonga Pap! and our mission to connect communities through fresh, local groceries and empower small businesses." />
+        <title>About Mboga Pap! - Our Mission & Community</title>
+        <meta name="description" content="Learn about Mboga Pap! and our mission to connect communities through fresh, local groceries and empower small businesses." />
+        <meta property="og:title" content="About Mboga Pap! - Our Mission & Community" />
+        <meta property="og:description" content="Learn about Mboga Pap! and our mission to connect communities through fresh, local groceries and empower small businesses." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/about" />
         <meta property="og:image" content="/placeholder.jpg" />
@@ -24,7 +24,7 @@ export default function AboutUsPage() {
         <div className="container mx-auto px-4 py-8">
           {/* Hero Section */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-[color:var(--color-primary)] mb-4">About Mbonga Pap!</h1>
+            <h1 className="text-4xl font-bold text-[color:var(--color-primary)] mb-4">About Mboga Pap!</h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Connecting communities through fresh, local groceries and empowering small businesses across Kenya.
             </p>
@@ -38,7 +38,7 @@ export default function AboutUsPage() {
                 <h2 className="text-3xl font-bold text-[color:var(--color-primary)] mb-4">Our Mission</h2>
               </div>
               <p className="text-lg text-gray-700 leading-relaxed text-center max-w-4xl mx-auto">
-                At Mbonga Pap!, our mission is to empower local "MamaMbogas" (vegetable vendors) by providing them with a
+                At Mboga Pap!, our mission is to empower local "MamaMbogas" (vegetable vendors) by providing them with a
                 digital platform to reach more customers, while offering urban dwellers convenient access to fresh,
                 farm-to-table produce. We believe in fostering strong community ties, supporting small businesses, and
                 promoting healthy eating habits across Kenya.
