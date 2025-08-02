@@ -397,7 +397,7 @@ export default function SignUpPage() {
                           onCheckedChange={(checked) =>
                             setFormData((prev) => ({ ...prev, agreeToTerms: checked as boolean }))
                           }
-                          className="border-[color:var(--color-primary)] data-[state=checked]:bg-[color:var(--color-primary)]"
+                          className="border-[color:var(--color-primary)] data-[state=checked]:bg-[color:var(--color-primary)] w-4 h-4 sm:w-5 sm:h-5"
                         />
                         <Label htmlFor="terms" className="text-sm text-gray-700">
                           I agree to the{" "}
