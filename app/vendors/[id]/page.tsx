@@ -288,7 +288,7 @@ export default function VendorItemsPage() {
         <meta property="og:title" content={vendor ? `${vendor.name} | Mboga Pap!` : 'Vendor | Mboga Pap!'} />
         <meta property="og:description" content={vendor ? `Order fresh produce from ${vendor.name} on Mboga Pap! See available items, prices, and specialties.` : 'Order fresh produce from local vendors on Mboga Pap!'} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://mbongapap.co.ke/vendors/${vendorId}`} />
+        <meta property="og:url" content={`https://mbogapap.co.ke/vendors/${vendorId}`} />
         <meta property="og:image" content={vendor?.image || '/placeholder.jpg'} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={vendor ? `${vendor.name} | Mboga Pap!` : 'Vendor | Mboga Pap!'} />
