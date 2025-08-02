@@ -57,8 +57,14 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2 text-[color:var(--color-primary)] font-bold text-lg sm:text-xl">
           <span className="text-[color:var(--color-accent)] font-bold text-sm sm:text-lg transform -rotate-12" aria-label="Mboga Pap logo">🥬</span>
-          <span className="hidden sm:inline">Mboga Pap</span>
-          <span className="sm:hidden">Mboga Pap</span>
+          <div className="flex flex-col">
+            <span className="hidden sm:inline">Mboga Pap</span>
+            <span className="sm:hidden">Mboga Pap</span>
+            <div className="flex items-center space-x-1 text-xs font-normal text-[color:var(--color-accent)]">
+              <span>Fresh & Fast</span>
+              <span className="text-sm">🏍️</span>
+            </div>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
