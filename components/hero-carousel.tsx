@@ -17,7 +17,7 @@ const slides = {
       title: "Fresh Groceries Delivered",
       subtitle: "Get farm-fresh vegetables delivered to your doorstep",
       description:
-        "Supporting local vendors while bringing you the freshest produce from trusted mamambogas across Nairobi.",
+        "Supporting local vendors while bringing you the freshest produce from trusted vendors across Nairobi.",
       ctaText: "Order Now",
       ctaLink: "/signup",
     },
@@ -51,7 +51,7 @@ const slides = {
       title: "Mboga Safi Zinapoletwa",
       subtitle: "Pata mboga safi kutoka shambani hadi mlangoni mwako",
       description:
-        "Tunasaidia wachuuzi wa mitaani wakati tunakupatia mboga safi kutoka kwa mamambogas wanaoaminika Nairobi.",
+        "Tunasaidia wachuuzi wa mitaani wakati tunakupatia mboga safi kutoka kwa wachuuzi wanaoaminika Nairobi.",
       ctaText: "Agiza Sasa",
       ctaLink: "/signup",
     },
