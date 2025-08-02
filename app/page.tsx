@@ -73,7 +73,7 @@ const content = {
       subtitle: "Real vendors, real stories, fresh produce every day",
       vendors: [
         {
-          name: "Fresh Harvest Mama",
+          name: "Fresh Harvest",
           location: "Westlands Market • 8 years",
           quote: "I love serving my community with fresh vegetables at fair prices!",
           specialties: ["Fresh Vegetables", "Herbs"],
@@ -81,7 +81,7 @@ const content = {
           image: "/grace-wanjiku.jpg",
         },
         {
-          name: "Green Valley Mama",
+          name: "Green Valley",
           location: "Kibera Market • 12 years",
           quote: "Fresh vegetables every morning, straight from the farm!",
           specialties: ["Spinach", "Carrots", "Eggplant"],
@@ -89,7 +89,7 @@ const content = {
           image: "/jane-njeri.jpg",
         },
         {
-          name: "Sunrise Market Mama",
+          name: "Sunrise Market",
           location: "Kawangware • 6 years",
           quote: "Quality produce at fair prices, that's my promise!",
           specialties: ["Cabbage", "Tomatoes", "Potatoes"],
@@ -270,7 +270,7 @@ const content = {
       subtitle: "Wachuuzi wa kweli, hadithi za kweli, mboga safi kila siku",
       vendors: [
         {
-          name: "Fresh Harvest Mama",
+          name: "Fresh Harvest",
           location: "Soko la Westlands • Miaka 8",
           quote: "Napenda kutumikia jamii yangu kwa mboga safi na bei nzuri!",
           specialties: ["Mboga Safi", "Viungo"],
@@ -278,7 +278,7 @@ const content = {
           image: "/grace-wanjiku.jpg",
         },
         {
-          name: "Green Valley Mama",
+          name: "Green Valley",
           location: "Soko la Kibera • Miaka 12",
           quote: "Mboga safi kila asubuhi, moja kwa moja kutoka shambani!",
           specialties: ["Mchicha", "Karoti", "Biringanya"],
@@ -286,7 +286,7 @@ const content = {
           image: "/jane-njeri.jpg",
         },
         {
-          name: "Sunrise Market Mama",
+          name: "Sunrise Market",
           location: "Kawangware • Miaka 6",
           quote: "Mazao ya ubora kwa bei nzuri, hiyo ni ahadi yangu!",
           specialties: ["Kabichi", "Nyanya", "Viazi"],
@@ -439,8 +439,8 @@ const content = {
 // Vendor list for both homepage and vendor pages
 const mamambogaVendors = [
   {
-    id: "fresh-harvest-mama",
-    name: "Fresh Harvest Mama",
+    id: "fresh-harvest",
+    name: "Fresh Harvest",
     location: "Westlands Market • 8 years",
     quote: "I love serving my community with fresh vegetables at fair prices!",
     specialties: ["Fresh Vegetables", "Herbs"],
@@ -448,8 +448,8 @@ const mamambogaVendors = [
     image: "/grace-wanjiku.jpg"
   },
   {
-    id: "green-valley-mama",
-    name: "Green Valley Mama",
+    id: "green-valley",
+    name: "Green Valley",
     location: "Kibera Market • 12 years",
     quote: "Fresh vegetables every morning, straight from the farm!",
     specialties: ["Spinach", "Carrots", "Eggplant"],
@@ -457,8 +457,8 @@ const mamambogaVendors = [
     image: "/jane-njeri.jpg"
   },
   {
-    id: "sunrise-market-mama",
-    name: "Sunrise Market Mama",
+    id: "sunrise-market",
+    name: "Sunrise Market",
     location: "Kawangware • 6 years",
     quote: "Quality produce at fair prices, that's my promise!",
     specialties: ["Cabbage", "Tomatoes", "Potatoes"],
