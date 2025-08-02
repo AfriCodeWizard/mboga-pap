@@ -192,13 +192,13 @@ export default function HeroCarousel({ language }: CarouselProps) {
       >
         <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform" />
       </button>
-      {/* Pagination Dots */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex space-x-0.5 sm:space-x-2 md:space-x-3">
+      {/* Pagination Dots - Hidden on mobile */}
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex space-x-0.5 sm:space-x-2 md:space-x-3 hidden sm:flex">
         {currentSlides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-0.5 h-0.5 sm:w-1 sm:h-1 md:w-1.5 md:h-1.5 lg:w-2 lg:h-2 rounded-full transition-all duration-300 ${
+            className={`w-1 h-1 sm:w-1.5 sm:h-1.5 md:w-2 md:h-2 lg:w-3 lg:h-3 rounded-full transition-all duration-300 ${
               index === currentSlide
                 ? "bg-[color:var(--color-accent)] scale-100 sm:scale-110 md:scale-125 shadow-sm sm:shadow-md md:shadow-lg ring-1 sm:ring-1 md:ring-2 ring-[color:var(--color-accent)]/50"
                 : "bg-white/30 hover:bg-white/50 hover:scale-110"
