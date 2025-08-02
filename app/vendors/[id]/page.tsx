@@ -20,8 +20,8 @@ import Head from "next/head";
 
 const mamambogaVendors = [
   {
-    id: "fresh-harvest-mama",
-    name: "Fresh Harvest Mama",
+    id: "fresh-harvest",
+    name: "Fresh Harvest",
     rating: 4.8,
     deliveryTime: "20-30 min",
     distance: "0.5 km",
@@ -30,8 +30,8 @@ const mamambogaVendors = [
     isOpen: true,
   },
   {
-    id: "green-valley-mama",
-    name: "Green Valley Mama",
+    id: "green-valley",
+    name: "Green Valley",
     rating: 4.9,
     deliveryTime: "25-35 min",
     distance: "0.8 km",
@@ -40,8 +40,8 @@ const mamambogaVendors = [
     isOpen: true,
   },
   {
-    id: "sunrise-market-mama",
-    name: "Sunrise Market Mama",
+    id: "sunrise-market",
+    name: "Sunrise Market",
     rating: 4.7,
     deliveryTime: "22-32 min",
     distance: "1.2 km",
@@ -102,7 +102,7 @@ const mamambogaVendors = [
 ];
 
 const vendorItems: { [vendorId: string]: any[] } = {
-  "fresh-harvest-mama": [
+  "fresh-harvest": [
     { id: 1, name: "Tomatoes", price: "80", image: "/placeholder.svg", description: "Fresh, juicy tomatoes." },
     { id: 2, name: "Onions", price: "60", image: "/placeholder.svg", description: "Red onions, per kg." },
     { id: 3, name: "Spinach", price: "40", image: "/placeholder.svg", description: "Leafy green spinach." },
@@ -112,7 +112,7 @@ const vendorItems: { [vendorId: string]: any[] } = {
     { id: 12, name: "Coriander (Dhania)", price: "20", image: "/placeholder.svg", description: "Fresh coriander, per bunch." },
     { id: 13, name: "Garlic", price: "120", image: "/placeholder.svg", description: "Aromatic garlic bulbs." },
   ],
-  "green-valley-mama": [
+  "green-valley": [
     { id: 4, name: "Carrots", price: "50", image: "/placeholder.svg", description: "Crunchy carrots." },
     { id: 5, name: "Potatoes", price: "70", image: "/placeholder.svg", description: "Organic potatoes." },
     { id: 6, name: "Cabbage", price: "45", image: "/placeholder.svg", description: "Fresh cabbage." },
@@ -122,7 +122,7 @@ const vendorItems: { [vendorId: string]: any[] } = {
     { id: 17, name: "French Beans", price: "90", image: "/placeholder.svg", description: "Tender French beans." },
     { id: 18, name: "Avocado", price: "50", image: "/placeholder.svg", description: "Ripe avocado, per piece." },
   ],
-  "sunrise-market-mama": [
+  "sunrise-market": [
     { id: 7, name: "Local Vegetables", price: "90", image: "/placeholder.svg", description: "Assorted local veggies." },
     { id: 8, name: "Spices", price: "120", image: "/placeholder.svg", description: "Aromatic spices." },
     { id: 19, name: "Arrowroots (Nduma)", price: "110", image: "/placeholder.svg", description: "Arrowroots, per kg." },
