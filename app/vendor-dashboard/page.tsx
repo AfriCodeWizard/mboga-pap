@@ -100,13 +100,13 @@ export default function VendorDashboard() {
     amount: "",
     bankName: "Equity Bank",
     accountNumber: "1234567890",
-    accountName: "Mama Grace Wanjiku",
+    accountName: "Fresh Harvest Mama",
     phoneNumber: "+254 700 123 456",
   })
   
   // Profile state
   const [profile, setProfile] = useState({
-    name: "Mama Grace Wanjiku",
+    name: "Fresh Harvest Mama",
     email: "grace@demo.com",
     phone: "+254 700 123 456",
     address: "Westlands Market, Nairobi",
@@ -128,7 +128,7 @@ export default function VendorDashboard() {
     paymentMethod: "Bank",
     bankName: "Equity Bank",
     accountNumber: "1234567890",
-    accountName: "Mama Grace Wanjiku",
+    accountName: "Fresh Harvest Mama",
     mpesaNumber: "",
     mpesaName: "",
   })
