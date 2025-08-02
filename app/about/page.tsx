@@ -38,7 +38,7 @@ export default function AboutUsPage() {
                 <h2 className="text-3xl font-bold text-[color:var(--color-primary)] mb-4">Our Mission</h2>
               </div>
               <p className="text-lg text-gray-700 leading-relaxed text-center max-w-4xl mx-auto">
-                At Mboga Pap!, our mission is to empower local "MamaMbogas" (vegetable vendors) by providing them with a
+                At Mboga Pap!, our mission is to empower local vendors by providing them with a
                 digital platform to reach more customers, while offering urban dwellers convenient access to fresh,
                 farm-to-table produce. We believe in fostering strong community ties, supporting small businesses, and
                 promoting healthy eating habits across Kenya.
@@ -80,7 +80,7 @@ export default function AboutUsPage() {
                 </div>
                 <h3 className="text-xl font-bold text-[color:var(--color-primary)] mb-2">Empowering Small Businesses</h3>
                 <p className="text-gray-600">
-                  Providing tools and opportunities for MamaMbogas to thrive in the digital age.
+                  Providing tools and opportunities for vendors to thrive in the digital age.
                 </p>
               </CardContent>
             </Card>
