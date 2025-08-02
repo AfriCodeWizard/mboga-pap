@@ -25,7 +25,7 @@ const sampleOrders = [
   {
     id: "MP20240712-12345",
     status: "In Transit",
-    vendor: "Mama Grace Wanjiku",
+          vendor: "Fresh Harvest Mama",
     items: ["Tomatoes (2kg)", "Spinach (1 bunch)", "Carrots (1kg)"],
     total: "KSh 850",
     orderDate: "July 12, 2024, 10:00 AM",
@@ -64,7 +64,7 @@ const sampleOrders = [
   {
     id: "MP20240712-12346",
     status: "Preparing",
-    vendor: "Mama Jane Njeri",
+          vendor: "Green Valley Mama",
     items: ["Cabbage (1 head)", "Potatoes (3kg)"],
     total: "KSh 650",
     orderDate: "July 12, 2024, 09:30 AM",
