@@ -365,38 +365,58 @@ const DashboardContent = () => {
 
         {/* Loyalty Points Display */}
         <Card className="mb-6 border-2 border-[color:var(--color-primary)]/20 shadow-lg bg-gradient-to-r from-[color:var(--color-primary)]/5 to-[color:var(--color-accent)]/5">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-[color:var(--color-accent)] rounded-full flex items-center justify-center">
-                  <Star className="h-6 w-6 text-[color:var(--color-primary)]" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[color:var(--color-accent)] to-[color:var(--color-primary)] rounded-full flex items-center justify-center shadow-lg">
+                  <Star className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-[color:var(--color-primary)]">Loyalty Points</h3>
-                  <p className="text-sm text-gray-600">Earn 1 point for every KSh 10 spent</p>
+                  <h3 className="text-base sm:text-lg font-bold text-[color:var(--color-primary)]">Loyalty Points</h3>
+                  <p className="text-xs sm:text-sm text-gray-600">Earn 1 point for every KSh 10 spent</p>
                 </div>
               </div>
-              <div className="text-right">
-                <div className="text-2xl font-bold text-[color:var(--color-primary)]">{points}</div>
-                <div className="text-sm text-gray-600">points available</div>
+              
+              <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-6">
+                <div className="text-center sm:text-right">
+                  <div className="text-xl sm:text-2xl font-bold text-[color:var(--color-primary)] bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-accent)] bg-clip-text text-transparent">
+                    {points}
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-600">points available</div>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="border-[color:var(--color-primary)] text-[color:var(--color-primary)] hover:bg-[color:var(--color-accent)] hover:text-[color:var(--color-primary)] text-xs sm:text-sm"
+                    onClick={() => router.push('/dashboard/loyalty')}
+                  >
+                    View History
+                  </Button>
+                  <Button 
+                    size="sm"
+                    className="bg-[color:var(--color-primary)] hover:bg-[color:var(--color-accent)] hover:text-[color:var(--color-primary)] text-[color:var(--color-accent)] text-xs sm:text-sm shadow-lg"
+                    onClick={handleRedeemPoints}
+                    disabled={points < 50}
+                  >
+                    Redeem (50 pts)
+                  </Button>
+                </div>
               </div>
-              <div className="flex space-x-2">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="border-[color:var(--color-primary)] text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-white"
-                  onClick={() => router.push('/dashboard/loyalty')}
-                >
-                  View History
-                </Button>
-                <Button 
-                  size="sm"
-                  className="bg-[color:var(--color-primary)] hover:bg-[color:var(--color-accent)] hover:text-black text-white"
-                  onClick={handleRedeemPoints}
-                  disabled={points < 50}
-                >
-                  Redeem (50 pts)
-                </Button>
+            </div>
+            
+            {/* Progress Bar */}
+            <div className="mt-4 sm:mt-6">
+              <div className="flex justify-between text-xs sm:text-sm text-gray-600 mb-2">
+                <span>Next reward at 100 points</span>
+                <span>{Math.min(points, 100)}/100</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3">
+                <div 
+                  className="bg-gradient-to-r from-[color:var(--color-accent)] to-[color:var(--color-primary)] h-2 sm:h-3 rounded-full transition-all duration-500 ease-out"
+                  style={{ width: `${Math.min((points / 100) * 100, 100)}%` }}
+                ></div>
               </div>
             </div>
           </CardContent>
