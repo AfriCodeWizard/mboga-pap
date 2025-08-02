@@ -908,6 +908,117 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      
+      {/* Loyalty Points System */}
+      <section className="py-20 bg-gradient-to-br from-[color:var(--color-primary)]/5 to-[color:var(--color-accent)]/5">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[color:var(--color-primary)] mb-4">
+              {language === "en" ? (
+                <>
+                  Earn <span className="text-[color:var(--color-accent)]">Loyalty Points</span> Every Order
+                </>
+              ) : (
+                <>
+                  Pata <span className="text-[color:var(--color-accent)]">Pointi za Uaminifu</span> Kila Agizo
+                </>
+              )}
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto">
+              {language === "en" 
+                ? "Get rewarded for every purchase! Earn 1 point for every KSh 10 spent and redeem for amazing rewards."
+                : "Pata malipo kwa kila ununuzi! Pata pointi 1 kwa kila KSh 10 uliyotumia na ubadilishe kwa malipo ya kushangaza."
+              }
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Earn Points */}
+            <Card className="border-2 border-[color:var(--color-primary)]/20 shadow-xl bg-white transform hover:scale-105 transition-all duration-500 hover:shadow-2xl group">
+              <CardContent className="p-8 text-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-[color:var(--color-accent)] to-[color:var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                  <Star className="h-10 w-10 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-[color:var(--color-primary)] mb-4">
+                  {language === "en" ? "Earn Points" : "Pata Pointi"}
+                </h3>
+                <p className="text-gray-700 mb-6">
+                  {language === "en" 
+                    ? "Earn 1 loyalty point for every KSh 10 you spend on fresh groceries."
+                    : "Pata pointi 1 za uaminifu kwa kila KSh 10 unayotumia kwenye mboga mbichi."
+                  }
+                </p>
+                <div className="bg-[color:var(--color-accent)]/10 rounded-lg p-4">
+                  <div className="text-2xl font-bold text-[color:var(--color-primary)]">1 Point</div>
+                  <div className="text-sm text-gray-600">
+                    {language === "en" ? "per KSh 10 spent" : "kwa kila KSh 10"}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Track Progress */}
+            <Card className="border-2 border-[color:var(--color-primary)]/20 shadow-xl bg-white transform hover:scale-105 transition-all duration-500 hover:shadow-2xl group">
+              <CardContent className="p-8 text-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-[color:var(--color-primary)] to-[color:var(--color-accent)] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                  <Award className="h-10 w-10 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-[color:var(--color-primary)] mb-4">
+                  {language === "en" ? "Track Progress" : "Fuatilia Maendeleo"}
+                </h3>
+                <p className="text-gray-700 mb-6">
+                  {language === "en" 
+                    ? "Watch your points grow and see how close you are to your next reward."
+                    : "Tazama pointi zako zikiongezeka na uone jinsi ulivyo karibu na malipo yako yafuatayo."
+                  }
+                </p>
+                <div className="bg-[color:var(--color-primary)]/10 rounded-lg p-4">
+                  <div className="text-2xl font-bold text-[color:var(--color-accent)]">100 Points</div>
+                  <div className="text-sm text-gray-600">
+                    {language === "en" ? "for next reward" : "kwa malipo yafuatayo"}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Redeem Rewards */}
+            <Card className="border-2 border-[color:var(--color-primary)]/20 shadow-xl bg-white transform hover:scale-105 transition-all duration-500 hover:shadow-2xl group">
+              <CardContent className="p-8 text-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-[color:var(--color-accent)] to-[color:var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                  <Gift className="h-10 w-10 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-[color:var(--color-primary)] mb-4">
+                  {language === "en" ? "Redeem Rewards" : "Badilisha Malipo"}
+                </h3>
+                <p className="text-gray-700 mb-6">
+                  {language === "en" 
+                    ? "Redeem your points for discounts, free delivery, and exclusive offers."
+                    : "Badilisha pointi zako kwa punguzo, usambazaji wa bure, na ofa za kipekee."
+                  }
+                </p>
+                <div className="bg-[color:var(--color-accent)]/10 rounded-lg p-4">
+                  <div className="text-2xl font-bold text-[color:var(--color-primary)]">50+ Points</div>
+                  <div className="text-sm text-gray-600">
+                    {language === "en" ? "to start redeeming" : "kuanza kubadilisha"}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center mt-12">
+            <Button 
+              size="lg"
+              className="bg-[color:var(--color-primary)] hover:bg-[color:var(--color-accent)] hover:text-[color:var(--color-primary)] text-[color:var(--color-accent)] text-lg px-8 py-3 shadow-lg"
+              onClick={() => window.location.href = '/signup'}
+            >
+              {language === "en" ? "Start Earning Points" : "Anza Kupata Pointi"}
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+      </section>
+      
       {/* Enhanced Footer */}
       <footer className="bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white py-20">
         <div className="container mx-auto px-4">
