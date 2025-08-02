@@ -66,8 +66,8 @@ const useLoyalty = () => {
 // All vendors from home page
 const mamambogaVendors = [
   {
-    id: "mama-grace-wanjiku",
-    name: "Mama Grace Wanjiku",
+    id: "fresh-harvest-mama",
+    name: "Fresh Harvest Mama",
     location: "Westlands Market • 8 years",
     rating: 4.8,
     reviews: 127,
@@ -81,8 +81,8 @@ const mamambogaVendors = [
     isOpen: true
   },
   {
-    id: "mama-jane-njeri",
-    name: "Mama Jane Njeri",
+    id: "green-valley-mama",
+    name: "Green Valley Mama",
     location: "Kibera Market • 12 years",
     rating: 4.9,
     reviews: 203,
@@ -96,8 +96,8 @@ const mamambogaVendors = [
     isOpen: true
   },
   {
-    id: "mama-mary-akinyi",
-    name: "Mama Mary Akinyi",
+    id: "sunrise-market-mama",
+    name: "Sunrise Market Mama",
     location: "Kawangware • 6 years",
     rating: 4.7,
     reviews: 89,
@@ -201,7 +201,7 @@ const DashboardContent = () => {
   const [activeDeliveries, setActiveDeliveries] = useState([
     {
       id: "DEL-001",
-      vendor: "Mama Grace Wanjiku",
+      vendor: "Fresh Harvest Mama",
       status: "On the way",
       estimatedTime: "15 mins",
       progress: 75,
@@ -214,7 +214,7 @@ const DashboardContent = () => {
     },
     {
       id: "DEL-002", 
-      vendor: "Mama Jane Njeri",
+      vendor: "Green Valley Mama",
       status: "Preparing",
       estimatedTime: "25 mins",
       progress: 30,
