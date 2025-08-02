@@ -100,13 +100,13 @@ export default function VendorDashboard() {
     amount: "",
     bankName: "Equity Bank",
     accountNumber: "1234567890",
-    accountName: "Fresh Harvest Mama",
+    accountName: "Fresh Harvest",
     phoneNumber: "+254 700 123 456",
   })
   
   // Profile state
   const [profile, setProfile] = useState({
-    name: "Fresh Harvest Mama",
+    name: "Fresh Harvest",
     email: "grace@demo.com",
     phone: "+254 700 123 456",
     address: "Westlands Market, Nairobi",
@@ -117,7 +117,7 @@ export default function VendorDashboard() {
   
   // Shop settings state
   const [shopSettings, setShopSettings] = useState({
-    shopName: "Mama Grace Vegetables",
+    shopName: "Fresh Harvest Vegetables",
     description: "Fresh vegetables and fruits from local farms",
     location: "Westlands Market, Nairobi",
     openingHours: "06:00-18:00",
@@ -128,7 +128,7 @@ export default function VendorDashboard() {
     paymentMethod: "Bank",
     bankName: "Equity Bank",
     accountNumber: "1234567890",
-    accountName: "Fresh Harvest Mama",
+    accountName: "Fresh Harvest",
     mpesaNumber: "",
     mpesaName: "",
   })
@@ -201,7 +201,7 @@ export default function VendorDashboard() {
             
             <div className="flex items-center space-x-3">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-medium">Mama Grace Vegetables</p>
+                <p className="text-sm font-medium">Fresh Harvest Vegetables</p>
                 <p className="text-xs text-gray-600">Westlands, Nairobi</p>
               </div>
               <DropdownMenu>
@@ -216,7 +216,7 @@ export default function VendorDashboard() {
                 <DropdownMenuContent className="w-56 bg-[color:var(--color-accent)]/95 border-2 border-[color:var(--color-primary)] shadow-lg backdrop-blur-sm" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal bg-[color:var(--color-primary)] text-white">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">Mama Grace</p>
+                      <p className="text-sm font-medium leading-none">Fresh Harvest</p>
                       <p className="text-xs leading-none text-white/80">vendor@demo.com</p>
                     </div>
                   </DropdownMenuLabel>
