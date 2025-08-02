@@ -116,7 +116,7 @@ const recentOrders = [
 const payoutRequests = [
   {
     id: "PAY-001",
-            requester: "Fresh Harvest Mama",
+            requester: "Fresh Harvest",
     type: "Vendor",
     amount: "KSh 8,750",
     bankDetails: "Equity Bank - 1234567890",
@@ -894,11 +894,11 @@ export default function AdminDashboard() {
                             </thead>
                             <tbody>
                               {[
-                                { date: "2024-01-16", user: "Fresh Harvest Mama", type: "Vendor", amount: "KSh 8,750", status: "Pending", ref: "PAY-001" },
+                                { date: "2024-01-16", user: "Fresh Harvest", type: "Vendor", amount: "KSh 8,750", status: "Pending", ref: "PAY-001" },
                                 { date: "2024-01-16", user: "Peter Ochieng", type: "Rider", amount: "KSh 3,450", status: "Pending", ref: "PAY-002" },
                                 { date: "2024-01-15", user: "Kiprotich Fresh Produce", type: "Vendor", amount: "KSh 5,200", status: "Approved", ref: "PAY-003" },
                                 { date: "2024-01-15", user: "David Kiprop", type: "Rider", amount: "KSh 2,800", status: "Paid", ref: "PAY-004" },
-                                { date: "2024-01-14", user: "Fresh Harvest Mama", type: "Vendor", amount: "KSh 4,000", status: "Paid", ref: "PAY-000" },
+                                { date: "2024-01-14", user: "Fresh Harvest", type: "Vendor", amount: "KSh 4,000", status: "Paid", ref: "PAY-000" },
                               ].map((tx) => (
                                 <tr key={tx.ref}>
                                   <td className="px-2 py-1 sm:px-4 sm:py-2">{tx.date}</td>
