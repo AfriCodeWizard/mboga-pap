@@ -9,7 +9,7 @@ import Head from "next/head";
 export default function BlogPage() {
   const blogPosts = [
     {
-      title: "The Rise of MamaMbogas: Empowering Local Economies",
+      title: "The Rise of Local Vendors: Empowering Local Economies",
       date: "July 10, 2024",
       category: "Community",
       excerpt: "Discover how local vegetable vendors are transforming urban food supply chains with Mboga Pap!.",
