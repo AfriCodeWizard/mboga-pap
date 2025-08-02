@@ -698,7 +698,7 @@ const DashboardContent = () => {
                       
                       <div className="flex space-x-2">
                         <Button 
-                          className="flex-1 bg-[color:var(--color-primary)] hover:bg-[color:var(--color-accent)] hover:text-[color:var(--color-primary)] text-white"
+                          className="flex-1 bg-[color:var(--color-primary)] hover:bg-[color:var(--color-accent)] hover:text-[color:var(--color-primary)] text-[color:var(--color-accent)]"
                           onClick={() => handleVendorClick(vendor.id)}
                           disabled={!vendor.isOpen}
                         >
