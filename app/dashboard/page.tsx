@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-import { 
+import {
   ShoppingCart, 
   Star, 
   MapPin, 
@@ -66,8 +66,8 @@ const useLoyalty = () => {
 // All vendors from home page
 const mamambogaVendors = [
   {
-    id: "fresh-harvest-mama",
-    name: "Fresh Harvest Mama",
+    id: "fresh-harvest",
+    name: "Fresh Harvest",
     location: "Westlands Market • 8 years",
     rating: 4.8,
     reviews: 127,
@@ -81,8 +81,8 @@ const mamambogaVendors = [
     isOpen: true
   },
   {
-    id: "green-valley-mama",
-    name: "Green Valley Mama",
+    id: "green-valley",
+    name: "Green Valley",
     location: "Kibera Market • 12 years",
     rating: 4.9,
     reviews: 203,
@@ -96,8 +96,8 @@ const mamambogaVendors = [
     isOpen: true
   },
   {
-    id: "sunrise-market-mama",
-    name: "Sunrise Market Mama",
+    id: "sunrise-market",
+    name: "Sunrise Market",
     location: "Kawangware • 6 years",
     rating: 4.7,
     reviews: 89,
@@ -201,7 +201,7 @@ const DashboardContent = () => {
   const [activeDeliveries, setActiveDeliveries] = useState([
     {
       id: "DEL-001",
-      vendor: "Fresh Harvest Mama",
+      vendor: "Fresh Harvest",
       status: "On the way",
       estimatedTime: "15 mins",
       progress: 75,
@@ -214,7 +214,7 @@ const DashboardContent = () => {
     },
     {
       id: "DEL-002", 
-      vendor: "Green Valley Mama",
+      vendor: "Green Valley",
       status: "Preparing",
       estimatedTime: "25 mins",
       progress: 30,
@@ -320,13 +320,13 @@ const DashboardContent = () => {
   };
 
   const filteredVendors = mamambogaVendors.filter(vendor =>
-    vendor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+     vendor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     vendor.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
     vendor.specialties.some(specialty => 
       specialty.toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
-
+  
   return (
     <div className="min-h-screen bg-gray-50">
       <CustomerNavbar />
@@ -374,7 +374,7 @@ const DashboardContent = () => {
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-[color:var(--color-primary)]">Loyalty Points</h3>
                   <p className="text-xs sm:text-sm text-gray-600">Earn 1 point for every KSh 10 spent</p>
-                </div>
+            </div>
               </div>
               
               <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-6">
@@ -385,38 +385,38 @@ const DashboardContent = () => {
                 </div>
                 
                 <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm"
+                    <Button 
+                      variant="outline"
+                      size="sm" 
                     className="border-[color:var(--color-primary)] text-[color:var(--color-primary)] hover:bg-[color:var(--color-accent)] hover:text-[color:var(--color-primary)] text-xs sm:text-sm"
                     onClick={() => router.push('/dashboard/loyalty')}
-                  >
+                    >
                     View History
-                  </Button>
-                  <Button 
-                    size="sm"
+                    </Button>
+                    <Button 
+                      size="sm" 
                     className="bg-[color:var(--color-primary)] hover:bg-[color:var(--color-accent)] hover:text-[color:var(--color-primary)] text-[color:var(--color-accent)] text-xs sm:text-sm shadow-lg"
                     onClick={handleRedeemPoints}
                     disabled={points < 50}
                   >
                     Redeem (50 pts)
-                  </Button>
+                    </Button>
                 </div>
               </div>
             </div>
-            
+
             {/* Progress Bar */}
             <div className="mt-4 sm:mt-6">
               <div className="flex justify-between text-xs sm:text-sm text-gray-600 mb-2">
                 <span>Next reward at 100 points</span>
                 <span>{Math.min(points, 100)}/100</span>
-              </div>
+                </div>
               <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3">
                 <div 
                   className="bg-gradient-to-r from-[color:var(--color-accent)] to-[color:var(--color-primary)] h-2 sm:h-3 rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${Math.min((points / 100) * 100, 100)}%` }}
                 ></div>
-              </div>
+                  </div>
             </div>
           </CardContent>
         </Card>
@@ -443,7 +443,7 @@ const DashboardContent = () => {
                         {notification.timestamp.toLocaleTimeString()}
                       </p>
                     </div>
-                    <Button
+                    <Button 
                       variant="ghost"
                       size="sm"
                       onClick={() => setNotifications(prev => prev.filter(n => n.id !== notification.id))}
@@ -467,8 +467,8 @@ const DashboardContent = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 pr-4 py-3 border-2 border-gray-200 focus:border-[color:var(--color-primary)] focus:ring-2 focus:ring-[color:var(--color-primary)]/20"
             />
+            </div>
           </div>
-        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
@@ -639,8 +639,8 @@ const DashboardContent = () => {
             <div className="mb-6">
               <h2 className="text-2xl font-bold text-[color:var(--color-primary)] mb-2">Nearby Vendors</h2>
               <p className="text-gray-600">Find fresh vegetables from trusted local vendors</p>
-            </div>
-            
+        </div>
+        
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredVendors.map((vendor) => (
                 <motion.div
@@ -659,16 +659,16 @@ const DashboardContent = () => {
                               {vendor.name.split(' ').map(n => n[0]).join('')}
                             </AvatarFallback>
                           </Avatar>
-                          <div>
+              <div>
                             <CardTitle className="text-lg group-hover:text-[color:var(--color-primary)] transition-colors">
                               {vendor.name}
                             </CardTitle>
                             <div className="flex items-center space-x-1 text-sm text-gray-600">
                               <MapPin className="h-3 w-3" />
                               <span>{vendor.location}</span>
-                            </div>
-                          </div>
-                        </div>
+              </div>
+              </div>
+              </div>
                         <div className="flex flex-col items-end space-y-1">
                           <Button
                             variant="ghost"
@@ -676,12 +676,12 @@ const DashboardContent = () => {
                             className={`p-1 ${vendor.isFavorite ? 'text-red-500' : 'text-gray-400'}`}
                           >
                             <Heart className="h-4 w-4" />
-                          </Button>
+                </Button>
                           <Badge className={`text-xs ${vendor.isOpen ? 'bg-[color:var(--color-accent)] text-[color:var(--color-primary)]' : 'bg-red-100 text-red-800'}`}>
                             {vendor.isOpen ? 'Open' : 'Closed'}
                           </Badge>
-                        </div>
-                      </div>
+              </div>
+            </div>
                     </CardHeader>
                     
                     <CardContent className="space-y-4">
@@ -695,7 +695,7 @@ const DashboardContent = () => {
                           <Clock className="h-3 w-3" />
                           <span>{vendor.deliveryTime}</span>
                         </div>
-                      </div>
+            </div>
                       
                       <p className="text-sm text-gray-600">{vendor.description}</p>
                       
@@ -705,15 +705,15 @@ const DashboardContent = () => {
                             {specialty}
                           </Badge>
                         ))}
-                      </div>
+              </div>
                       
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-gray-600">Min Order: <span className="font-medium">{vendor.minOrder}</span></span>
                         <div className="flex items-center space-x-1 text-gray-600">
                           <Phone className="h-3 w-3" />
                           <span>{vendor.phone}</span>
-                        </div>
-                      </div>
+              </div>
+            </div>
                       
                       <div className="flex space-x-2">
                         <Button 
@@ -722,7 +722,7 @@ const DashboardContent = () => {
                           disabled={!vendor.isOpen}
                         >
                           Order Now
-                        </Button>
+              </Button>
                       </div>
                     </CardContent>
                   </Card>
