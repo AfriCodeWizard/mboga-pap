@@ -7,8 +7,6 @@ import { LoyaltyProvider } from '@/components/LoyaltyContext';
 export const metadata: Metadata = {
   title: 'Mboga Pap',
   description: 'Order fresh groceries from local vendors and get fast delivery with Mboga Pap! Supporting community, vendors, and riders across Nairobi.',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
-  themeColor: '#6A1B9A',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -17,6 +15,14 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#6A1B9A',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
