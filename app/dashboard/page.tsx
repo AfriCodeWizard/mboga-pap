@@ -382,7 +382,6 @@ const DashboardContent = () => {
                   <div className="text-xl sm:text-2xl font-bold text-[color:var(--color-primary)] bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-accent)] bg-clip-text text-transparent">
                     {points}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">points available</div>
                 </div>
                 
                 <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
