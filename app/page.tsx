@@ -851,64 +851,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      {/* Testimonials */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[color:var(--color-primary)] mb-4">
-              {language === "en"
-                ? (
-                  <>
-                    What Our <span className="text-brandgreen">Community Says</span>
-                  </>
-                )
-                : (
-                  <>
-                    {t.testimonialsSection.title} <span className="text-brandgreen">Inasema</span>
-                  </>
-                )}
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto">{t.testimonialsSection.subtitle}</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {t.testimonialsSection.testimonials.map((testimonial, index) => (
-              <Card
-                key={index}
-                className="border border-[color:var(--color-primary)] shadow-2xl bg-white transform hover:scale-105 transition-all duration-500 hover:shadow-3xl group"
-              >
-                <CardContent className="p-8">
-                  <div className="flex items-center mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-5 w-5 fill-[color:var(--color-accent)] text-[color:var(--color-accent)] group-hover:scale-110 transition-transform"
-                      />
-                    ))}
-                  </div>
-                  <p className="text-gray-700 mb-6 text-lg italic group-hover:text-black transition-colors">
-                    "{testimonial.text}"
-                  </p>
-                  <div className="flex items-center">
-                    <img
-                      src="/placeholder.svg?height=50&width=50"
-                      alt={testimonial.name}
-                      className="w-12 h-12 rounded-full mr-4 border-2 border-white shadow-lg"
-                    />
-                    <div>
-                      <div className="font-bold text-[color:var(--color-primary)] group-hover:text-[color:var(--color-primary)] transition-colors">
-                        {testimonial.name}
-                      </div>
-                      <div className="text-sm text-gray-700">{testimonial.role}</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-      
       {/* Loyalty Points System */}
       <section className="py-20 bg-gradient-to-br from-[color:var(--color-primary)]/5 to-[color:var(--color-accent)]/5">
         <div className="container mx-auto px-4">
@@ -1015,6 +957,64 @@ export default function HomePage() {
               {language === "en" ? "Start Earning Points" : "Anza Kupata Pointi"}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
+          </div>
+        </div>
+      </section>
+      
+      {/* Testimonials */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[color:var(--color-primary)] mb-4">
+              {language === "en"
+                ? (
+                  <>
+                    What Our <span className="text-brandgreen">Community Says</span>
+                  </>
+                )
+                : (
+                  <>
+                    {t.testimonialsSection.title} <span className="text-brandgreen">Inasema</span>
+                  </>
+                )}
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto">{t.testimonialsSection.subtitle}</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {t.testimonialsSection.testimonials.map((testimonial, index) => (
+              <Card
+                key={index}
+                className="border border-[color:var(--color-primary)] shadow-2xl bg-white transform hover:scale-105 transition-all duration-500 hover:shadow-3xl group"
+              >
+                <CardContent className="p-8">
+                  <div className="flex items-center mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-5 w-5 fill-[color:var(--color-accent)] text-[color:var(--color-accent)] group-hover:scale-110 transition-transform"
+                      />
+                    ))}
+                  </div>
+                  <p className="text-gray-700 mb-6 text-lg italic group-hover:text-black transition-colors">
+                    "{testimonial.text}"
+                  </p>
+                  <div className="flex items-center">
+                    <img
+                      src="/placeholder.svg?height=50&width=50"
+                      alt={testimonial.name}
+                      className="w-12 h-12 rounded-full mr-4 border-2 border-white shadow-lg"
+                    />
+                    <div>
+                      <div className="font-bold text-[color:var(--color-primary)] group-hover:text-[color:var(--color-primary)] transition-colors">
+                        {testimonial.name}
+                      </div>
+                      <div className="text-sm text-gray-700">{testimonial.role}</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
