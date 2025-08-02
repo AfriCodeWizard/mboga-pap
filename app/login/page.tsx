@@ -142,6 +142,7 @@ export default function LoginPage() {
                         onCheckedChange={(checked) =>
                           setFormData((prev) => ({ ...prev, rememberMe: checked as boolean }))
                         }
+                        className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5"
                       />
                       <Label htmlFor="remember" className="text-sm">
                         Remember me
