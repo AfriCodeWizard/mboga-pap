@@ -11,15 +11,15 @@ export default function VendorResourcesPage() {
     <>
       <Head>
         <title>Vendor Resources | Mboga Pap!</title>
-        <meta name="description" content="Everything you need to succeed as a MamaMboga on Mboga Pap! Guides, payments, marketing tips, and community support." />
+        <meta name="description" content="Everything you need to succeed as a vendor on Mboga Pap! Guides, payments, marketing tips, and community support." />
         <meta property="og:title" content="Vendor Resources | Mboga Pap!" />
-        <meta property="og:description" content="Everything you need to succeed as a MamaMboga on Mboga Pap! Guides, payments, marketing tips, and community support." />
+        <meta property="og:description" content="Everything you need to succeed as a vendor on Mboga Pap! Guides, payments, marketing tips, and community support." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mbongapap.co.ke/vendor-resources" />
         <meta property="og:image" content="/placeholder.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Vendor Resources | Mboga Pap!" />
-        <meta name="twitter:description" content="Everything you need to succeed as a MamaMboga on Mboga Pap! Guides, payments, marketing tips, and community support." />
+        <meta name="twitter:description" content="Everything you need to succeed as a vendor on Mboga Pap! Guides, payments, marketing tips, and community support." />
       </Head>
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8 max-w-3xl">
