@@ -44,7 +44,7 @@ export default function OurStoryPage() {
                     <h2 className="text-2xl font-bold text-[color:var(--color-primary)]">The Genesis (2022)</h2>
                   </div>
                   <div className="md:w-2/3 text-gray-700 leading-relaxed">
-                    Mboga Pap was born from a simple observation: the incredible dedication of local MamaMbogas and the
+                    Mboga Pap was born from a simple observation: the incredible dedication of local vendors and the
                     growing demand for convenient access to fresh produce in urban areas. Our founder, a Nairobi resident,
                     noticed the challenges both vendors and customers faced – limited reach for vendors and time constraints
                     for customers. The idea was simple: bridge this gap with technology.
@@ -59,7 +59,7 @@ export default function OurStoryPage() {
                   <div className="md:w-2/3 text-gray-700 leading-relaxed">
                     We started with a small team, a big vision, and a lot of passion. Our initial focus was on building a
                     user-friendly platform that respected the traditional market experience while adding the convenience of
-                    online ordering and fast delivery. We partnered with a few pioneering MamaMbogas and bodaboda riders,
+                    online ordering and fast delivery. We partnered with a few pioneering vendors and bodaboda riders,
                     learning and iterating based on their invaluable feedback. Word-of-mouth spread, and our community began
                     to grow.
                   </div>
@@ -71,7 +71,7 @@ export default function OurStoryPage() {
                     <h2 className="text-2xl font-bold text-[color:var(--color-primary)]">The Future (Today & Beyond)</h2>
                   </div>
                   <div className="md:w-2/3 text-gray-700 leading-relaxed">
-                    Today, Mboga Pap is a thriving ecosystem connecting thousands of customers with hundreds of MamaMbogas
+                    Today, Mboga Pap is a thriving ecosystem connecting thousands of customers with hundreds of vendors
                     and riders across Nairobi. We are constantly innovating, aiming to expand our reach, introduce new
                     features, and continue empowering local economies. Our heart remains in the community, and we are
                     dedicated to making fresh, local groceries accessible to everyone, while creating sustainable livelihoods.
