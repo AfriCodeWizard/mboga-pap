@@ -38,7 +38,7 @@ const VendorList: React.FC<VendorListProps> = ({ vendors, fromDashboard }) => {
   return (
     <div>
       <div className="mb-4 flex flex-col sm:flex-row sm:items-center gap-2">
-        <label htmlFor="vendor-select" className="font-medium text-gray-700">Select nearest Mamamboga:</label>
+        <label htmlFor="vendor-select" className="font-medium text-gray-700">Select nearest Vendor:</label>
         <select
           id="vendor-select"
           className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brandgreen"
