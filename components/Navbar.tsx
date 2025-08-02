@@ -25,7 +25,7 @@ const content = {
     header: {
       howItWorks: "Jinsi Inavyofanya",
       pricing: "Bei",
-      vendors: "Mamambogas",
+              vendors: "Vendors",
       riders: "Madereva",
       login: "Ingia",
       getStarted: "Anza Sasa",
@@ -75,7 +75,7 @@ export default function Navbar() {
           <Link href="/#bei" className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors">
             {t.header.pricing}
           </Link>
-          <Link href="/#mamambogas" className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors">
+          <Link href="/#vendors" className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors">
             {t.header.vendors}
           </Link>
           <Link href="/#riders" className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors">
@@ -291,7 +291,7 @@ export default function Navbar() {
                   {t.header.pricing}
                 </Link>
                 <Link 
-                  href="/#mamambogas" 
+                  href="/#vendors" 
                   className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors py-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
