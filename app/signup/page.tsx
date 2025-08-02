@@ -65,8 +65,8 @@ export default function SignUpPage() {
     },
     {
       id: "vendor" as UserRole,
-      title: "Vendor (MamaMboga)",
-      titleSw: "Mchuuzi (MamaMboga)",
+              title: "Vendor",
+        titleSw: "Mchuuzi",
       description: "Sell your fresh produce to customers",
       descriptionSw: "Uza mazao yako safi kwa wateja",
       icon: Store,
