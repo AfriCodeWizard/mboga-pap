@@ -56,7 +56,7 @@ const content = {
       cards: [
         {
           title: "Fresh & Local",
-          description: "Support local mamambogas and enjoy farm-fresh groceries straight from the market to your door.",
+          description: "Support local vendors and enjoy farm-fresh groceries straight from the market to your door.",
         },
         {
           title: "Fast Delivery",
@@ -73,27 +73,27 @@ const content = {
       subtitle: "Real vendors, real stories, fresh produce every day",
       vendors: [
         {
-          name: "Mama Grace Wanjiku",
+          name: "Fresh Harvest Mama",
           location: "Westlands Market • 8 years",
           quote: "I love serving my community with fresh vegetables at fair prices!",
           specialties: ["Fresh Vegetables", "Herbs"],
-          buttonText: "Shop from Mama Grace",
+          buttonText: "Shop from Fresh Harvest",
           image: "/grace-wanjiku.jpg",
         },
         {
-          name: "Mama Jane Njeri",
+          name: "Green Valley Mama",
           location: "Kibera Market • 12 years",
           quote: "Fresh vegetables every morning, straight from the farm!",
           specialties: ["Spinach", "Carrots", "Eggplant"],
-          buttonText: "Shop from Mama Jane",
+          buttonText: "Shop from Green Valley",
           image: "/jane-njeri.jpg",
         },
         {
-          name: "Mama Mary Akinyi",
+          name: "Sunrise Market Mama",
           location: "Kawangware • 6 years",
           quote: "Quality produce at fair prices, that's my promise!",
           specialties: ["Cabbage", "Tomatoes", "Potatoes"],
-          buttonText: "Shop from Mama Mary",
+          buttonText: "Shop from Sunrise Market",
           image: "/mary-akinyi.jpg",
         },
       ],
@@ -103,7 +103,7 @@ const content = {
       subtitle: "Simple steps to get fresh groceries delivered to your door",
       steps: [
         {
-          title: "Find a MamaMboga",
+          title: "Find a Vendor",
           description: "Discover trusted local vendors near you with fresh produce and great prices.",
         },
         {
@@ -168,7 +168,7 @@ const content = {
           role: "Customer • Westlands",
         },
         {
-          text: "As a mamamboga, this platform has helped me reach more customers and grow my business. My income has doubled!",
+          text: "As a vendor, this platform has helped me reach more customers and grow my business. My income has doubled!",
           name: "John Kiprotich",
           role: "Vendor • Kibera Market",
         },
@@ -241,7 +241,7 @@ const content = {
     header: {
       howItWorks: "Jinsi Inavyofanya",
       pricing: "Bei",
-      vendors: "Mamambogas",
+              vendors: "Vendors",
       riders: "Madereva",
       login: "Ingia",
       getStarted: "Anza Sasa",
@@ -252,7 +252,7 @@ const content = {
       cards: [
         {
           title: "Safi na za Mitaani",
-          description: "Saidia mamambogas wa mitaani na ufurahie mboga safi kutoka sokoni hadi mlangoni mwako.",
+          description: "Saidia wachuuzi wa mitaani na ufurahie mboga safi kutoka sokoni hadi mlangoni mwako.",
         },
         {
           title: "Utoaji wa Haraka",
@@ -270,27 +270,27 @@ const content = {
       subtitle: "Wachuuzi wa kweli, hadithi za kweli, mboga safi kila siku",
       vendors: [
         {
-          name: "Mama Grace Wanjiku",
+          name: "Fresh Harvest Mama",
           location: "Soko la Westlands • Miaka 8",
           quote: "Napenda kutumikia jamii yangu kwa mboga safi na bei nzuri!",
           specialties: ["Mboga Safi", "Viungo"],
-          buttonText: "Nunua kutoka kwa Mama Grace",
+          buttonText: "Nunua kutoka kwa Fresh Harvest",
           image: "/grace-wanjiku.jpg",
         },
         {
-          name: "Mama Jane Njeri",
+          name: "Green Valley Mama",
           location: "Soko la Kibera • Miaka 12",
           quote: "Mboga safi kila asubuhi, moja kwa moja kutoka shambani!",
           specialties: ["Mchicha", "Karoti", "Biringanya"],
-          buttonText: "Nunua kutoka kwa Mama Jane",
+          buttonText: "Nunua kutoka kwa Green Valley",
           image: "/jane-njeri.jpg",
         },
         {
-          name: "Mama Mary Akinyi",
+          name: "Sunrise Market Mama",
           location: "Kawangware • Miaka 6",
           quote: "Mazao ya ubora kwa bei nzuri, hiyo ni ahadi yangu!",
           specialties: ["Kabichi", "Nyanya", "Viazi"],
-          buttonText: "Nunua kutoka kwa Mama Mary",
+          buttonText: "Nunua kutoka kwa Sunrise Market",
           image: "/mary-akinyi.jpg",
         },
       ],
@@ -300,7 +300,7 @@ const content = {
       subtitle: "Hatua rahisi za kupata mboga safi zikiletwa mlangoni mwako",
       steps: [
         {
-          title: "Tafuta MamaMboga",
+          title: "Tafuta Mchuuzi",
           description: "Gundua wachuuzi wa mitaani wanaoaminika karibu nawe wenye mboga safi na bei nzuri.",
         },
         {
@@ -365,7 +365,7 @@ const content = {
           role: "Mteja • Westlands",
         },
         {
-          text: "Kama mamamboga, jukwaa hili limenisaidia kufikia wateja wengi na kukuza biashara yangu. Mapato yangu yamezidishwa mara mbili!",
+          text: "Kama mchuuzi, jukwaa hili limenisaidia kufikia wateja wengi na kukuza biashara yangu. Mapato yangu yamezidishwa mara mbili!",
           name: "John Kiprotich",
           role: "Mchuuzi • Soko la Kibera",
         },
@@ -439,30 +439,30 @@ const content = {
 // Vendor list for both homepage and vendor pages
 const mamambogaVendors = [
   {
-    id: "mama-grace-wanjiku",
-    name: "Mama Grace Wanjiku",
+    id: "fresh-harvest-mama",
+    name: "Fresh Harvest Mama",
     location: "Westlands Market • 8 years",
     quote: "I love serving my community with fresh vegetables at fair prices!",
     specialties: ["Fresh Vegetables", "Herbs"],
-    buttonText: "Shop from Mama Grace",
+    buttonText: "Shop from Fresh Harvest",
     image: "/grace-wanjiku.jpg"
   },
   {
-    id: "mama-jane-njeri",
-    name: "Mama Jane Njeri",
+    id: "green-valley-mama",
+    name: "Green Valley Mama",
     location: "Kibera Market • 12 years",
     quote: "Fresh vegetables every morning, straight from the farm!",
     specialties: ["Spinach", "Carrots", "Eggplant"],
-    buttonText: "Shop from Mama Jane",
+    buttonText: "Shop from Green Valley",
     image: "/jane-njeri.jpg"
   },
   {
-    id: "mama-mary-akinyi",
-    name: "Mama Mary Akinyi",
+    id: "sunrise-market-mama",
+    name: "Sunrise Market Mama",
     location: "Kawangware • 6 years",
     quote: "Quality produce at fair prices, that's my promise!",
     specialties: ["Cabbage", "Tomatoes", "Potatoes"],
-    buttonText: "Shop from Mama Mary",
+    buttonText: "Shop from Sunrise Market",
     image: "/mary-akinyi.jpg"
   },
   {
@@ -589,9 +589,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      {/* Meet Your Local Mamambogas */}
+      {/* Meet Your Local Vendors */}
       <section
-        id="mamambogas"
+        id="vendors"
         ref={mamambogaRef}
         className="relative py-20 bg-fixed bg-cover"
         style={{ backgroundImage: 'url(/market-woman.jpg)', backgroundPosition: 'center 20%' }}
@@ -600,7 +600,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-slide-down">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
-              Meet Your Local <span className="text-brandgreen">Mamambogas</span>
+              Meet Your Local <span className="text-brandgreen">Vendors</span>
             </h2>
             <div className="flex items-center justify-center gap-3 mb-8">
               <span className="hidden sm:inline-block flex-1 border-t-2 border-dashed border-white/70"></span>
