@@ -23,7 +23,7 @@ export default function SafetyPage() {
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Commitment to Your Safety</h2>
           <p className="text-gray-700 leading-relaxed">
             At Mboga Pap!, we are dedicated to creating a safe and secure environment for all our users – customers,
-            MamaMbogas, and riders. We continuously implement and update our safety measures to ensure peace of mind
+            vendors, and riders. We continuously implement and update our safety measures to ensure peace of mind
             with every interaction and delivery.
           </p>
         </div>
