@@ -468,7 +468,7 @@ const mamambogaVendors = [
   {
     id: "wambuis-greens",
     name: "Wambui's Greens",
-    location: "1.1 km • 4.7★",
+    location: "1.1 km • 4.7",
     quote: "Traditional greens and organic produce.",
     specialties: ["Traditional Greens", "Organic"],
     buttonText: "Shop from Wambui's Greens",
@@ -477,7 +477,7 @@ const mamambogaVendors = [
   {
     id: "fruit-basket",
     name: "Fruit Basket",
-    location: "1.5 km • 4.5★",
+    location: "1.5 km • 4.5",
     quote: "Fresh fruits and juices for your family.",
     specialties: ["Fresh Fruits", "Juices"],
     buttonText: "Shop from Fruit Basket",
@@ -486,7 +486,7 @@ const mamambogaVendors = [
   {
     id: "organic-hub",
     name: "Organic Hub",
-    location: "2.0 km • 4.8★",
+    location: "2.0 km • 4.8",
     quote: "Organic veggies and herbs delivered.",
     specialties: ["Organic Veggies", "Herbs"],
     buttonText: "Shop from Organic Hub",
@@ -495,7 +495,7 @@ const mamambogaVendors = [
   {
     id: "roots-tubers",
     name: "Roots & Tubers",
-    location: "2.3 km • 4.4★",
+    location: "2.3 km • 4.4",
     quote: "Best tubers and roots in town.",
     specialties: ["Tubers", "Roots"],
     buttonText: "Shop from Roots & Tubers",
@@ -504,7 +504,7 @@ const mamambogaVendors = [
   {
     id: "salad-stop",
     name: "Salad Stop",
-    location: "1.8 km • 4.6★",
+    location: "1.8 km • 4.6",
     quote: "Fresh salads and veggies every day.",
     specialties: ["Salads", "Fresh Veggies"],
     buttonText: "Shop from Salad Stop",
