@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: mboga-pap-n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=mboga-pap-2025
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - N8N_USER_MANAGEMENT_DISABLED=false
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_HIRING_BANNER_ENABLED=false
+      - N8N_VERSION_NOTIFICATIONS_ENABLED=false
+      - N8N_TEMPLATES_ENABLED=false
+      - N8N_ONBOARDING_FLOW_DISABLED=true
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=Africa/Nairobi
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./n8n-workflows:/home/node/.n8n/workflows
+    networks:
+      - mboga-pap-network
+
+  # Optional: Redis for caching (recommended for production)
+  redis:
+    image: redis:7-alpine
+    container_name: mboga-pap-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - mboga-pap-network
+
+volumes:
+  n8n_data:
+  redis_data:
+
+networks:
+  mboga-pap-network:
+    driver: bridge 
