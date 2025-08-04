@@ -625,7 +625,7 @@ export default function HomePage() {
                             className="w-full h-48 object-cover rounded-t-lg group-hover:scale-105 transition-transform duration-500"
                           />
                           <div className="absolute top-4 right-4 bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-accent)] text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                            {vendor.location.split('•')[1] || '4.7★'}
+                            ⭐ {vendor.location.split('•')[1] || '4.7'}
                           </div>
                           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-t-lg"></div>
                         </div>
