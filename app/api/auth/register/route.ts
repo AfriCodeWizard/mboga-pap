@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabaseAdmin } from '@/lib/supabase'
 import { z } from 'zod'
 
 const registerSchema = z.object({
@@ -15,6 +14,28 @@ const registerSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if required environment variables are available
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.error('Missing required environment variables for registration')
+      return NextResponse.json(
+        { success: false, error: 'Server configuration error' },
+        { status: 500 }
+      )
+    }
+
+    // Dynamic import to avoid build-time issues
+    let supabaseAdmin
+    try {
+      const supabaseModule = await import('@/lib/supabase')
+      supabaseAdmin = supabaseModule.supabaseAdmin
+    } catch (importError) {
+      console.error('Failed to import supabase:', importError)
+      return NextResponse.json(
+        { success: false, error: 'Server configuration error' },
+        { status: 500 }
+      )
+    }
+
     const body = await request.json()
     const validatedData = registerSchema.parse(body)
 
