@@ -21,25 +21,31 @@ if (!supabaseServiceKey) {
 }
 
 // Create clients - only create if environment variables are available
-export const supabase = createClient(
-  supabaseUrl!,
-  supabaseAnonKey!,
+export const supabase = supabaseUrl && supabaseAnonKey ? createClient(
+  supabaseUrl,
+  supabaseAnonKey,
   {
     auth: {
       autoRefreshToken: false,
       persistSession: false
     }
   }
-)
+) : null
 
 // Service role client for server-side operations
-export const supabaseAdmin = createClient(
-  supabaseUrl!,
-  supabaseServiceKey!,
+export const supabaseAdmin = supabaseUrl && supabaseServiceKey ? createClient(
+  supabaseUrl,
+  supabaseServiceKey,
   {
     auth: {
       autoRefreshToken: false,
       persistSession: false
     }
   }
-) 
+) : null
+
+// Helper function to check if admin client is available
+export const isAdminAvailable = () => !!supabaseAdmin
+
+// Helper function to check if regular client is available
+export const isClientAvailable = () => !!supabase 
