@@ -370,7 +370,7 @@ const DashboardContent = () => {
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[color:var(--color-accent)] to-[color:var(--color-primary)] rounded-full flex items-center justify-center shadow-lg">
                   <Star className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                </div>
+            </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-[color:var(--color-primary)]">Loyalty Points</h3>
                   <p className="text-xs sm:text-sm text-gray-600">Earn 1 point for every KSh 10 spent</p>
@@ -453,7 +453,7 @@ const DashboardContent = () => {
                   </div>
                 </motion.div>
               ))}
-            </div>
+              </div>
           )}
         </AnimatePresence>
 
@@ -466,7 +466,7 @@ const DashboardContent = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 pr-4 py-3 border-2 border-gray-200 focus:border-[color:var(--color-primary)] focus:ring-2 focus:ring-[color:var(--color-primary)]/20"
-            />
+              />
             </div>
           </div>
 

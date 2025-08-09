@@ -6,23 +6,24 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
 // Check if required environment variables are available
 if (!supabaseUrl || !supabaseAnonKey) {
-  if (typeof window === 'undefined') {
-    // Server-side: log warning but don't crash
-    console.warn('Missing Supabase environment variables. Client-side features may not work properly.')
+  console.error('Missing required Supabase environment variables:')
+  console.error('NEXT_PUBLIC_SUPABASE_URL:', supabaseUrl ? '✓ Set' : '✗ Missing')
+  console.error('NEXT_PUBLIC_SUPABASE_ANON_KEY:', supabaseAnonKey ? '✓ Set' : '✗ Missing')
+  
+  if (typeof window !== 'undefined') {
+    // Client-side: throw error to prevent silent failures
+    throw new Error('Supabase configuration is missing. Please check your environment variables.')
   }
 }
 
 if (!supabaseServiceKey) {
-  if (typeof window === 'undefined') {
-    // Server-side: log warning but don't crash
-    console.warn('Missing Supabase service role key. Admin operations may not work properly.')
-  }
+  console.warn('Missing Supabase service role key. Admin operations may not work properly.')
 }
 
-// Create clients with fallbacks for build time
+// Create clients - only create if environment variables are available
 export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-key',
+  supabaseUrl!,
+  supabaseAnonKey!,
   {
     auth: {
       autoRefreshToken: false,
@@ -33,8 +34,8 @@ export const supabase = createClient(
 
 // Service role client for server-side operations
 export const supabaseAdmin = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseServiceKey || 'placeholder-service-key',
+  supabaseUrl!,
+  supabaseServiceKey!,
   {
     auth: {
       autoRefreshToken: false,

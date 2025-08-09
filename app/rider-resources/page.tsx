@@ -256,8 +256,8 @@ export default function RiderResourcesPage() {
                 <Link href="/help" passHref>
                   <Button variant="outline" className="border-[color:var(--color-primary)] text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-white text-lg px-8 py-3 transition-all duration-300">
                     Get Help
-                  </Button>
-                </Link>
+              </Button>
+            </Link>
           </div>
             </CardContent>
           </Card>

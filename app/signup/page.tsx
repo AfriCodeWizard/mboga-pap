@@ -51,6 +51,12 @@ export default function SignUpPage() {
     setFormData((prev) => ({ ...prev, agreeToTerms: checked }))
   }
 
+  const isPasswordValid = (password: string) => {
+    return password.length >= 4 && 
+           /\d/.test(password) && 
+           /[!@#$%^&*(),.?":{}|<>]/.test(password)
+  }
+
   const validateForm = () => {
     if (!formData.agreeToTerms) {
       alert("Please agree to the terms and conditions")
@@ -60,8 +66,8 @@ export default function SignUpPage() {
       alert("Passwords do not match")
       return false
     }
-    if (formData.password.length < 6) {
-      alert("Password must be at least 6 characters long")
+    if (!isPasswordValid(formData.password)) {
+      alert("Password must be at least 4 characters with 1 number and 1 symbol")
       return false
     }
     return true
@@ -231,11 +237,11 @@ export default function SignUpPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[color:var(--color-primary)]/5 via-white to-[color:var(--color-accent)]/5">
-      <div className="container mx-auto px-4 py-8 md:py-12">
+        <div className="container mx-auto px-4 py-8 md:py-12">
         <div className="max-w-6xl mx-auto">
-          {!selectedRole ? (
-            // Role Selection Step
-            <div className="text-center mb-8 md:mb-12">
+            {!selectedRole ? (
+              // Role Selection Step
+              <div className="text-center mb-8 md:mb-12">
               <div className="mb-8">
                 <h1 className="text-4xl md:text-5xl font-bold text-[color:var(--color-primary)] mb-4">
                   Join Mboga Pap
@@ -249,16 +255,16 @@ export default function SignUpPage() {
               </div>
 
               <div className="grid md:grid-cols-3 gap-8 md:gap-10">
-                {roleOptions.map((role) => (
-                  <Card
-                    key={role.id}
+                  {roleOptions.map((role) => (
+                    <Card
+                      key={role.id}
                     className={`cursor-pointer border-2 transition-all duration-500 hover:scale-105 hover:shadow-2xl group relative overflow-hidden ${
                       selectedRole === role.id 
                         ? "border-[color:var(--color-primary)] shadow-xl ring-4 ring-[color:var(--color-primary)]/20" 
                         : `${role.borderColor} ${role.hoverBorderColor} hover:shadow-xl`
-                    }`}
-                    onClick={() => setSelectedRole(role.id)}
-                  >
+                      }`}
+                      onClick={() => setSelectedRole(role.id)}
+                    >
                     <CardContent className={`p-8 text-center bg-gradient-to-br ${role.bgColor} relative z-10`}>
                       {/* Selection indicator */}
                       {selectedRole === role.id && (
@@ -292,11 +298,11 @@ export default function SignUpPage() {
 
                       <Badge className={`${role.earningsColor} text-sm font-semibold px-4 py-2`}>
                         {role.earnings}
-                      </Badge>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+                          </Badge>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
 
               {/* Trust indicators */}
               <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -328,9 +334,9 @@ export default function SignUpPage() {
                   </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            // Registration Form Step
+              </div>
+            ) : (
+              // Registration Form Step
             <div className="max-w-2xl mx-auto">
               <Card className="border-2 border-[color:var(--color-primary)]/20 shadow-xl">
                 <CardHeader className="text-center bg-gradient-to-r from-[color:var(--color-primary)]/5 to-[color:var(--color-accent)]/5">
@@ -340,25 +346,25 @@ export default function SignUpPage() {
                       onClick={() => setSelectedRole(null)} 
                       className="mr-4 hover:bg-[color:var(--color-accent)]/20"
                     >
-                      <ArrowLeft className="h-4 w-4 mr-2" />
-                      Back
-                    </Button>
-                    <div
+                        <ArrowLeft className="h-4 w-4 mr-2" />
+                        Back
+                      </Button>
+                      <div
                       className={`w-16 h-16 bg-gradient-to-br ${roleOptions.find((r) => r.id === selectedRole)?.color} rounded-2xl flex items-center justify-center shadow-lg`}
-                    >
-                      {roleOptions.find((r) => r.id === selectedRole)?.icon &&
-                        React.createElement(roleOptions.find((r) => r.id === selectedRole)?.icon, {
+                      >
+                        {roleOptions.find((r) => r.id === selectedRole)?.icon &&
+                          React.createElement(roleOptions.find((r) => r.id === selectedRole)?.icon, {
                           className: "h-8 w-8 text-white",
-                        })}
+                          })}
+                      </div>
                     </div>
-                  </div>
                   <CardTitle className="text-3xl font-bold text-[color:var(--color-primary)]">
-                    Create Your {roleOptions.find((r) => r.id === selectedRole)?.title} Account
-                  </CardTitle>
+                      Create Your {roleOptions.find((r) => r.id === selectedRole)?.title} Account
+                    </CardTitle>
                   <CardDescription className="text-lg">
                     Join Mboga Pap as a {selectedRole} and start your journey
                   </CardDescription>
-                </CardHeader>
+                  </CardHeader>
                 <CardContent className="p-8">
                   {/* Debug Section - Remove this after fixing */}
                   <div className="mb-6 p-4 bg-yellow-100 border border-yellow-300 rounded-lg">
@@ -393,60 +399,64 @@ export default function SignUpPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-3">
                         <Label htmlFor="firstName" className="text-[color:var(--color-primary)] font-semibold">First Name</Label>
-                        <div className="relative">
+                          <div className="relative">
                           <User className="absolute left-3 top-3 h-5 w-5 text-[color:var(--color-primary)]" />
-                          <Input
-                            id="firstName"
-                            name="firstName"
-                            placeholder="John"
+                            <Input
+                              id="firstName"
+                              name="firstName"
+                              placeholder="John"
                             className="pl-12 py-3 border-2 border-gray-200 focus:border-[color:var(--color-primary)] focus:ring-2 focus:ring-[color:var(--color-primary)]/20"
-                            value={formData.firstName}
+                              value={formData.firstName}
+                              onChange={handleInputChange}
+                              required
+                            />
+                          </div>
+                        </div>
+                      <div className="space-y-3">
+                        <Label htmlFor="lastName" className="text-[color:var(--color-primary)] font-semibold">Last Name</Label>
+                          <Input
+                            id="lastName"
+                            name="lastName"
+                            placeholder="Doe"
+                          className="py-3 border-2 border-gray-200 focus:border-[color:var(--color-primary)] focus:ring-2 focus:ring-[color:var(--color-primary)]/20"
+                            value={formData.lastName}
                             onChange={handleInputChange}
                             required
                           />
                         </div>
                       </div>
-                      <div className="space-y-3">
-                        <Label htmlFor="lastName" className="text-[color:var(--color-primary)] font-semibold">Last Name</Label>
-                        <Input
-                          id="lastName"
-                          name="lastName"
-                          placeholder="Doe"
-                          className="py-3 border-2 border-gray-200 focus:border-[color:var(--color-primary)] focus:ring-2 focus:ring-[color:var(--color-primary)]/20"
-                          value={formData.lastName}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </div>
-                    </div>
 
                     <div className="space-y-3">
                       <Label htmlFor="email" className="text-[color:var(--color-primary)] font-semibold">Email</Label>
-                      <div className="relative">
+                        <div className="relative">
                         <Mail className="absolute left-3 top-3 h-5 w-5 text-[color:var(--color-primary)]" />
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          placeholder="john@example.com"
+                          <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="john@example.com"
                           className="pl-12 py-3 border-2 border-gray-200 focus:border-[color:var(--color-primary)] focus:ring-2 focus:ring-[color:var(--color-primary)]/20"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          required
-                        />
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            required
+                          />
+                        </div>
                       </div>
-                    </div>
 
                     <div className="space-y-3">
                       <Label htmlFor="password" className="text-[color:var(--color-primary)] font-semibold">Password</Label>
-                      <div className="relative border-2 border-red-500 p-2 rounded-lg bg-red-50">
+                      <div className="relative">
                         <Lock className="absolute left-3 top-3 h-5 w-5 text-[color:var(--color-primary)]" />
                         <Input
                           id="password"
                           name="password"
                           type={showPassword ? "text" : "password"}
-                          placeholder="Create a strong password"
-                          className="pl-12 pr-12 py-3 border-2 border-gray-200 focus:border-[color:var(--color-primary)] focus:ring-2 focus:ring-[color:var(--color-primary)]/20"
+                          placeholder="Create a strong password (min 4 chars, 1 number, 1 symbol)"
+                          className={`pl-12 pr-12 py-3 border-2 focus:ring-2 focus:ring-[color:var(--color-primary)]/20 ${
+                            formData.password && !isPasswordValid(formData.password)
+                              ? 'border-red-500 bg-red-50'
+                              : 'border-gray-200 focus:border-[color:var(--color-primary)]'
+                          }`}
                           value={formData.password}
                           onChange={handleInputChange}
                           required
@@ -461,18 +471,27 @@ export default function SignUpPage() {
                           {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </Button>
                       </div>
+                      {formData.password && !isPasswordValid(formData.password) && (
+                        <p className="text-sm text-red-600">
+                          Password must be at least 4 characters with 1 number and 1 symbol
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-3">
                       <Label htmlFor="confirmPassword" className="text-[color:var(--color-primary)] font-semibold">Confirm Password</Label>
-                      <div className="relative border-2 border-red-500 p-2 rounded-lg bg-red-50">
+                      <div className="relative">
                         <Lock className="absolute left-3 top-3 h-5 w-5 text-[color:var(--color-primary)]" />
                         <Input
                           id="confirmPassword"
                           name="confirmPassword"
                           type={showConfirmPassword ? "text" : "password"}
                           placeholder="Confirm your password"
-                          className="pl-12 pr-12 py-3 border-2 border-gray-200 focus:border-[color:var(--color-primary)] focus:ring-2 focus:ring-[color:var(--color-primary)]/20"
+                          className={`pl-12 pr-12 py-3 border-2 focus:ring-2 focus:ring-[color:var(--color-primary)]/20 ${
+                            formData.confirmPassword && formData.password !== formData.confirmPassword
+                              ? 'border-red-500 bg-red-50'
+                              : 'border-gray-200 focus:border-[color:var(--color-primary)]'
+                          }`}
                           value={formData.confirmPassword}
                           onChange={handleInputChange}
                           required
@@ -487,119 +506,124 @@ export default function SignUpPage() {
                           {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </Button>
                       </div>
+                      {formData.confirmPassword && formData.password !== formData.confirmPassword && (
+                        <p className="text-sm text-red-600">
+                          Passwords do not match
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-3">
                       <Label htmlFor="phone" className="text-[color:var(--color-primary)] font-semibold">Phone Number</Label>
-                      <div className="relative">
+                        <div className="relative">
                         <Phone className="absolute left-3 top-3 h-5 w-5 text-[color:var(--color-primary)]" />
-                        <Input
-                          id="phone"
-                          name="phone"
-                          type="tel"
-                          placeholder="+254 700 000 000"
+                          <Input
+                            id="phone"
+                            name="phone"
+                            type="tel"
+                            placeholder="+254 700 000 000"
                           className="pl-12 py-3 border-2 border-gray-200 focus:border-[color:var(--color-primary)] focus:ring-2 focus:ring-[color:var(--color-primary)]/20"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          required
-                        />
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                            required
+                          />
+                        </div>
                       </div>
-                    </div>
 
                     <div className="space-y-3">
                       <Label htmlFor="address" className="text-[color:var(--color-primary)] font-semibold">Address</Label>
-                      <div className="relative">
+                        <div className="relative">
                         <MapPin className="absolute left-3 top-3 h-5 w-5 text-[color:var(--color-primary)]" />
-                        <Input
-                          id="address"
-                          name="address"
+                          <Input
+                            id="address"
+                            name="address"
                           placeholder="Nairobi, Kenya"
                           className="pl-12 py-3 border-2 border-gray-200 focus:border-[color:var(--color-primary)] focus:ring-2 focus:ring-[color:var(--color-primary)]/20"
-                          value={formData.address}
-                          onChange={handleInputChange}
-                          required
-                        />
+                            value={formData.address}
+                            onChange={handleInputChange}
+                            required
+                          />
+                        </div>
                       </div>
-                    </div>
 
                     {/* Role-specific fields */}
-                    {selectedRole === "vendor" && (
+                      {selectedRole === "vendor" && (
                       <div className="space-y-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
                         <h3 className="font-semibold text-orange-800">Vendor Information</h3>
                         <div className="space-y-3">
                           <Label htmlFor="shopName" className="text-orange-800 font-semibold">Shop Name</Label>
-                          <Input
-                            id="shopName"
-                            name="shopName"
+                              <Input
+                                id="shopName"
+                                name="shopName"
                             placeholder="Your shop name"
                             className="py-3 border-2 border-orange-200 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20"
-                            value={formData.shopName}
-                            onChange={handleInputChange}
-                          />
-                        </div>
+                                value={formData.shopName}
+                                onChange={handleInputChange}
+                              />
+                            </div>
                         <div className="space-y-3">
                           <Label htmlFor="businessLicense" className="text-orange-800 font-semibold">Business License (Optional)</Label>
-                          <Input
-                            id="businessLicense"
-                            name="businessLicense"
-                            placeholder="Business license number"
+                            <Input
+                              id="businessLicense"
+                              name="businessLicense"
+                              placeholder="Business license number"
                             className="py-3 border-2 border-orange-200 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20"
-                            value={formData.businessLicense}
-                            onChange={handleInputChange}
-                          />
-                        </div>
+                              value={formData.businessLicense}
+                              onChange={handleInputChange}
+                            />
+                          </div>
                       </div>
-                    )}
+                      )}
 
-                    {selectedRole === "rider" && (
+                      {selectedRole === "rider" && (
                       <div className="space-y-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
                         <h3 className="font-semibold text-blue-800">Rider Information</h3>
                         <div className="space-y-3">
                           <Label htmlFor="vehicleType" className="text-blue-800 font-semibold">Vehicle Type</Label>
-                          <Input
-                            id="vehicleType"
-                            name="vehicleType"
+                              <Input
+                                id="vehicleType"
+                                name="vehicleType"
                             placeholder="Motorcycle, Bicycle, etc."
                             className="py-3 border-2 border-blue-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20"
-                            value={formData.vehicleType}
-                            onChange={handleInputChange}
-                          />
-                        </div>
+                                value={formData.vehicleType}
+                                onChange={handleInputChange}
+                              />
+                            </div>
                         <div className="space-y-3">
                           <Label htmlFor="licenseNumber" className="text-blue-800 font-semibold">License Number (Optional)</Label>
-                          <Input
-                            id="licenseNumber"
-                            name="licenseNumber"
+                            <Input
+                              id="licenseNumber"
+                              name="licenseNumber"
                             placeholder="Driver's license number"
                             className="py-3 border-2 border-blue-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20"
-                            value={formData.licenseNumber}
-                            onChange={handleInputChange}
-                          />
-                        </div>
+                              value={formData.licenseNumber}
+                              onChange={handleInputChange}
+                            />
+                          </div>
                       </div>
-                    )}
+                      )}
 
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
                         id="agreeToTerms"
-                        checked={formData.agreeToTerms}
+                          checked={formData.agreeToTerms}
                         onCheckedChange={handleCheckboxChange}
                         className="border-2 border-[color:var(--color-primary)]"
-                      />
+                        />
                       <Label htmlFor="agreeToTerms" className="text-sm text-gray-700">
-                        I agree to the{" "}
+                          I agree to the{" "}
                         <Link href="/terms" className="text-[color:var(--color-primary)] hover:underline">
-                          Terms of Service
-                        </Link>{" "}
-                        and{" "}
+                            Terms of Service
+                          </Link>{" "}
+                          and{" "}
                         <Link href="/privacy" className="text-[color:var(--color-primary)] hover:underline">
-                          Privacy Policy
-                        </Link>
-                      </Label>
-                    </div>
+                            Privacy Policy
+                          </Link>
+                        </Label>
+                      </div>
 
-                    <Button
-                      type="submit"
+                      <Button
+                        type="submit"
                       disabled={isLoading}
                       className="w-full bg-[color:var(--color-primary)] hover:bg-[color:var(--color-accent)] text-[color:var(--color-accent)] hover:text-[color:var(--color-primary)] transition-all duration-300 py-3 text-lg font-semibold"
                     >
@@ -611,7 +635,7 @@ export default function SignUpPage() {
                       ) : (
                         `Create ${selectedRole} Account`
                       )}
-                    </Button>
+                      </Button>
 
                     <div className="text-center">
                       <p className="text-gray-600">
@@ -622,12 +646,12 @@ export default function SignUpPage() {
                       </p>
                     </div>
                   </form>
-                </CardContent>
-              </Card>
-            </div>
-          )}
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
   )
 }
