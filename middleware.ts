@@ -3,40 +3,60 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export async function middleware(req: NextRequest) {
+  // Check if Supabase environment variables are available
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.error('Missing Supabase environment variables in middleware')
+    // If environment variables are missing, skip middleware and continue
+    return NextResponse.next()
+  }
+
   const res = NextResponse.next()
-  const supabase = createMiddlewareClient({ req, res })
+  
+  try {
+    const supabase = createMiddlewareClient({ req, res }, {
+      supabaseUrl,
+      supabaseKey: supabaseAnonKey,
+    })
 
-  // Refresh session if expired - required for Server Components
-  const { data: { session } } = await supabase.auth.getSession()
+    // Refresh session if expired - required for Server Components
+    const { data: { session } } = await supabase.auth.getSession()
 
-  // Handle auth callback route
-  if (req.nextUrl.pathname.startsWith('/auth/callback')) {
+    // Handle auth callback route
+    if (req.nextUrl.pathname.startsWith('/auth/callback')) {
+      return res
+    }
+
+    // Protected routes that require authentication
+    const protectedRoutes = ['/dashboard', '/vendor-dashboard', '/rider-dashboard', '/admin']
+    const isProtectedRoute = protectedRoutes.some(route => req.nextUrl.pathname.startsWith(route))
+
+    if (isProtectedRoute && !session) {
+      // Redirect to login if trying to access protected route without session
+      const redirectUrl = new URL('/login', req.url)
+      redirectUrl.searchParams.set('redirect', req.nextUrl.pathname)
+      return NextResponse.redirect(redirectUrl)
+    }
+
+    // If user is authenticated and trying to access login/signup, redirect to appropriate dashboard
+    if (session && (req.nextUrl.pathname === '/login' || req.nextUrl.pathname === '/signup')) {
+      // Get user role from session metadata or redirect to default dashboard
+      const userRole = session.user.user_metadata?.role || 'customer'
+      const dashboardUrl = userRole === 'vendor' ? '/vendor-dashboard' : 
+                          userRole === 'rider' ? '/rider-dashboard' : 
+                          '/dashboard'
+      
+      return NextResponse.redirect(new URL(dashboardUrl, req.url))
+    }
+
     return res
+  } catch (error) {
+    console.error('Middleware error:', error)
+    // If there's an error, continue without middleware
+    return NextResponse.next()
   }
-
-  // Protected routes that require authentication
-  const protectedRoutes = ['/dashboard', '/vendor-dashboard', '/rider-dashboard', '/admin']
-  const isProtectedRoute = protectedRoutes.some(route => req.nextUrl.pathname.startsWith(route))
-
-  if (isProtectedRoute && !session) {
-    // Redirect to login if trying to access protected route without session
-    const redirectUrl = new URL('/login', req.url)
-    redirectUrl.searchParams.set('redirect', req.nextUrl.pathname)
-    return NextResponse.redirect(redirectUrl)
-  }
-
-  // If user is authenticated and trying to access login/signup, redirect to appropriate dashboard
-  if (session && (req.nextUrl.pathname === '/login' || req.nextUrl.pathname === '/signup')) {
-    // Get user role from session metadata or redirect to default dashboard
-    const userRole = session.user.user_metadata?.role || 'customer'
-    const dashboardUrl = userRole === 'vendor' ? '/vendor-dashboard' : 
-                        userRole === 'rider' ? '/rider-dashboard' : 
-                        '/dashboard'
-    
-    return NextResponse.redirect(new URL(dashboardUrl, req.url))
-  }
-
-  return res
 }
 
 export const config = {
