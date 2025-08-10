@@ -15,12 +15,12 @@ export const getClientEnvVar = (key: string): string | undefined => {
 
 // Environment configuration for Supabase
 export const getSupabaseConfig = () => {
-  // Try to get from environment variables first
+  // Try to get from environment variables first (works on both client and server)
   let url = process.env.NEXT_PUBLIC_SUPABASE_URL
   let anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   let serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-  // If not available, try client-side fallbacks
+  // If not available on server, try client-side fallbacks
   if (!url || !anonKey) {
     if (typeof window !== 'undefined') {
       url = (window as any).__NEXT_DATA__?.props?.env?.NEXT_PUBLIC_SUPABASE_URL
@@ -40,8 +40,27 @@ export const getSupabaseConfig = () => {
     url: !!url,
     anonKey: !!anonKey,
     serviceKey: !!serviceKey,
-    source: url === 'https://xdjyshmyeivebsrmrayj.supabase.co' ? 'fallback' : 'environment'
+    source: url === 'https://xdjyshmyeivebsrmrayj.supabase.co' ? 'fallback' : 'environment',
+    context: typeof window !== 'undefined' ? 'client' : 'server'
   })
+
+  return { url, anonKey, serviceKey }
+}
+
+// Server-side environment variable loader (for middleware and API routes)
+export const getServerEnvVar = (key: string): string | undefined => {
+  return process.env[key]
+}
+
+// Get Supabase config for server-side usage
+export const getServerSupabaseConfig = () => {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!url || !anonKey) {
+    throw new Error(`Missing required Supabase environment variables: ${!url ? 'NEXT_PUBLIC_SUPABASE_URL' : ''} ${!anonKey ? 'NEXT_PUBLIC_SUPABASE_ANON_KEY' : ''}`.trim())
+  }
 
   return { url, anonKey, serviceKey }
 }
