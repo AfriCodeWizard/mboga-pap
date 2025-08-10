@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
-import { supabase } from "@/lib/supabase"
+import { getSupabaseClient } from "@/lib/supabase"
 import { useRouter } from "next/navigation"
 
 type UserRole = "customer" | "vendor" | "rider"
@@ -87,6 +87,11 @@ export default function SignUpPage() {
     setIsLoading(true)
 
     try {
+      const supabase = getSupabaseClient()
+      if (!supabase) {
+        throw new Error('Supabase client not available. Please try again.')
+      }
+
       // Create user with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
@@ -166,6 +171,11 @@ export default function SignUpPage() {
     setIsLoading(true)
 
     try {
+      const supabase = getSupabaseClient()
+      if (!supabase) {
+        throw new Error('Supabase client not available. Please try again.')
+      }
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
