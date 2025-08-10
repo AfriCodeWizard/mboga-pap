@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
+import { getSupabaseClient } from '@/lib/supabase'
 import { RealtimeChannel } from '@supabase/supabase-js'
 
 interface UseRealtimeOptions {
@@ -21,6 +21,11 @@ export function useRealtime<T = any>(options: UseRealtimeOptions) {
     const fetchData = async () => {
       try {
         setLoading(true)
+        const supabase = getSupabaseClient()
+        if (!supabase) {
+          throw new Error('Supabase client not available')
+        }
+        
         let query = supabase.from(options.table).select('*')
 
         if (options.filter) {
@@ -52,6 +57,12 @@ export function useRealtime<T = any>(options: UseRealtimeOptions) {
 
     // Set up real-time subscription
     const setupSubscription = () => {
+      const supabase = getSupabaseClient()
+      if (!supabase) {
+        console.warn('Supabase client not available for real-time subscription')
+        return
+      }
+      
       let subscriptionQuery = supabase
         .channel(`${options.table}_changes`)
         .on(
@@ -91,7 +102,10 @@ export function useRealtime<T = any>(options: UseRealtimeOptions) {
     return () => {
       mounted = false
       if (channel) {
-        supabase.removeChannel(channel)
+        const supabase = getSupabaseClient()
+        if (supabase) {
+          supabase.removeChannel(channel)
+        }
       }
     }
   }, [options.table, options.event, options.filter, options.userId])
