@@ -16,6 +16,7 @@ import { getSupabaseClient } from "@/lib/supabase"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -29,38 +30,100 @@ export default function LoginPage() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+    setIsLoading(true)
 
-    // Generic credentials for demo purposes
-    const validCredentials = [
-      { email: "customer@demo.com", password: "demo123", role: "customer" },
-      { email: "vendor@demo.com", password: "demo123", role: "vendor" },
-      { email: "rider@demo.com", password: "demo123", role: "rider" },
-      { email: "admin@demo.com", password: "demo123", role: "admin" },
-    ]
-
-    const user = validCredentials.find((cred) => cred.email === formData.email && cred.password === formData.password)
-
-    if (user) {
-      // Redirect based on role
-      switch (user.role) {
-        case "customer":
-          router.push("/dashboard")
-          break
-        case "vendor":
-          router.push("/vendor-dashboard")
-          break
-        case "rider":
-          router.push("/rider-dashboard")
-          break
-        case "admin":
-          router.push("/admin")
-          break
+    try {
+      const supabase = getSupabaseClient()
+      if (!supabase) {
+        setError('Authentication service not available')
+        return
       }
-    } else {
-      setError("Invalid credentials. Try: customer@demo.com / demo123");
+
+      // Try Supabase authentication first
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      })
+
+      if (authError) {
+        // If Supabase auth fails, check if it's a demo account
+        const validCredentials = [
+          { email: "customer@demo.com", password: "demo123", role: "customer" },
+          { email: "vendor@demo.com", password: "demo123", role: "vendor" },
+          { email: "rider@demo.com", password: "demo123", role: "rider" },
+          { email: "admin@demo.com", password: "demo123", role: "admin" },
+        ]
+
+        const demoUser = validCredentials.find((cred) => 
+          cred.email === formData.email && cred.password === formData.password
+        )
+
+        if (demoUser) {
+          // Handle demo login
+          switch (demoUser.role) {
+            case "customer":
+              router.push("/dashboard")
+              break
+            case "vendor":
+              router.push("/vendor-dashboard")
+              break
+            case "rider":
+              router.push("/rider-dashboard")
+              break
+            case "admin":
+              router.push("/admin")
+              break
+          }
+          return
+        } else {
+          // Real authentication failed
+          setError(authError.message || "Invalid credentials")
+          return
+        }
+      }
+
+      // Supabase authentication successful
+      if (data.user) {
+        // Get user role from the database
+        const { data: profile, error: profileError } = await supabase
+          .from('users')
+          .select('role')
+          .eq('id', data.user.id)
+          .single()
+
+        if (profileError) {
+          console.error('Profile fetch error:', profileError)
+          // Default to customer dashboard if profile not found
+          router.push("/dashboard")
+          return
+        }
+
+        // Redirect based on user role
+        switch (profile.role) {
+          case "customer":
+            router.push("/dashboard")
+            break
+          case "vendor":
+            router.push("/vendor-dashboard")
+            break
+          case "rider":
+            router.push("/rider-dashboard")
+            break
+          case "admin":
+            router.push("/admin")
+            break
+          default:
+            router.push("/dashboard")
+        }
+      }
+    } catch (err: any) {
+      console.error('Login error:', err)
+      setError(err.message || 'An error occurred during login')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -177,13 +240,20 @@ export default function LoginPage() {
                     </Link>
                   </div>
 
-                  <Button type="submit" className="w-full transition-all duration-300">
-                    Sign In
+                  <Button type="submit" className="w-full transition-all duration-300" disabled={isLoading}>
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-current mr-2"></div>
+                        Signing In...
+                      </>
+                    ) : (
+                      "Sign In"
+                    )}
                   </Button>
                 </form>
 
                 <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                  <p className="text-sm font-medium text-blue-800 mb-2">Demo Credentials:</p>
+                  <p className="text-sm font-medium text-blue-800 mb-2">Demo Credentials (for testing):</p>
                   <div className="text-xs text-blue-600 space-y-1">
                     <p>Customer: customer@demo.com / demo123</p>
                     <p>Vendor: vendor@demo.com / demo123</p>
