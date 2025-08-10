@@ -97,11 +97,14 @@ export default function SignUpPage() {
         email: formData.email,
         password: formData.password,
         options: {
+          emailRedirectTo: 'https://mbogapap.vercel.app/auth/callback',
           data: {
             full_name: `${formData.firstName} ${formData.lastName}`,
             role: selectedRole,
             phone: formData.phone,
-            address: formData.address
+            address: formData.address,
+            city: 'Nairobi',
+            country: 'Kenya'
           }
         }
       })
@@ -179,7 +182,7 @@ export default function SignUpPage() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?role=${selectedRole}`,
+          redirectTo: `https://mbogapap.vercel.app/auth/callback?role=${selectedRole}`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
