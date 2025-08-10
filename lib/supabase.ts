@@ -20,8 +20,7 @@ const createSupabaseClient = (): any => {
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: true,
-        flowType: 'pkce',
-        redirectTo: 'https://mbogapap.vercel.app/dashboard'
+        flowType: 'pkce'
       }
     })
   } catch (error) {
