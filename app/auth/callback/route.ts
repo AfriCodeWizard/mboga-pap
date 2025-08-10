@@ -7,6 +7,8 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get('code')
   const role = requestUrl.searchParams.get('role')
 
+  console.log('Auth callback triggered with:', { code: !!code, role })
+
   if (code) {
     const supabase = createRouteHandlerClient({ cookies })
     
@@ -25,7 +27,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.redirect(new URL('/signup?error=user_fetch_error', requestUrl.origin))
       }
       
-      console.log('User authenticated:', user.id, 'Role:', role)
+      console.log('User authenticated:', user.id, 'Email:', user.email, 'Role from params:', role)
       
       // Check if user profile already exists
       const { data: existingUser, error: profileCheckError } = await supabase
@@ -34,6 +36,8 @@ export async function GET(request: NextRequest) {
         .eq('id', user.id)
         .single()
 
+      let userRole = role // Use a separate variable to avoid reassignment issues
+
       if (profileCheckError && profileCheckError.code !== 'PGRST116') {
         console.error('Profile check error:', profileCheckError)
         return NextResponse.redirect(new URL('/signup?error=profile_check_error', requestUrl.origin))
@@ -41,12 +45,12 @@ export async function GET(request: NextRequest) {
 
       if (!existingUser) {
         // This is a new user - role parameter is required
-        if (!role) {
+        if (!userRole) {
           console.error('No role provided for new user')
           return NextResponse.redirect(new URL('/signup?error=no_role_provided', requestUrl.origin))
         }
 
-        console.log('Creating new user profile...')
+        console.log('Creating new user profile with role:', userRole)
         
         // Create user profile FIRST
         const { error: profileError } = await supabase
@@ -55,7 +59,7 @@ export async function GET(request: NextRequest) {
             id: user.id,
             email: user.email,
             full_name: user.user_metadata?.full_name || user.user_metadata?.name || 'User',
-            role: role,
+            role: userRole,
             phone: user.user_metadata?.phone || '',
             address: user.user_metadata?.address || '',
             city: 'Nairobi',
@@ -70,7 +74,7 @@ export async function GET(request: NextRequest) {
         console.log('User profile created successfully')
 
         // Now create role-specific profiles AFTER user profile is created
-        if (role === 'vendor') {
+        if (userRole === 'vendor') {
           console.log('Creating vendor profile...')
           const { error: vendorError } = await supabase.from('vendors').insert({
             user_id: user.id,
@@ -87,14 +91,13 @@ export async function GET(request: NextRequest) {
           } else {
             console.log('Vendor profile created successfully')
           }
-        } else if (role === 'rider') {
+        } else if (userRole === 'rider') {
           console.log('Creating rider profile...')
           const { error: riderError } = await supabase.from('rider_profiles').insert({
             user_id: user.id,
             vehicle_type: 'motorcycle',
             vehicle_number: '',
             is_available: false,
-            current_location: null,
             total_deliveries: 0,
             rating: 0
           })
@@ -109,8 +112,16 @@ export async function GET(request: NextRequest) {
       } else {
         // This is an existing user - use their existing role
         console.log('User profile already exists with role:', existingUser.role)
-        role = existingUser.role
+        userRole = existingUser.role
       }
+      
+      // Redirect to appropriate dashboard based on role
+      const redirectUrl = userRole === 'vendor' ? '/vendor-dashboard' : 
+                         userRole === 'rider' ? '/rider-dashboard' : 
+                         '/dashboard'
+      
+      console.log('Redirecting to:', redirectUrl, 'for role:', userRole)
+      return NextResponse.redirect(new URL(redirectUrl, requestUrl.origin))
       
     } catch (error) {
       console.error('Unexpected error in auth callback:', error)
@@ -118,11 +129,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // Redirect to appropriate dashboard based on role
-  const redirectUrl = role === 'vendor' ? '/vendor-dashboard' : 
-                     role === 'rider' ? '/rider-dashboard' : 
-                     '/dashboard'
-  
-  console.log('Redirecting to:', redirectUrl)
-  return NextResponse.redirect(new URL(redirectUrl, requestUrl.origin))
+  // No code provided, redirect to signup
+  console.log('No auth code provided, redirecting to signup')
+  return NextResponse.redirect(new URL('/signup', requestUrl.origin))
 } 
