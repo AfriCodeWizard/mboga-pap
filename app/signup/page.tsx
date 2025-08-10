@@ -97,7 +97,7 @@ export default function SignUpPage() {
         email: formData.email,
         password: formData.password,
         options: {
-          emailRedirectTo: 'https://mbogapap.vercel.app/auth/callback',
+          emailRedirectTo: `https://mbogapap.vercel.app/auth/callback?role=${selectedRole}`,
           data: {
             full_name: `${formData.firstName} ${formData.lastName}`,
             role: selectedRole,
@@ -114,48 +114,11 @@ export default function SignUpPage() {
       }
 
       if (authData.user) {
-        // Create user profile in our database
-        const { error: profileError } = await supabase
-          .from('users')
-          .insert({
-            id: authData.user.id,
-            email: formData.email,
-            phone: formData.phone,
-            full_name: `${formData.firstName} ${formData.lastName}`,
-            role: selectedRole,
-            address: formData.address,
-            city: 'Nairobi',
-            country: 'Kenya'
-          })
-
-        if (profileError) {
-          console.error('Profile creation error:', profileError)
-        }
-
-        // Create role-specific profiles
-        if (selectedRole === 'vendor') {
-          await supabase.from('vendors').insert({
-            user_id: authData.user.id,
-            business_name: formData.shopName || `${formData.firstName} ${formData.lastName}`,
-            description: '',
-            is_online: false,
-            rating: 0,
-            total_orders: 0
-          })
-        } else if (selectedRole === 'rider') {
-          await supabase.from('rider_profiles').insert({
-            user_id: authData.user.id,
-            vehicle_type: formData.vehicleType || 'motorcycle',
-            vehicle_number: formData.licenseNumber || '',
-            is_available: false,
-            current_location: null,
-            total_deliveries: 0,
-            rating: 0
-          })
-        }
-
+        // Don't create profiles here - let the auth callback handle it
+        // The user will receive a confirmation email and click the link
+        // The auth callback will create the profiles when they confirm
         alert(`Account created successfully as ${selectedRole}! Please check your email to verify your account.`)
-        router.push('/signin')
+        router.push('/login')
       }
     } catch (error: any) {
       console.error('Signup error:', error)
