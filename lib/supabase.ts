@@ -17,8 +17,11 @@ const createSupabaseClient = (): any => {
     console.log('Debug: Creating Supabase client with:', { url: config.url.substring(0, 20) + '...', anonKey: config.anonKey.substring(0, 20) + '...' })
     return createClient(config.url, config.anonKey, {
       auth: {
-        autoRefreshToken: false,
-        persistSession: false
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true,
+        flowType: 'pkce',
+        redirectTo: 'https://mbogapap.vercel.app/dashboard'
       }
     })
   } catch (error) {
