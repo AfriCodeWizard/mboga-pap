@@ -73,6 +73,12 @@ Run these SQL scripts in your Supabase SQL Editor:
 - Restart your development server
 - Check browser console for environment variable loading
 
+### Getting "either NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY env variables or supabaseUrl and supabaseKey are required!"?
+- This error occurs when the middleware can't access environment variables
+- Ensure you have created the `.env.local` file with the exact values shown above
+- **Completely restart your development server** (stop it completely, then run `npm run dev` again)
+- The middleware now has better error handling and will skip authentication if variables are missing
+
 ### Profile creation still failing?
 - Run the database setup scripts in Supabase
 - Check RLS policies are correctly set
@@ -90,7 +96,8 @@ Run these SQL scripts in your Supabase SQL Editor:
 3. **`app/signup/page.tsx`**: Fixed redirect URLs to include role parameter
 4. **`lib/supabase.ts`**: Removed hardcoded redirectTo to prevent conflicts
 5. **`lib/env.ts`**: Improved environment variable loading with fallbacks
-6. **`middleware.ts`**: Added authentication middleware for proper route protection
+6. **`middleware.ts`**: Added authentication middleware for proper route protection with improved environment variable handling
+7. **`lib/env.ts`**: Added server-side environment variable loaders for middleware compatibility
 
 ## Next Steps
 
