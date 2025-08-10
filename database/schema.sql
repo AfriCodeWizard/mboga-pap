@@ -225,9 +225,11 @@ ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
 -- Basic RLS policies (you can customize these based on your needs)
 CREATE POLICY "Users can view their own profile" ON public.users FOR SELECT USING (auth.uid() = id);
 CREATE POLICY "Users can update their own profile" ON public.users FOR UPDATE USING (auth.uid() = id);
+CREATE POLICY "Allow auth callback to create user profiles" ON public.users FOR INSERT WITH CHECK (true);
 
 CREATE POLICY "Vendors are viewable by all" ON public.vendors FOR SELECT USING (true);
 CREATE POLICY "Vendors can update their own profile" ON public.vendors FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Allow auth callback to create vendor profiles" ON public.vendors FOR INSERT WITH CHECK (true);
 
 CREATE POLICY "Products are viewable by all" ON public.products FOR SELECT USING (true);
 CREATE POLICY "Vendors can manage their own products" ON public.products FOR ALL USING (auth.uid() IN (SELECT user_id FROM public.vendors WHERE id = vendor_id));
@@ -239,4 +241,9 @@ CREATE POLICY "Users can view their own cart items" ON public.cart_items FOR SEL
 CREATE POLICY "Users can manage their own cart items" ON public.cart_items FOR ALL USING (auth.uid() = user_id);
 
 CREATE POLICY "Users can view their own notifications" ON public.notifications FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "Users can update their own notifications" ON public.notifications FOR UPDATE USING (auth.uid() = user_id); 
+CREATE POLICY "Users can update their own notifications" ON public.notifications FOR UPDATE USING (auth.uid() = user_id);
+
+-- Add policies for rider profiles
+CREATE POLICY "Rider profiles are viewable by all" ON public.rider_profiles FOR SELECT USING (true);
+CREATE POLICY "Riders can update their own profile" ON public.rider_profiles FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Allow auth callback to create rider profiles" ON public.rider_profiles FOR INSERT WITH CHECK (true); 
