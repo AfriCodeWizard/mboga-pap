@@ -97,7 +97,7 @@ export default function SignUpPage() {
         email: formData.email,
         password: formData.password,
         options: {
-          emailRedirectTo: `https://mbogapap.vercel.app/auth/callback?role=${selectedRole}`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?role=${selectedRole}`,
           data: {
             full_name: `${formData.firstName} ${formData.lastName}`,
             role: selectedRole,
@@ -145,7 +145,7 @@ export default function SignUpPage() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `https://mbogapap.vercel.app/auth/callback?role=${selectedRole}`,
+          redirectTo: `${window.location.origin}/auth/callback?role=${selectedRole}`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
