@@ -11,7 +11,8 @@
     "check-env": "node scripts/check-env.js",
     "build-safe": "node scripts/build-check.js",
     "verify-setup": "node scripts/verify-setup.js",
-    "quick-start": "node scripts/quick-start.js"
+    "quick-start": "node scripts/quick-start.js",
+    "check-prod-env": "node scripts/check-production-env.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
