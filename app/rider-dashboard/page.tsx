@@ -127,6 +127,12 @@ export default function RiderDashboard() {
   }
 
   const handleLogout = () => {
+    // Clear demo user cookies if they exist
+    if (typeof document !== 'undefined') {
+      document.cookie = 'demo-user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      document.cookie = 'demo-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+    }
+    // Handle logout logic
     window.location.href = "/"
   }
 
@@ -849,3 +855,854 @@ export default function RiderDashboard() {
     </>
   )
 }
+
+
+                      </div>
+
+                    </div>
+
+                    <div className="space-y-2">
+
+                      <div className="flex justify-between text-sm">
+
+                        <span className="text-gray-600">Progress</span>
+
+                        <span className="font-medium">{achievement.progress}/{achievement.target}</span>
+
+                      </div>
+
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+
+                        <div 
+
+                          className="bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-accent)] h-2 rounded-full transition-all duration-300"
+
+                          style={{ width: `${(achievement.progress / achievement.target) * 100}%` }}
+
+                        ></div>
+
+                      </div>
+
+                      <div className="flex justify-between items-center">
+
+                        <span className="text-xs text-gray-500">Reward</span>
+
+                        <Badge className="bg-green-100 text-green-800 text-xs">{achievement.reward}</Badge>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </CardContent>
+
+          </Card>
+
+
+
+          {/* Transaction History */}
+
+          <Card className="mb-6 border-2 border-gray-200 shadow-lg">
+
+            <CardHeader>
+
+              <CardTitle className="text-[color:var(--color-primary)]">Transaction History</CardTitle>
+
+              <CardDescription>Recent payout requests and their status</CardDescription>
+
+            </CardHeader>
+
+            <CardContent>
+
+              <div className="overflow-x-auto">
+
+                <table className="min-w-full text-sm">
+
+                  <thead>
+
+                    <tr className="border-b">
+
+                      <th className="px-4 py-3 text-left font-semibold">Date</th>
+
+                      <th className="px-4 py-3 text-left font-semibold">Amount</th>
+
+                      <th className="px-4 py-3 text-left font-semibold">Status</th>
+
+                      <th className="px-4 py-3 text-left font-semibold">Reference</th>
+
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+
+                    {[
+
+                      { date: "2024-01-16", amount: "KSh 3,450", status: "Pending", ref: "PAY-002" },
+
+                      { date: "2024-01-15", amount: "KSh 2,800", status: "Paid", ref: "PAY-004" },
+
+                    ].map((tx) => (
+
+                      <tr key={tx.ref} className="border-b hover:bg-gray-50 transition-colors">
+
+                        <td className="px-4 py-3">{tx.date}</td>
+
+                        <td className="px-4 py-3 font-medium">{tx.amount}</td>
+
+                        <td className="px-4 py-3">
+
+                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+
+                            tx.status === 'Paid' ? 'bg-green-100 text-green-700' : tx.status === 'Approved' ? 'bg-blue-100 text-blue-700' : 'bg-yellow-100 text-yellow-700'
+
+                          }`}>
+
+                            {tx.status}
+
+                          </span>
+
+                        </td>
+
+                        <td className="px-4 py-3 text-gray-600">{tx.ref}</td>
+
+                      </tr>
+
+                    ))}
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            </CardContent>
+
+          </Card>
+
+
+
+          <div className="grid lg:grid-cols-2 gap-6">
+
+            {/* Enhanced Available Deliveries */}
+
+            <Card className="border-2 border-gray-200 shadow-lg">
+
+              <CardHeader>
+
+                <CardTitle className="text-[color:var(--color-primary)] flex items-center space-x-2">
+
+                  <Zap className="h-5 w-5" />
+
+                  <span>Available Deliveries</span>
+
+                </CardTitle>
+
+                <CardDescription>Accept deliveries near your location</CardDescription>
+
+              </CardHeader>
+
+              <CardContent>
+
+                <div className="space-y-4">
+
+                  {availableDeliveries.map((delivery) => (
+
+                    <div key={delivery.id} className={`border rounded-lg p-4 transition-all duration-300 hover:shadow-lg ${
+
+                      delivery.priority === 'high' ? 'border-orange-300 bg-orange-50' : 'border-gray-200 bg-white'
+
+                    }`}>
+
+                      <div className="flex items-center justify-between mb-3">
+
+                        <div>
+
+                          <div className="flex items-center space-x-2">
+
+                          <p className="font-medium">{delivery.id}</p>
+
+                            {delivery.priority === 'high' && (
+
+                              <Badge className="bg-orange-500 text-white text-xs">Priority</Badge>
+
+                            )}
+
+                          </div>
+
+                          <p className="text-sm text-gray-600">{delivery.vendor}</p>
+
+                        </div>
+
+                        <div className="text-right">
+
+                          <p className="font-bold text-[color:var(--color-accent)]">{delivery.earnings}</p>
+
+                          <p className="text-xs text-gray-500">
+
+                            {delivery.distance} • {delivery.estimatedTime}
+
+                          </p>
+
+                          {delivery.bonus && (
+
+                            <p className="text-xs text-green-600 font-medium">{delivery.bonus}</p>
+
+                          )}
+
+                        </div>
+
+                      </div>
+
+
+
+                      <div className="space-y-2 mb-4">
+
+                        <div className="flex items-start space-x-2">
+
+                          <MapPin className="h-4 w-4 text-[color:var(--color-accent)] mt-0.5" />
+
+                          <div>
+
+                            <p className="text-sm font-medium">Pickup</p>
+
+                            <p className="text-xs text-gray-600">{delivery.pickupAddress}</p>
+
+                          </div>
+
+                        </div>
+
+                        <div className="flex items-start space-x-2">
+
+                          <MapPin className="h-4 w-4 text-red-600 mt-0.5" />
+
+                          <div>
+
+                            <p className="text-sm font-medium">Delivery</p>
+
+                            <p className="text-xs text-gray-600">{delivery.deliveryAddress}</p>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <div className="mb-3">
+
+                        <p className="text-sm font-medium mb-1">Items:</p>
+
+                        <p className="text-xs text-gray-600">{delivery.items.join(", ")}</p>
+
+                      </div>
+
+
+
+                      <div className="flex space-x-2">
+
+                        <Button
+
+                          size="sm"
+
+                          className="flex-1 bg-gradient-to-r from-[color:var(--color-accent)] to-[color:var(--color-primary)] hover:from-[color:var(--color-primary)] hover:to-[color:var(--color-accent)] text-white transition-all duration-300"
+
+                          onClick={() => handleAcceptDelivery(delivery)}
+
+                        >
+
+                          <CheckCircle className="h-4 w-4 mr-1" />
+
+                          Accept Delivery
+
+                        </Button>
+
+                        <Dialog>
+
+                          <DialogTrigger asChild>
+
+                            <Button size="sm" variant="outline">
+
+                              <Eye className="h-4 w-4 mr-1" />
+
+                              Details
+
+                            </Button>
+
+                          </DialogTrigger>
+
+                          <DialogContent>
+
+                            <DialogHeader>
+
+                              <DialogTitle>Delivery Details - {delivery.id}</DialogTitle>
+
+                              <DialogDescription>Complete delivery information</DialogDescription>
+
+                            </DialogHeader>
+
+                            <div className="space-y-4">
+
+                              <div>
+
+                                <h4 className="font-medium mb-2">Vendor Information</h4>
+
+                                <p className="text-sm">{delivery.vendor}</p>
+
+                                <p className="text-xs text-gray-600">{delivery.pickupAddress}</p>
+
+                              </div>
+
+                              <div>
+
+                                <h4 className="font-medium mb-2">Customer Information</h4>
+
+                                <p className="text-sm">{delivery.customer}</p>
+
+                                <p className="text-xs text-gray-600">{delivery.deliveryAddress}</p>
+
+                              </div>
+
+                              <div>
+
+                                <h4 className="font-medium mb-2">Order Items</h4>
+
+                                <ul className="text-sm space-y-1">
+
+                                  {delivery.items.map((item, index) => (
+
+                                    <li key={index} className="text-gray-600">
+
+                                      • {item}
+
+                                    </li>
+
+                                  ))}
+
+                                </ul>
+
+                              </div>
+
+                              <div className="flex justify-between items-center pt-4 border-t">
+
+                                <div>
+
+                                  <p className="text-sm text-gray-600">Estimated Earnings</p>
+
+                                  <p className="font-bold text-[color:var(--color-accent)]">{delivery.earnings}</p>
+
+                                </div>
+
+                                <div>
+
+                                  <p className="text-sm text-gray-600">Distance & Time</p>
+
+                                  <p className="font-medium">
+
+                                    {delivery.distance} • {delivery.estimatedTime}
+
+                                  </p>
+
+                                </div>
+
+                              </div>
+
+                            </div>
+
+                          </DialogContent>
+
+                        </Dialog>
+
+                      </div>
+
+                    </div>
+
+                  ))}
+
+                </div>
+
+              </CardContent>
+
+            </Card>
+
+
+
+            {/* Enhanced Active Deliveries */}
+
+            <Card className="border-2 border-gray-200 shadow-lg">
+
+              <CardHeader>
+
+                <CardTitle className="text-[color:var(--color-primary)] flex items-center space-x-2">
+
+                  <Activity className="h-5 w-5" />
+
+                  <span>Active Deliveries</span>
+
+                </CardTitle>
+
+                <CardDescription>Your current delivery assignments</CardDescription>
+
+              </CardHeader>
+
+              <CardContent>
+
+                {activeDeliveries.length > 0 ? (
+
+                  <div className="space-y-4">
+
+                    {activeDeliveries.map((delivery) => (
+
+                      <div key={delivery.id} className="border rounded-lg p-4 bg-gradient-to-br from-[color:var(--color-primary)]/5 to-[color:var(--color-accent)]/10">
+
+                        <div className="flex items-center justify-between mb-3">
+
+                          <div>
+
+                            <p className="font-medium">{delivery.id}</p>
+
+                            <p className="text-sm text-gray-600">{delivery.vendor}</p>
+
+                          </div>
+
+                          <Badge className="bg-[color:var(--color-primary)] text-white">{delivery.status}</Badge>
+
+                        </div>
+
+
+
+                        {/* Progress Bar */}
+
+                        <div className="mb-4">
+
+                          <div className="flex justify-between text-sm mb-1">
+
+                            <span className="text-gray-600">Delivery Progress</span>
+
+                            <span className="font-medium">{delivery.progress}%</span>
+
+                          </div>
+
+                          <div className="w-full bg-gray-200 rounded-full h-2">
+
+                            <div 
+
+                              className="bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-accent)] h-2 rounded-full transition-all duration-500"
+
+                              style={{ width: `${delivery.progress}%` }}
+
+                            ></div>
+
+                          </div>
+
+                          <p className="text-xs text-gray-500 mt-1">Estimated time remaining: {delivery.timeRemaining}</p>
+
+                        </div>
+
+
+
+                        <div className="space-y-2 mb-4">
+
+                          <div className="flex items-start space-x-2">
+
+                            <MapPin className="h-4 w-4 text-[color:var(--color-accent)] mt-0.5" />
+
+                            <div>
+
+                              <p className="text-sm font-medium">From</p>
+
+                              <p className="text-xs text-gray-600">{delivery.pickupAddress}</p>
+
+                            </div>
+
+                          </div>
+
+                          <div className="flex items-start space-x-2">
+
+                            <MapPin className="h-4 w-4 text-red-600 mt-0.5" />
+
+                            <div>
+
+                              <p className="text-sm font-medium">To</p>
+
+                              <p className="text-xs text-gray-600">{delivery.deliveryAddress}</p>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+
+
+                        <div className="flex space-x-2">
+
+                          <Button size="sm" className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white" onClick={() => handleNavigate(delivery.deliveryAddress)}>
+
+                            <Navigation className="h-4 w-4 mr-1" />
+
+                            Navigate
+
+                          </Button>
+
+                          <Button size="sm" variant="outline" onClick={() => handleCallCustomer(delivery.customerPhone)}>
+
+                            <Phone className="h-4 w-4 mr-1" />
+
+                            Call
+
+                          </Button>
+
+                          <Button size="sm" className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white" onClick={() => handleMarkDelivered(delivery.id)}>
+
+                            <CheckCircle2 className="h-4 w-4 mr-1" />
+
+                            Complete
+
+                          </Button>
+
+                        </div>
+
+                      </div>
+
+                    ))}
+
+                  </div>
+
+                ) : (
+
+                  <div className="text-center py-8">
+
+                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+
+                      <Clock className="h-8 w-8 text-gray-400" />
+
+                    </div>
+
+                    <p className="text-gray-600 font-medium">No active deliveries</p>
+
+                    <p className="text-sm text-gray-500">Accept a delivery to get started</p>
+
+                  </div>
+
+                )}
+
+              </CardContent>
+
+            </Card>
+
+          </div>
+
+
+
+          {/* Enhanced Earnings Summary */}
+
+          <Card className="mt-6 border-2 border-gray-200 shadow-lg">
+
+            <CardHeader>
+
+              <CardTitle className="text-[color:var(--color-primary)] flex items-center space-x-2">
+
+                <Target className="h-5 w-5" />
+
+                <span>Weekly Performance Summary</span>
+
+              </CardTitle>
+
+              <CardDescription>Your performance this week</CardDescription>
+
+            </CardHeader>
+
+            <CardContent>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg">
+
+                  <p className="text-3xl font-bold text-green-700">KSh 8,400</p>
+
+                  <p className="text-sm text-gray-600">Total Earnings</p>
+
+                  <p className="text-xs text-green-600 mt-1">+18% from last week</p>
+
+                </div>
+
+                <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+
+                  <p className="text-3xl font-bold text-blue-700">42</p>
+
+                  <p className="text-sm text-gray-600">Deliveries Completed</p>
+
+                  <p className="text-xs text-blue-600 mt-1">+5 from last week</p>
+
+                </div>
+
+                <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg">
+
+                  <p className="text-3xl font-bold text-purple-700">4.9</p>
+
+                  <p className="text-sm text-gray-600">Average Rating</p>
+
+                  <p className="text-xs text-purple-600 mt-1">+0.2 improvement</p>
+
+                </div>
+
+              </div>
+
+            </CardContent>
+
+          </Card>
+
+        </div>
+
+
+
+        {/* Profile Modal (read-only) */}
+
+        <Dialog open={profileOpen} onOpenChange={setProfileOpen}>
+
+          <DialogContent className="max-w-lg">
+
+            <DialogHeader>
+
+              <DialogTitle className="flex items-center space-x-2">
+
+                <User className="h-5 w-5 text-[color:var(--color-primary)]" />
+
+                <span>Profile</span>
+
+              </DialogTitle>
+
+              <DialogDescription>Your profile details</DialogDescription>
+
+            </DialogHeader>
+
+            <div className="space-y-4">
+
+              <div>
+
+                <Label>Full Name</Label>
+
+                <div className="px-3 py-2 bg-gray-100 rounded">{profile.name}</div>
+
+              </div>
+
+              <div>
+
+                <Label>Email</Label>
+
+                <div className="px-3 py-2 bg-gray-100 rounded">{profile.email}</div>
+
+              </div>
+
+              <div>
+
+                <Label>Phone Number</Label>
+
+                <div className="px-3 py-2 bg-gray-100 rounded">{profile.phone}</div>
+
+              </div>
+
+              <div>
+
+                <Label>Address</Label>
+
+                <div className="px-3 py-2 bg-gray-100 rounded">{profile.address}</div>
+
+              </div>
+
+            </div>
+
+          </DialogContent>
+
+        </Dialog>
+
+        
+
+        {/* Settings Modal (editable) */}
+
+        <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
+
+          <DialogContent className="max-w-lg">
+
+            <DialogHeader>
+
+              <DialogTitle className="flex items-center space-x-2">
+
+                <Settings className="h-5 w-5 text-gray-600" />
+
+                <span>Settings</span>
+
+              </DialogTitle>
+
+              <DialogDescription>Edit your profile details</DialogDescription>
+
+            </DialogHeader>
+
+            <div className="space-y-4">
+
+              <div>
+
+                <Label htmlFor="name">Full Name</Label>
+
+                <Input id="name" value={profile.name} onChange={e => setProfile({ ...profile, name: e.target.value })} />
+
+              </div>
+
+              <div>
+
+                <Label htmlFor="email">Email</Label>
+
+                <Input id="email" type="email" value={profile.email} onChange={e => setProfile({ ...profile, email: e.target.value })} />
+
+              </div>
+
+              <div>
+
+                <Label htmlFor="phone">Phone Number</Label>
+
+                <Input id="phone" value={profile.phone} onChange={e => setProfile({ ...profile, phone: e.target.value })} />
+
+              </div>
+
+              <div>
+
+                <Label htmlFor="address">Address</Label>
+
+                <Input id="address" value={profile.address} onChange={e => setProfile({ ...profile, address: e.target.value })} />
+
+              </div>
+
+              <div className="flex items-center space-x-2">
+
+                <Button className="flex-1">
+
+                  <Camera className="h-4 w-4 mr-2" /> Upload Photo
+
+                </Button>
+
+              </div>
+
+            </div>
+
+            <div className="flex justify-end mt-6">
+
+              <Button onClick={() => { setSettingsOpen(false); alert('Profile updated!') }} className="bg-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)]/90">
+
+                <Save className="h-4 w-4 mr-2" /> Save Changes
+
+              </Button>
+
+            </div>
+
+          </DialogContent>
+
+        </Dialog>
+
+        
+
+        {/* Motorbike Info Modal */}
+
+        <Dialog open={motorbikeInfoOpen} onOpenChange={setMotorbikeInfoOpen}>
+
+          <DialogContent className="max-w-lg">
+
+            <DialogHeader>
+
+              <DialogTitle className="flex items-center space-x-2">
+
+                <Bike className="h-5 w-5 text-[color:var(--color-primary)]" />
+
+                <span>Motorbike Information</span>
+
+              </DialogTitle>
+
+              <DialogDescription>Manage your motorbike details</DialogDescription>
+
+            </DialogHeader>
+
+            <div className="space-y-4">
+
+              <div>
+
+                <Label htmlFor="make">Make</Label>
+
+                <Input id="make" value={motorbike.make} onChange={e => setMotorbike({ ...motorbike, make: e.target.value })} />
+
+              </div>
+
+              <div>
+
+                <Label htmlFor="model">Model</Label>
+
+                <Input id="model" value={motorbike.model} onChange={e => setMotorbike({ ...motorbike, model: e.target.value })} />
+
+              </div>
+
+              <div>
+
+                <Label htmlFor="color">Color</Label>
+
+                <Input id="color" value={motorbike.color} onChange={e => setMotorbike({ ...motorbike, color: e.target.value })} />
+
+              </div>
+
+              <div>
+
+                <Label htmlFor="plate">Plate Number</Label>
+
+                <Input id="plate" value={motorbike.plate} onChange={e => setMotorbike({ ...motorbike, plate: e.target.value })} />
+
+              </div>
+
+            </div>
+
+            <div className="flex justify-end mt-6">
+
+              <Button onClick={() => { setMotorbikeInfoOpen(false); alert('Motorbike information updated!') }} className="bg-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)]/90">
+
+                <Save className="h-4 w-4 mr-2" /> Save Changes
+
+              </Button>
+
+            </div>
+
+          </DialogContent>
+
+        </Dialog>
+
+        
+
+        {/* Enhanced Toast Notification */}
+
+        {toastMsg && toastVisible && (
+
+          <div className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-accent)] text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3 animate-fade-in transition-all duration-500 max-w-sm">
+
+            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+
+              <CheckCircle className="h-5 w-5 text-white" />
+
+            </div>
+
+            <span className="font-medium">{toastMsg}</span>
+
+          </div>
+
+        )}
+
+      </div>
+
+    </>
+
+  )
+
+}
+
+

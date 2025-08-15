@@ -26,6 +26,14 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  // Function to set demo user cookie
+  const setDemoUserCookie = (role: string) => {
+    if (typeof document !== 'undefined') {
+      document.cookie = `demo-user=true; path=/; max-age=3600` // 1 hour expiry
+      document.cookie = `demo-role=${role}; path=/; max-age=3600`
+    }
+  }
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -51,35 +59,51 @@ export default function LoginPage() {
     if (demoUser) {
       console.log('🎭 Demo login detected for role:', demoUser.role)
       
-      // Handle demo login with simple redirect
-      switch (demoUser.role) {
-        case "customer":
-          console.log('🔄 Redirecting to customer dashboard')
-          window.location.href = "/dashboard"
-          break
-        case "vendor":
-          console.log('🔄 Redirecting to vendor dashboard')
-          window.location.href = "/vendor-dashboard"
-          break
-        case "rider":
-          console.log('🔄 Redirecting to rider dashboard')
-          window.location.href = "/rider-dashboard"
-          break
-        case "admin":
-          console.log('🔄 Redirecting to admin dashboard')
-          window.location.href = "/admin"
-          break
+      // Set demo user cookie for middleware
+      setDemoUserCookie(demoUser.role)
+      
+      // Handle demo login with router.push for better navigation
+      try {
+        switch (demoUser.role) {
+          case "customer":
+            console.log('🔄 Redirecting to customer dashboard')
+            await router.push("/dashboard")
+            break
+          case "vendor":
+            console.log('🔄 Redirecting to vendor dashboard')
+            await router.push("/vendor-dashboard")
+            break
+          case "rider":
+            console.log('🔄 Redirecting to rider dashboard')
+            await router.push("/rider-dashboard")
+            break
+          case "admin":
+            console.log('🔄 Redirecting to admin dashboard')
+            await router.push("/admin")
+            break
+        }
+        return
+      } catch (error) {
+        console.error('Demo login redirect error:', error)
+        // Fallback to window.location if router fails
+        window.location.href = demoUser.role === 'vendor' ? '/vendor-dashboard' : 
+                              demoUser.role === 'rider' ? '/rider-dashboard' : 
+                              demoUser.role === 'admin' ? '/admin' : '/dashboard'
       }
-      return
     }
 
     // If not demo, try Supabase authentication
     try {
+      console.log('🔐 Attempting Supabase authentication for:', formData.email)
+      
       const supabase = getSupabaseClient()
       if (!supabase) {
-        setError('Authentication service not available')
+        console.error('❌ Supabase client not available')
+        setError('Authentication service not available. Please check your connection.')
         return
       }
+
+      console.log('✅ Supabase client created successfully')
 
       const { data, error: authError } = await supabase.auth.signInWithPassword({
         email: formData.email,
@@ -88,13 +112,29 @@ export default function LoginPage() {
 
       if (authError) {
         console.error('❌ Supabase auth failed:', authError.message)
-        setError(authError.message || "Invalid credentials")
+        console.error('❌ Auth error details:', {
+          message: authError.message,
+          status: authError.status,
+          name: authError.name
+        })
+        
+        // Provide more helpful error messages
+        if (authError.message.includes('Invalid login credentials')) {
+          setError('Invalid email or password. Please check your credentials.')
+        } else if (authError.message.includes('Email not confirmed')) {
+          setError('Please check your email and click the verification link before logging in.')
+        } else if (authError.message.includes('Too many requests')) {
+          setError('Too many login attempts. Please wait a moment and try again.')
+        } else {
+          setError(authError.message || "Invalid credentials")
+        }
         return
       }
 
       // Supabase authentication successful
       if (data.user) {
         console.log('✅ Supabase auth successful for user:', data.user.id, data.user.email)
+        console.log('✅ User metadata:', data.user.user_metadata)
         
         // Get user role from the database
         const { data: profile, error: profileError } = await supabase
@@ -107,6 +147,18 @@ export default function LoginPage() {
 
         if (profileError) {
           console.error('❌ Profile fetch error:', profileError)
+          console.error('❌ Profile error details:', {
+            message: profileError.message,
+            code: profileError.code,
+            details: profileError.details
+          })
+          
+          // Check if it's a connection issue
+          if (profileError.message.includes('fetch') || profileError.message.includes('network')) {
+            setError('Database connection error. Please try again.')
+            return
+          }
+          
           // Default to customer dashboard if profile not found
           console.log('🔄 Redirecting to customer dashboard (fallback)')
           window.location.href = "/dashboard"
@@ -119,32 +171,53 @@ export default function LoginPage() {
         const userRole = String(profile.role).toLowerCase()
         console.log('🔄 Normalized role:', userRole)
         
-        // Use window.location.href for immediate redirect
-        switch (userRole) {
-          case "customer":
-            console.log('🔄 Redirecting to customer dashboard')
-            window.location.href = "/dashboard"
-            break
-          case "vendor":
-            console.log('🔄 Redirecting to vendor dashboard')
-            window.location.href = "/vendor-dashboard"
-            break
-          case "rider":
-            console.log('🔄 Redirecting to rider dashboard')
-            window.location.href = "/rider-dashboard"
-            break
-          case "admin":
-            console.log('🔄 Redirecting to admin dashboard')
-            window.location.href = "/admin"
-            break
-          default:
-            console.log('🔄 Redirecting to customer dashboard (default)')
-            window.location.href = "/dashboard"
+        // Use router.push for better navigation
+        try {
+          switch (userRole) {
+            case "customer":
+              console.log('🔄 Redirecting to customer dashboard')
+              await router.push("/dashboard")
+              break
+            case "vendor":
+              console.log('🔄 Redirecting to vendor dashboard')
+              await router.push("/vendor-dashboard")
+              break
+            case "rider":
+              console.log('🔄 Redirecting to rider dashboard')
+              await router.push("/rider-dashboard")
+              break
+            case "admin":
+              console.log('🔄 Redirecting to admin dashboard')
+              await router.push("/admin")
+              break
+            default:
+              console.log('🔄 Redirecting to customer dashboard (default)')
+              await router.push("/dashboard")
+          }
+        } catch (redirectError) {
+          console.error('❌ Redirect error:', redirectError)
+          // Fallback to window.location
+          window.location.href = userRole === 'vendor' ? '/vendor-dashboard' : 
+                                userRole === 'rider' ? '/rider-dashboard' : 
+                                userRole === 'admin' ? '/admin' : '/dashboard'
         }
+      } else {
+        console.error('❌ No user data returned from Supabase')
+        setError('Authentication failed. Please try again.')
       }
     } catch (err: any) {
-      console.error('Login error:', err)
-      setError(err.message || 'An error occurred during login')
+      console.error('❌ Login error:', err)
+      console.error('❌ Error details:', {
+        message: err.message,
+        name: err.name,
+        stack: err.stack
+      })
+      
+      if (err.message.includes('fetch') || err.message.includes('network')) {
+        setError('Network error. Please check your internet connection.')
+      } else {
+        setError(err.message || 'An error occurred during login')
+      }
     } finally {
       setIsLoading(false)
     }

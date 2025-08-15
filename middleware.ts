@@ -47,12 +47,16 @@ export async function middleware(req: NextRequest) {
       return res
     }
 
+    // Check for demo user cookie or session indicator
+    const demoUserCookie = req.cookies.get('demo-user')
+    const isDemoUser = demoUserCookie?.value === 'true'
+
     // Protected routes that require authentication
     const protectedRoutes = ['/dashboard', '/vendor-dashboard', '/rider-dashboard', '/admin']
     const isProtectedRoute = protectedRoutes.some(route => req.nextUrl.pathname.startsWith(route))
 
-    if (isProtectedRoute && !session) {
-      // Redirect to login if trying to access protected route without session
+    if (isProtectedRoute && !session && !isDemoUser) {
+      // Redirect to login if trying to access protected route without session or demo user
       const redirectUrl = new URL('/login', req.url)
       redirectUrl.searchParams.set('redirect', req.nextUrl.pathname)
       return NextResponse.redirect(redirectUrl)

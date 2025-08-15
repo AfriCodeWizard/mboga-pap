@@ -218,6 +218,11 @@ export default function AdminDashboard() {
   }
 
   const handleLogout = () => {
+    // Clear demo user cookies if they exist
+    if (typeof document !== 'undefined') {
+      document.cookie = 'demo-user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      document.cookie = 'demo-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+    }
     // Handle logout logic
     window.location.href = "/"
   }
@@ -936,3 +941,941 @@ export default function AdminDashboard() {
     </>
   )
 }
+
+                                  variant={
+
+                                    order.status === "Delivered"
+
+                                      ? "default"
+
+                                      : order.status === "In Transit"
+
+                                        ? "secondary"
+
+                                        : "outline"
+
+                                  }
+
+                                  className={
+
+                                    order.status === "Delivered"
+
+                                      ? "bg-green-600"
+
+                                      : order.status === "In Transit"
+
+                                        ? "bg-blue-500"
+
+                                        : "bg-yellow-500"
+
+                                  }
+
+                                >
+
+                                  {order.status}
+
+                                </Badge>
+
+                                <p className="text-xs text-gray-500 mt-1">{order.total}</p>
+
+                              </div>
+
+                            </div>
+
+                          ))}
+
+                        </div>
+
+                      </CardContent>
+
+                    </Card>
+
+
+
+                    <Card className="w-full border-2 border-gray-200 shadow-md">
+
+                      <CardHeader>
+
+                        <CardTitle>Pending Approvals</CardTitle>
+
+                        <CardDescription>Items requiring your attention</CardDescription>
+
+                      </CardHeader>
+
+                      <CardContent>
+
+                        <div className="space-y-3">
+
+                          <div className="flex items-center justify-between p-3 border rounded-lg bg-yellow-50">
+
+                            <div className="flex items-center space-x-3">
+
+                              <AlertCircle className="h-5 w-5 text-yellow-600" />
+
+                              <div>
+
+                                <p className="text-sm font-medium">Vendor Applications</p>
+
+                                <p className="text-xs text-gray-600">{pendingVendors.length} pending</p>
+
+                              </div>
+
+                            </div>
+
+                            <Button size="sm" variant="outline">
+
+                              Review
+
+                            </Button>
+
+                          </div>
+
+                          <div className="flex items-center justify-between p-3 border rounded-lg bg-blue-50">
+
+                            <div className="flex items-center space-x-3">
+
+                              <AlertCircle className="h-5 w-5 text-blue-600" />
+
+                              <div>
+
+                                <p className="text-sm font-medium">Rider Applications</p>
+
+                                <p className="text-xs text-gray-600">{pendingRiders.length} pending</p>
+
+                              </div>
+
+                            </div>
+
+                            <Button size="sm" variant="outline">
+
+                              Review
+
+                            </Button>
+
+                          </div>
+
+                        </div>
+
+                      </CardContent>
+
+                    </Card>
+
+                  </div>
+
+                </TabsContent>
+
+
+
+                <TabsContent value="vendors" className="space-y-6">
+
+                  <div className="flex flex-col space-y-6 w-full">
+
+                    <Card className="w-full border-2 border-gray-200 shadow-md">
+
+                      <CardHeader>
+
+                        <CardTitle>Vendor Management</CardTitle>
+
+                        <CardDescription>Manage vendor applications and accounts</CardDescription>
+
+                      </CardHeader>
+
+                      <CardContent className="p-2 sm:p-6 w-full">
+
+                        <div className="overflow-x-auto w-full">
+
+                          <Table className="w-full">
+
+                            <TableHeader>
+
+                              <TableRow>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Vendor</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Shop Name</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Location</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Join Date</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Status</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Actions</TableHead>
+
+                              </TableRow>
+
+                            </TableHeader>
+
+                            <TableBody>
+
+                              {pendingVendors.map((vendor) => (
+
+                                <TableRow key={vendor.id}>
+
+                                  <TableCell>
+
+                                    <div>
+
+                                      <p className="font-medium">{vendor.name}</p>
+
+                                      <p className="text-sm text-gray-600">{vendor.phone}</p>
+
+                                    </div>
+
+                                  </TableCell>
+
+                                  <TableCell>{vendor.shopName}</TableCell>
+
+                                  <TableCell>{vendor.location}</TableCell>
+
+                                  <TableCell>{vendor.joinDate}</TableCell>
+
+                                  <TableCell>
+
+                                    <Badge variant="secondary" className="bg-yellow-500">
+
+                                      {vendor.status}
+
+                                    </Badge>
+
+                                  </TableCell>
+
+                                  <TableCell>
+
+                                    <div className="flex space-x-2">
+
+                                      <Button size="sm" variant="outline">
+
+                                        <Eye className="h-4 w-4" />
+
+                                      </Button>
+
+                                      <Button
+
+                                        size="sm"
+
+                                        className="bg-green-600 hover:bg-green-700"
+
+                                        onClick={() => handleApproveVendor(vendor.id)}
+
+                                      >
+
+                                        <CheckCircle className="h-4 w-4" />
+
+                                      </Button>
+
+                                      <Button size="sm" variant="destructive" onClick={() => handleRejectVendor(vendor.id)}>
+
+                                        <XCircle className="h-4 w-4" />
+
+                                      </Button>
+
+                                    </div>
+
+                                  </TableCell>
+
+                                </TableRow>
+
+                              ))}
+
+                            </TableBody>
+
+                          </Table>
+
+                        </div>
+
+                      </CardContent>
+
+                    </Card>
+
+                  </div>
+
+                </TabsContent>
+
+
+
+                <TabsContent value="riders" className="space-y-6">
+
+                  <div className="flex flex-col space-y-6 w-full">
+
+                    <Card className="w-full border-2 border-gray-200 shadow-md">
+
+                      <CardHeader>
+
+                        <CardTitle>Rider Management</CardTitle>
+
+                        <CardDescription>Manage rider applications and accounts</CardDescription>
+
+                      </CardHeader>
+
+                      <CardContent className="p-2 sm:p-6 w-full">
+
+                        <div className="overflow-x-auto w-full">
+
+                          <Table className="w-full">
+
+                            <TableHeader>
+
+                              <TableRow>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Rider</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">License</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Location</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Join Date</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Status</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Actions</TableHead>
+
+                              </TableRow>
+
+                            </TableHeader>
+
+                            <TableBody>
+
+                              {pendingRiders.map((rider) => (
+
+                                <TableRow key={rider.id}>
+
+                                  <TableCell>
+
+                                    <div>
+
+                                      <p className="font-medium">{rider.name}</p>
+
+                                      <p className="text-sm text-gray-600">{rider.phone}</p>
+
+                                    </div>
+
+                                  </TableCell>
+
+                                  <TableCell>{rider.license}</TableCell>
+
+                                  <TableCell>{rider.location}</TableCell>
+
+                                  <TableCell>{rider.joinDate}</TableCell>
+
+                                  <TableCell>
+
+                                    <Badge variant="secondary" className="bg-yellow-500">
+
+                                      {rider.status}
+
+                                    </Badge>
+
+                                  </TableCell>
+
+                                  <TableCell>
+
+                                    <div className="flex space-x-2">
+
+                                      <Button size="sm" variant="outline">
+
+                                        <Eye className="h-4 w-4" />
+
+                                      </Button>
+
+                                      <Button
+
+                                        size="sm"
+
+                                        className="bg-green-600 hover:bg-green-700"
+
+                                        onClick={() => handleApproveRider(rider.id)}
+
+                                      >
+
+                                        <CheckCircle className="h-4 w-4" />
+
+                                      </Button>
+
+                                      <Button size="sm" variant="destructive" onClick={() => handleRejectRider(rider.id)}>
+
+                                        <XCircle className="h-4 w-4" />
+
+                                      </Button>
+
+                                    </div>
+
+                                  </TableCell>
+
+                                </TableRow>
+
+                              ))}
+
+                            </TableBody>
+
+                          </Table>
+
+                        </div>
+
+                      </CardContent>
+
+                    </Card>
+
+                  </div>
+
+                </TabsContent>
+
+
+
+                <TabsContent value="orders" className="space-y-6">
+
+                  <div className="flex flex-col space-y-6 w-full">
+
+                    <Card className="w-full border-2 border-gray-200 shadow-md">
+
+                      <CardHeader>
+
+                        <CardTitle>Order Management</CardTitle>
+
+                        <CardDescription>Monitor and manage platform orders</CardDescription>
+
+                      </CardHeader>
+
+                      <CardContent className="p-2 sm:p-6 w-full">
+
+                        <div className="overflow-x-auto w-full">
+
+                          <Table className="w-full">
+
+                            <TableHeader>
+
+                              <TableRow>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Order ID</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Customer</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Vendor</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Rider</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Total</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Status</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Date</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Actions</TableHead>
+
+                              </TableRow>
+
+                            </TableHeader>
+
+                            <TableBody>
+
+                              {recentOrders.map((order) => (
+
+                                <TableRow key={order.id}>
+
+                                  <TableCell className="font-medium">{order.id}</TableCell>
+
+                                  <TableCell>{order.customer}</TableCell>
+
+                                  <TableCell>{order.vendor}</TableCell>
+
+                                  <TableCell>{order.rider}</TableCell>
+
+                                  <TableCell>{order.total}</TableCell>
+
+                                  <TableCell>
+
+                                    <Badge
+
+                                      variant={
+
+                                        order.status === "Delivered"
+
+                                          ? "default"
+
+                                          : order.status === "In Transit"
+
+                                            ? "secondary"
+
+                                            : "outline"
+
+                                      }
+
+                                      className={
+
+                                        order.status === "Delivered"
+
+                                          ? "bg-green-600"
+
+                                          : order.status === "In Transit"
+
+                                            ? "bg-blue-500"
+
+                                            : "bg-yellow-500"
+
+                                      }
+
+                                    >
+
+                                      {order.status}
+
+                                    </Badge>
+
+                                  </TableCell>
+
+                                  <TableCell>{order.date}</TableCell>
+
+                                  <TableCell>
+
+                                    <Button size="sm" variant="outline">
+
+                                      <Eye className="h-4 w-4" />
+
+                                    </Button>
+
+                                  </TableCell>
+
+                                </TableRow>
+
+                              ))}
+
+                            </TableBody>
+
+                          </Table>
+
+                        </div>
+
+                      </CardContent>
+
+                    </Card>
+
+                  </div>
+
+                </TabsContent>
+
+
+
+                <TabsContent value="payouts" className="space-y-6">
+
+                  {/* Payout Stats */}
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+
+                    <Card className="w-full border-2 border-gray-200 shadow-md">
+
+                      <CardContent className="p-2 sm:p-6">
+
+                        <div className="flex items-center justify-between">
+
+                          <div>
+
+                            <p className="text-sm font-medium text-gray-600">Pending Requests</p>
+
+                            <p className="text-2xl font-bold text-yellow-600">
+
+                              {payoutRequests.filter(p => p.status === "Pending").length}
+
+                            </p>
+
+                          </div>
+
+                          <Clock className="h-8 w-8 text-yellow-600" />
+
+                        </div>
+
+                      </CardContent>
+
+                    </Card>
+
+                    <Card className="w-full border-2 border-gray-200 shadow-md">
+
+                      <CardContent className="p-2 sm:p-6">
+
+                        <div className="flex items-center justify-between">
+
+                          <div>
+
+                            <p className="text-sm font-medium text-gray-600">Approved Today</p>
+
+                            <p className="text-2xl font-bold text-green-600">
+
+                              {payoutRequests.filter(p => p.status === "Approved").length}
+
+                            </p>
+
+                          </div>
+
+                          <CheckCircle className="h-8 w-8 text-green-600" />
+
+                        </div>
+
+                      </CardContent>
+
+                    </Card>
+
+                    <Card className="w-full border-2 border-gray-200 shadow-md">
+
+                      <CardContent className="p-2 sm:p-6">
+
+                        <div className="flex items-center justify-between">
+
+                          <div>
+
+                            <p className="text-sm font-medium text-gray-600">Total Paid</p>
+
+                            <p className="text-2xl font-bold text-blue-600">
+
+                              {payoutRequests.filter(p => p.status === "Paid").length}
+
+                            </p>
+
+                          </div>
+
+                          <DollarSign className="h-8 w-8 text-blue-600" />
+
+                        </div>
+
+                      </CardContent>
+
+                    </Card>
+
+                  </div>
+
+
+
+                  {/* Payout Requests Table */}
+
+                  <div className="flex flex-col space-y-6 w-full">
+
+                    <Card className="w-full border-2 border-gray-200 shadow-md">
+
+                      <CardHeader>
+
+                        <CardTitle className="flex items-center space-x-2">
+
+                          <DollarSign className="h-5 w-5 text-green-600" />
+
+                          <span>Payout Requests</span>
+
+                        </CardTitle>
+
+                        <CardDescription>Manage vendor and rider payout requests</CardDescription>
+
+                      </CardHeader>
+
+                      <CardContent className="p-2 sm:p-6 w-full">
+
+                        <div className="overflow-x-auto w-full">
+
+                          <Table className="w-full">
+
+                            <TableHeader>
+
+                              <TableRow>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Request ID</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Requester</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Type</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Amount</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Bank Details</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Date</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Status</TableHead>
+
+                                <TableHead className="text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2">Actions</TableHead>
+
+                              </TableRow>
+
+                            </TableHeader>
+
+                            <TableBody>
+
+                              {payoutRequests.map((request) => (
+
+                                <TableRow key={request.id}>
+
+                                  <TableCell className="font-medium">{request.id}</TableCell>
+
+                                  <TableCell>
+
+                                    <div>
+
+                                      <p className="font-medium">{request.requester}</p>
+
+                                      <p className="text-sm text-gray-500">{request.phone}</p>
+
+                                    </div>
+
+                                  </TableCell>
+
+                                  <TableCell>
+
+                                    <Badge className={request.type === "Vendor" ? "bg-blue-600" : "bg-orange-600"}>
+
+                                      {request.type}
+
+                                    </Badge>
+
+                                  </TableCell>
+
+                                  <TableCell className="font-bold text-green-600">{request.amount}</TableCell>
+
+                                  <TableCell className="text-sm text-gray-600">{request.bankDetails}</TableCell>
+
+                                  <TableCell>{request.requestDate}</TableCell>
+
+                                  <TableCell>
+
+                                    <Badge
+
+                                      className={
+
+                                        request.status === "Pending"
+
+                                          ? "bg-yellow-500"
+
+                                          : request.status === "Approved"
+
+                                          ? "bg-green-600"
+
+                                          : "bg-blue-600"
+
+                                      }
+
+                                    >
+
+                                      {request.status}
+
+                                    </Badge>
+
+                                  </TableCell>
+
+                                  <TableCell>
+
+                                    <div className="flex space-x-2">
+
+                                      {request.status === "Pending" && (
+
+                                        <>
+
+                                          <Button
+
+                                            size="sm"
+
+                                            className="bg-green-600 hover:bg-green-700"
+
+                                            onClick={() => handleApprovePayout(request.id)}
+
+                                          >
+
+                                            <CheckCircle className="h-4 w-4 mr-1" />
+
+                                            Approve
+
+                                          </Button>
+
+                                          <Button
+
+                                            size="sm"
+
+                                            variant="outline"
+
+                                            className="border-red-500 text-red-600 hover:bg-red-50"
+
+                                            onClick={() => handleRejectPayout(request.id)}
+
+                                          >
+
+                                            <XCircle className="h-4 w-4 mr-1" />
+
+                                            Reject
+
+                                          </Button>
+
+                                        </>
+
+                                      )}
+
+                                      {request.status === "Approved" && (
+
+                                        <Button
+
+                                          size="sm"
+
+                                          className="bg-blue-600 hover:bg-blue-700"
+
+                                          onClick={() => handleMarkAsPaid(request.id)}
+
+                                        >
+
+                                          <DollarSign className="h-4 w-4 mr-1" />
+
+                                          Mark Paid
+
+                                        </Button>
+
+                                      )}
+
+                                      <Button size="sm" variant="ghost">
+
+                                        <Eye className="h-4 w-4" />
+
+                                      </Button>
+
+                                    </div>
+
+                                  </TableCell>
+
+                                </TableRow>
+
+                              ))}
+
+                            </TableBody>
+
+                          </Table>
+
+                        </div>
+
+                      </CardContent>
+
+                    </Card>
+
+                  </div>
+
+                </TabsContent>
+
+
+
+                <TabsContent value="transactions" className="space-y-6">
+
+                  <div className="flex flex-col space-y-6 w-full">
+
+                    <Card className="w-full border-2 border-gray-200 shadow-md">
+
+                      <CardHeader>
+
+                        <CardTitle>Transaction History</CardTitle>
+
+                        <CardDescription>All vendor and rider payout activities</CardDescription>
+
+                      </CardHeader>
+
+                      <CardContent className="p-2 sm:p-6 w-full">
+
+                        <div className="overflow-x-auto w-full">
+
+                          <table className="w-full text-xs sm:text-sm">
+
+                            <thead>
+
+                              <tr>
+
+                                <th className="px-2 py-1 sm:px-4 sm:py-2 text-left">Date</th>
+
+                                <th className="px-2 py-1 sm:px-4 sm:py-2 text-left">User</th>
+
+                                <th className="px-2 py-1 sm:px-4 sm:py-2 text-left">Type</th>
+
+                                <th className="px-2 py-1 sm:px-4 sm:py-2 text-left">Amount</th>
+
+                                <th className="px-2 py-1 sm:px-4 sm:py-2 text-left">Status</th>
+
+                                <th className="px-2 py-1 sm:px-4 sm:py-2 text-left">Reference</th>
+
+                              </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                              {[
+
+                                { date: "2024-01-16", user: "Fresh Harvest", type: "Vendor", amount: "KSh 8,750", status: "Pending", ref: "PAY-001" },
+
+                                { date: "2024-01-16", user: "Peter Ochieng", type: "Rider", amount: "KSh 3,450", status: "Pending", ref: "PAY-002" },
+
+                                { date: "2024-01-15", user: "Kiprotich Fresh Produce", type: "Vendor", amount: "KSh 5,200", status: "Approved", ref: "PAY-003" },
+
+                                { date: "2024-01-15", user: "David Kiprop", type: "Rider", amount: "KSh 2,800", status: "Paid", ref: "PAY-004" },
+
+                                { date: "2024-01-14", user: "Fresh Harvest", type: "Vendor", amount: "KSh 4,000", status: "Paid", ref: "PAY-000" },
+
+                              ].map((tx) => (
+
+                                <tr key={tx.ref}>
+
+                                  <td className="px-2 py-1 sm:px-4 sm:py-2">{tx.date}</td>
+
+                                  <td className="px-2 py-1 sm:px-4 sm:py-2">{tx.user}</td>
+
+                                  <td className="px-2 py-1 sm:px-4 sm:py-2">
+
+                                    <span className={`px-2 py-1 rounded text-xs font-semibold ${
+
+                                      tx.type === 'Vendor' ? 'bg-blue-100 text-blue-700' : 'bg-orange-100 text-orange-700'
+
+                                    }`}>
+
+                                      {tx.type}
+
+                                    </span>
+
+                                  </td>
+
+                                  <td className="px-2 py-1 sm:px-4 sm:py-2">{tx.amount}</td>
+
+                                  <td className="px-2 py-1 sm:px-4 sm:py-2">
+
+                                    <span className={`px-2 py-1 rounded text-xs font-semibold ${
+
+                                      tx.status === 'Paid' ? 'bg-green-100 text-green-700' : tx.status === 'Approved' ? 'bg-blue-100 text-blue-700' : 'bg-yellow-100 text-yellow-700'
+
+                                    }`}>
+
+                                      {tx.status}
+
+                                    </span>
+
+                                  </td>
+
+                                  <td className="px-2 py-1 sm:px-4 sm:py-2">{tx.ref}</td>
+
+                                </tr>
+
+                              ))}
+
+                            </tbody>
+
+                          </table>
+
+                        </div>
+
+                      </CardContent>
+
+                    </Card>
+
+                  </div>
+
+                </TabsContent>
+
+              </Tabs>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </>
+
+  )
+
+}
+
+
