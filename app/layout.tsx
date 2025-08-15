@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import ClientLayoutWithConditionalNavbar from '@/components/ClientLayoutWithConditionalNavbar'
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import SafeSpeedInsights from '@/components/SafeSpeedInsights';
 import { LoyaltyProvider } from '@/components/LoyaltyContext';
 
 export const metadata: Metadata = {
@@ -37,7 +37,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </ClientLayoutWithConditionalNavbar>
         </LoyaltyProvider>
-        <SpeedInsights />
+        {/* Safe Speed Insights that won't cause ad blocker errors */}
+        <SafeSpeedInsights />
       </body>
     </html>
   );
