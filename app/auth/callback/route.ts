@@ -108,6 +108,24 @@ export async function GET(request: NextRequest) {
           } else {
             console.log('Rider profile created successfully')
           }
+        } else if (userRole === 'customer') {
+          console.log('Creating customer profile...')
+          const { error: customerError } = await supabase.from('customers').insert({
+            user_id: user.id,
+            first_name: user.user_metadata?.full_name?.split(' ')[0] || user.user_metadata?.name?.split(' ')[0] || 'Customer',
+            last_name: user.user_metadata?.full_name?.split(' ').slice(1).join(' ') || user.user_metadata?.name?.split(' ').slice(1).join(' ') || 'User',
+            phone: user.user_metadata?.phone || '',
+            address: user.user_metadata?.address || '',
+            city: user.user_metadata?.city || 'Nairobi',
+            country: user.user_metadata?.country || 'Kenya'
+          })
+          
+          if (customerError) {
+            console.error('Customer profile creation error:', customerError)
+            // Don't fail the entire process, just log the error
+          } else {
+            console.log('Customer profile created successfully')
+          }
         }
       } else {
         // This is an existing user - use their existing role

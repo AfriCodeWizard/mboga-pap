@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
 import { getSupabaseClient } from "@/lib/supabase"
+import { getAuthCallbackUrl } from "@/lib/auth-config"
 import { useRouter } from "next/navigation"
 
 type UserRole = "customer" | "vendor" | "rider"
@@ -75,6 +76,7 @@ export default function SignUpPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
     if (!selectedRole) {
       alert("Please select your role first")
       return
@@ -92,12 +94,22 @@ export default function SignUpPage() {
         throw new Error('Supabase client not available. Please try again.')
       }
 
+      console.log('🚀 Starting signup process for:', formData.email, 'Role:', selectedRole)
+      console.log('📧 Email validation check:', formData.email)
+      console.log('🔑 Password length:', formData.password.length)
+
+      // Validate email format before sending to Supabase
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(formData.email)) {
+        throw new Error('Please enter a valid email address')
+      }
+
       // Create user with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: formData.email,
+        email: formData.email.trim().toLowerCase(), // Normalize email
         password: formData.password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback?role=${selectedRole}`,
+          emailRedirectTo: getAuthCallbackUrl(selectedRole),
           data: {
             full_name: `${formData.firstName} ${formData.lastName}`,
             role: selectedRole,
@@ -109,16 +121,36 @@ export default function SignUpPage() {
         }
       })
 
+      console.log('📤 Supabase signup response:', { authData, authError })
+
       if (authError) {
-        throw authError
+        console.error('❌ Supabase auth error details:', {
+          message: authError.message,
+          status: authError.status,
+          name: authError.name
+        })
+        
+        // Handle specific error types
+        if (authError.message.includes('Email address') && authError.message.includes('invalid')) {
+          throw new Error('Email address format is invalid. Please check your email and try again.')
+        } else if (authError.message.includes('already registered')) {
+          throw new Error('This email is already registered. Please try logging in instead.')
+        } else if (authError.message.includes('password')) {
+          throw new Error('Password requirements not met. Please use a stronger password.')
+        } else {
+          throw new Error(`Signup failed: ${authError.message}`)
+        }
       }
 
       if (authData.user) {
+        console.log('✅ User created successfully:', authData.user.id)
         // Don't create profiles here - let the auth callback handle it
         // The user will receive a confirmation email and click the link
         // The auth callback will create the profiles when they confirm
         alert(`Account created successfully as ${selectedRole}! Please check your email to verify your account.`)
         router.push('/login')
+      } else {
+        throw new Error('User creation failed - no user data returned')
       }
     } catch (error: any) {
       console.error('Signup error:', error)
@@ -145,7 +177,7 @@ export default function SignUpPage() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?role=${selectedRole}`,
+          redirectTo: getAuthCallbackUrl(selectedRole),
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',

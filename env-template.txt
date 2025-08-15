@@ -1,0 +1,16 @@
+# Supabase Configuration
+# Copy these lines to a new file called .env.local in your project root
+
+NEXT_PUBLIC_SUPABASE_URL=https://xdjyshmyeivebsrmrayj.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkanlzaG15ZWl2ZWJzcm1yYXlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQzMDQ2NzAsImV4cCI6MjA2OTg4MDY3MH0.B8qmQTcGKO3F3-BB19V36cTT6HUllN4S6LLaE7KbtCk
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkanlzaG15ZWl2ZWJzcm1yYXlqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NDMwNDY3MCwiZXhwIjoyMDY5ODgwNjcwfQ.dbqMB49qQmYFuXhCWts89rUFmkahX0-FeZ26R-YYz6U
+
+# Instructions:
+# 1. Create a new file called .env.local in your project root
+# 2. Copy the three lines above into that file
+# 3. Make sure the values match your Supabase project
+# 4. Restart your development server after creating the file
+# 5. The middleware should now work without the environment variable error
+
+
+

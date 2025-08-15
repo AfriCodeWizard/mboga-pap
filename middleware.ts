@@ -29,6 +29,11 @@ export async function middleware(req: NextRequest) {
       return res
     }
 
+    // Skip middleware for login and signup pages to prevent redirect loops
+    if (req.nextUrl.pathname === '/login' || req.nextUrl.pathname === '/signup') {
+      return res
+    }
+
     // Protected routes that require authentication
     const protectedRoutes = ['/dashboard', '/vendor-dashboard', '/rider-dashboard', '/admin']
     const isProtectedRoute = protectedRoutes.some(route => req.nextUrl.pathname.startsWith(route))

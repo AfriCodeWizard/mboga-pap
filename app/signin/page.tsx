@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { supabase } from "@/lib/supabase"
+import { getAuthCallbackUrl } from "@/lib/auth-config"
 import { useRouter } from "next/navigation"
 
 type UserRole = "customer" | "vendor" | "rider"
@@ -78,7 +79,7 @@ export default function SignInPage() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?role=${selectedRole}`,
+          redirectTo: getAuthCallbackUrl(selectedRole),
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',

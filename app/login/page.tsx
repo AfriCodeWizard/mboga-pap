@@ -13,6 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import Head from "next/head";
 import { useRouter } from "next/navigation"
 import { getSupabaseClient } from "@/lib/supabase"
+import { getAuthCallbackUrl } from "@/lib/auth-config"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -31,10 +32,48 @@ export default function LoginPage() {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
+    // Check for demo credentials first
+    const validCredentials = [
+      { email: "customer@demo.com", password: "demo123", role: "customer" },
+      { email: "vendor@demo.com", password: "demo123", role: "vendor" },
+      { email: "rider@demo.com", password: "demo123", role: "rider" },
+      { email: "admin@demo.com", password: "demo123", role: "admin" },
+    ]
+
+    const demoUser = validCredentials.find((cred) => 
+      cred.email === formData.email && cred.password === formData.password
+    )
+
+    if (demoUser) {
+      console.log('🎭 Demo login detected for role:', demoUser.role)
+      
+      // Handle demo login with simple redirect
+      switch (demoUser.role) {
+        case "customer":
+          console.log('🔄 Redirecting to customer dashboard')
+          window.location.href = "/dashboard"
+          break
+        case "vendor":
+          console.log('🔄 Redirecting to vendor dashboard')
+          window.location.href = "/vendor-dashboard"
+          break
+        case "rider":
+          console.log('🔄 Redirecting to rider dashboard')
+          window.location.href = "/rider-dashboard"
+          break
+        case "admin":
+          console.log('🔄 Redirecting to admin dashboard')
+          window.location.href = "/admin"
+          break
+      }
+      return
+    }
+
+    // If not demo, try Supabase authentication
     try {
       const supabase = getSupabaseClient()
       if (!supabase) {
@@ -42,51 +81,21 @@ export default function LoginPage() {
         return
       }
 
-      // Try Supabase authentication first
       const { data, error: authError } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       })
 
       if (authError) {
-        // If Supabase auth fails, check if it's a demo account
-        const validCredentials = [
-          { email: "customer@demo.com", password: "demo123", role: "customer" },
-          { email: "vendor@demo.com", password: "demo123", role: "vendor" },
-          { email: "rider@demo.com", password: "demo123", role: "rider" },
-          { email: "admin@demo.com", password: "demo123", role: "admin" },
-        ]
-
-        const demoUser = validCredentials.find((cred) => 
-          cred.email === formData.email && cred.password === formData.password
-        )
-
-        if (demoUser) {
-          // Handle demo login
-          switch (demoUser.role) {
-            case "customer":
-              router.push("/dashboard")
-              break
-            case "vendor":
-              router.push("/vendor-dashboard")
-              break
-            case "rider":
-              router.push("/rider-dashboard")
-              break
-            case "admin":
-              router.push("/admin")
-              break
-          }
-          return
-        } else {
-          // Real authentication failed
-          setError(authError.message || "Invalid credentials")
-          return
-        }
+        console.error('❌ Supabase auth failed:', authError.message)
+        setError(authError.message || "Invalid credentials")
+        return
       }
 
       // Supabase authentication successful
       if (data.user) {
+        console.log('✅ Supabase auth successful for user:', data.user.id, data.user.email)
+        
         // Get user role from the database
         const { data: profile, error: profileError } = await supabase
           .from('users')
@@ -94,29 +103,43 @@ export default function LoginPage() {
           .eq('id', data.user.id)
           .single()
 
+        console.log('🔍 Profile fetch result:', { profile, profileError })
+
         if (profileError) {
-          console.error('Profile fetch error:', profileError)
+          console.error('❌ Profile fetch error:', profileError)
           // Default to customer dashboard if profile not found
-          router.push("/dashboard")
+          console.log('🔄 Redirecting to customer dashboard (fallback)')
+          window.location.href = "/dashboard"
           return
         }
 
-        // Redirect based on user role
-        switch (profile.role) {
+        console.log('🎯 User role detected:', profile.role, 'Type:', typeof profile.role)
+
+        // Redirect based on user role - handle both string and ENUM types
+        const userRole = String(profile.role).toLowerCase()
+        console.log('🔄 Normalized role:', userRole)
+        
+        // Use window.location.href for immediate redirect
+        switch (userRole) {
           case "customer":
-            router.push("/dashboard")
+            console.log('🔄 Redirecting to customer dashboard')
+            window.location.href = "/dashboard"
             break
           case "vendor":
-            router.push("/vendor-dashboard")
+            console.log('🔄 Redirecting to vendor dashboard')
+            window.location.href = "/vendor-dashboard"
             break
           case "rider":
-            router.push("/rider-dashboard")
+            console.log('🔄 Redirecting to rider dashboard')
+            window.location.href = "/rider-dashboard"
             break
           case "admin":
-            router.push("/admin")
+            console.log('🔄 Redirecting to admin dashboard')
+            window.location.href = "/admin"
             break
           default:
-            router.push("/dashboard")
+            console.log('🔄 Redirecting to customer dashboard (default)')
+            window.location.href = "/dashboard"
         }
       }
     } catch (err: any) {
@@ -138,7 +161,7 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: 'https://mbogapap.vercel.app/auth/callback'
+          redirectTo: getAuthCallbackUrl()
         }
       })
 

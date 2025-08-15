@@ -1,7 +1,8 @@
 import { config } from 'dotenv'
+import path from 'path'
 
 // Load environment variables from .env.local
-config({ path: '.env.local' })
+config({ path: path.join(process.cwd(), '.env.local') })
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -14,11 +15,15 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Ensure environment variables are available
+  // Ensure environment variables are available at build time
   env: {
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
+  },
+  // Ensure environment variables are loaded before build
+  experimental: {
+    serverComponentsExternalPackages: ['@supabase/supabase-js'],
   },
 }
 

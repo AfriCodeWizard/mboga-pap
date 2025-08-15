@@ -9,7 +9,9 @@
     "start": "next start",
     "test": "jest",
     "check-env": "node scripts/check-env.js",
-    "build-safe": "node scripts/build-check.js"
+    "build-safe": "node scripts/build-check.js",
+    "verify-setup": "node scripts/verify-setup.js",
+    "quick-start": "node scripts/quick-start.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
