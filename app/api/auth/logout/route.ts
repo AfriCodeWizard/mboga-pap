@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // Sign out the user
+    // Sign out the user from Supabase
     const { error } = await supabase.auth.signOut()
     
     if (error) {
@@ -23,16 +23,35 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Clear any session cookies
+    // Create response with success message
     const response = NextResponse.json(
       { message: 'Logged out successfully' },
       { status: 200 }
     )
 
-    // Clear auth cookies
-    response.cookies.delete('sb-access-token')
-    response.cookies.delete('sb-refresh-token')
-    response.cookies.delete('demo-user')
+    // Clear all possible auth cookies
+    const cookiesToDelete = [
+      'sb-access-token',
+      'sb-refresh-token',
+      'sb-auth-token',
+      'supabase-auth-token',
+      'demo-user',
+      'demo-role',
+      'auth-token',
+      'session',
+      'user-session'
+    ]
+
+    cookiesToDelete.forEach(cookieName => {
+      response.cookies.delete(cookieName)
+    })
+
+    // Set additional headers to prevent caching
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate')
+    response.headers.set('Pragma', 'no-cache')
+    response.headers.set('Expires', '0')
+    
+    console.log('✅ Logout successful - all cookies and sessions cleared')
     
     return response
   } catch (error) {
