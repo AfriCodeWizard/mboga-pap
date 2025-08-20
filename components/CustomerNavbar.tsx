@@ -97,16 +97,10 @@ export default function CustomerNavbar() {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <button
-                onClick={() => router.push('/vendors')}
+                onClick={() => router.push('/dashboard')}
                 className="text-gray-700 hover:text-[color:var(--color-primary)] px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
-                Vendors
-              </button>
-              <button
-                onClick={() => router.push('/track')}
-                className="text-gray-700 hover:text-[color:var(--color-primary)] px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Track Order
+                Dashboard
               </button>
             </div>
           </div>
@@ -124,11 +118,15 @@ export default function CustomerNavbar() {
               variant="ghost"
               size="sm"
               className="relative"
-              onClick={() => router.push('/dashboard')}
+              onClick={() => {
+                // Open cart drawer instead of redirecting
+                const event = new CustomEvent('openCartDrawer');
+                window.dispatchEvent(event);
+              }}
             >
               <ShoppingCart className="h-5 w-5" />
               {cartItemCount > 0 && (
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+                <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-[color:var(--color-primary)] text-white">
                   {cartItemCount}
                 </Badge>
               )}
@@ -205,21 +203,12 @@ export default function CustomerNavbar() {
             <div className="px-2 pt-2 pb-3 space-y-1">
               <button
                 onClick={() => {
-                  router.push('/vendors')
+                  router.push('/dashboard')
                   setIsMenuOpen(false)
                 }}
                 className="text-gray-700 hover:text-[color:var(--color-primary)] block px-3 py-2 rounded-md text-base font-medium transition-colors"
               >
-                Vendors
-              </button>
-              <button
-                onClick={() => {
-                  router.push('/track')
-                  setIsMenuOpen(false)
-                }}
-                className="text-gray-700 hover:text-[color:var(--color-primary)] block px-3 py-2 rounded-md text-base font-medium transition-colors"
-              >
-                Track Order
+                Dashboard
               </button>
               <button
                 onClick={() => {

@@ -298,6 +298,18 @@ const DashboardContent = () => {
       }));
     }, 30000); // Update every 30 seconds
 
+    // Listen for cart drawer open events
+    const handleOpenCart = () => {
+      setCartDrawerOpen(true);
+    };
+
+    window.addEventListener('openCartDrawer', handleOpenCart);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('openCartDrawer', handleOpenCart);
+    };
+
     return () => clearInterval(interval);
   }, []);
 
@@ -400,26 +412,57 @@ const DashboardContent = () => {
       </div>
       
       <div className="container mx-auto px-4 py-6">
-        {/* Header Section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[color:var(--color-primary)] mb-2">
-            Welcome back, {getUserFirstName()}!
-          </h1>
-          <p className="text-gray-600">Discover fresh vegetables from local vendors</p>
+        {/* Enhanced Header Section */}
+        <div className="mb-8 relative">
+          <div className="bg-gradient-to-r from-[color:var(--color-primary)]/10 to-[color:var(--color-accent)]/10 rounded-2xl p-6 border border-[color:var(--color-primary)]/20">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-accent)] bg-clip-text text-transparent mb-2">
+                  Welcome back, {getUserFirstName()}! 👋
+                </h1>
+                <p className="text-gray-600 text-lg">Discover fresh vegetables from local vendors</p>
+                <div className="flex items-center space-x-4 mt-3">
+                  <div className="flex items-center space-x-2 text-sm text-gray-600">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span>Live updates enabled</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-sm text-gray-600">
+                    <Clock className="h-4 w-4" />
+                    <span>{currentTime.toLocaleTimeString()}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 sm:mt-0">
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-[color:var(--color-primary)]/20">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-[color:var(--color-primary)]">
+                      {activeDeliveries.length}
+                    </div>
+                    <div className="text-sm text-gray-600">Active Orders</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Loyalty Points Display */}
-        <Card className="mb-6 border-2 border-[color:var(--color-primary)]/20 shadow-lg bg-gradient-to-r from-[color:var(--color-primary)]/5 to-[color:var(--color-accent)]/5">
-          <CardContent className="p-4 sm:p-6">
+        {/* Enhanced Loyalty Points Display */}
+        <Card className="mb-6 border-2 border-[color:var(--color-primary)]/20 shadow-xl bg-gradient-to-br from-[color:var(--color-primary)]/5 via-[color:var(--color-accent)]/5 to-[color:var(--color-primary)]/10 rounded-2xl overflow-hidden">
+          <CardContent className="p-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[color:var(--color-accent)] to-[color:var(--color-primary)] rounded-full flex items-center justify-center shadow-lg">
-                  <Star className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-            </div>
+              <div className="flex items-center space-x-4">
+                <div className="relative">
+                  <div className="w-14 h-14 bg-gradient-to-br from-[color:var(--color-accent)] to-[color:var(--color-primary)] rounded-full flex items-center justify-center shadow-lg">
+                    <Star className="h-7 w-7 text-white" />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
+                    <span className="text-xs font-bold text-white">★</span>
+                  </div>
+                </div>
                 <div>
-                  <h3 className="text-base sm:text-lg font-bold text-[color:var(--color-primary)]">Loyalty Points</h3>
-                  <p className="text-xs sm:text-sm text-gray-600">Earn 1 point for every KSh 10 spent</p>
-            </div>
+                  <h3 className="text-xl font-bold bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-accent)] bg-clip-text text-transparent">Loyalty Points</h3>
+                  <p className="text-sm text-gray-600">Earn 1 point for every KSh 10 spent</p>
+                </div>
               </div>
               
               <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-6">
@@ -694,26 +737,31 @@ const DashboardContent = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <Card className="border-2 border-[color:var(--color-primary)]/20 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group">
+                  <Card className="border-2 border-[color:var(--color-primary)]/20 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group bg-gradient-to-br from-white to-[color:var(--color-primary)]/5 rounded-2xl overflow-hidden hover:border-[color:var(--color-primary)]/30">
                     <CardHeader className="pb-3">
                       <div className="flex items-start justify-between">
-                        <div className="flex items-center space-x-3">
-                          <Avatar className="h-12 w-12">
-                            <AvatarImage src={vendor.image} alt={vendor.name} />
-                            <AvatarFallback className="bg-[color:var(--color-primary)]/10 text-[color:var(--color-primary)]">
-                              {vendor.name.split(' ').map(n => n[0]).join('')}
-                            </AvatarFallback>
-                          </Avatar>
-              <div>
-                            <CardTitle className="text-lg group-hover:text-[color:var(--color-primary)] transition-colors">
+                        <div className="flex items-center space-x-4">
+                          <div className="relative">
+                            <Avatar className="h-14 w-14 ring-2 ring-[color:var(--color-primary)]/20">
+                              <AvatarImage src={vendor.image} alt={vendor.name} />
+                              <AvatarFallback className="bg-gradient-to-br from-[color:var(--color-primary)]/10 to-[color:var(--color-accent)]/10 text-[color:var(--color-primary)] font-bold">
+                                {vendor.name.split(' ').map(n => n[0]).join('')}
+                              </AvatarFallback>
+                            </Avatar>
+                            {vendor.isOpen && (
+                              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                            )}
+                          </div>
+                          <div>
+                            <CardTitle className="text-xl group-hover:text-[color:var(--color-primary)] transition-colors font-bold">
                               {vendor.name}
                             </CardTitle>
-                            <div className="flex items-center space-x-1 text-sm text-gray-600">
-                              <MapPin className="h-3 w-3" />
+                            <div className="flex items-center space-x-2 text-sm text-gray-600">
+                              <MapPin className="h-4 w-4 text-[color:var(--color-primary)]" />
                               <span>{vendor.location}</span>
-              </div>
-              </div>
-              </div>
+                            </div>
+                          </div>
+                        </div>
                         <div className="flex flex-col items-end space-y-1">
                           <Button
                             variant="ghost"
