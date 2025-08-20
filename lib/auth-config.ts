@@ -14,3 +14,15 @@ export const getAuthCallbackUrl = (role?: string) => {
   return role ? `${baseUrl}?role=${role}` : baseUrl
 }
 
+export const getVerificationUrl = () => {
+  return getAuthRedirectUrl('/auth/verify')
+}
+
+export const getLoginUrl = () => {
+  return getAuthRedirectUrl('/login')
+}
+
+export const getSignupUrl = () => {
+  return getAuthRedirectUrl('/signup')
+}
+

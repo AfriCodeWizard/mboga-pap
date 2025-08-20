@@ -137,7 +137,7 @@ export default function LoginPage() {
         console.log('✅ User metadata:', data.user.user_metadata)
         
         // Get user role from the database
-        const { data: profile, error: profileError } = await supabase
+        let { data: profile, error: profileError } = await supabase
           .from('users')
           .select('role')
           .eq('id', data.user.id)
@@ -145,7 +145,57 @@ export default function LoginPage() {
 
         console.log('🔍 Profile fetch result:', { profile, profileError })
 
-        if (profileError) {
+        // If profile doesn't exist, create one with default role
+        if (profileError && profileError.code === 'PGRST116') {
+          console.log('🆕 User profile not found, creating default profile...')
+          
+          try {
+            // Create a default user profile with 'customer' role
+            const { error: createError } = await supabase
+              .from('users')
+              .insert({
+                id: data.user.id,
+                email: data.user.email,
+                full_name: data.user.user_metadata?.full_name || data.user.user_metadata?.name || 'User',
+                role: 'customer', // Default role
+                phone: data.user.user_metadata?.phone || '',
+                address: data.user.user_metadata?.address || '',
+                city: 'Nairobi',
+                country: 'Kenya',
+                is_active: true
+              })
+
+            if (createError) {
+              console.error('❌ Failed to create user profile:', createError)
+              // Continue with default role
+              profile = { role: 'customer' }
+            } else {
+              console.log('✅ User profile created successfully')
+              profile = { role: 'customer' }
+              
+              // Also create customer profile
+              const { error: customerError } = await supabase.from('customers').insert({
+                user_id: data.user.id,
+                first_name: data.user.user_metadata?.full_name?.split(' ')[0] || data.user.user_metadata?.name?.split(' ')[0] || 'Customer',
+                last_name: data.user.user_metadata?.full_name?.split(' ').slice(1).join(' ') || data.user.user_metadata?.name?.split(' ').slice(1).join(' ') || 'User',
+                phone: data.user.user_metadata?.phone || '',
+                address: data.user.user_metadata?.address || '',
+                city: data.user.user_metadata?.city || 'Nairobi',
+                country: data.user.user_metadata?.country || 'Kenya'
+              })
+              
+              if (customerError) {
+                console.error('❌ Customer profile creation error:', customerError)
+              } else {
+                console.log('✅ Customer profile created successfully')
+              }
+            }
+          } catch (createErr) {
+            console.error('❌ Error creating user profile:', createErr)
+            // Continue with default role
+            profile = { role: 'customer' }
+          }
+        } else if (profileError) {
           console.error('❌ Profile fetch error:', profileError)
           console.error('❌ Profile error details:', {
             message: profileError.message,
@@ -165,6 +215,11 @@ export default function LoginPage() {
           return
         }
 
+        if (!profile) {
+          console.log('🔄 No profile data, using default customer role')
+          profile = { role: 'customer' }
+        }
+
         console.log('🎯 User role detected:', profile.role, 'Type:', typeof profile.role)
 
         // Redirect based on user role - handle both string and ENUM types
@@ -172,52 +227,41 @@ export default function LoginPage() {
         console.log('🔄 Normalized role:', userRole)
         
         // Use router.push for better navigation
+        let redirectUrl = "/dashboard" // Default
+        
+        switch (userRole) {
+          case "customer":
+            redirectUrl = "/dashboard"
+            break
+          case "vendor":
+            redirectUrl = "/vendor-dashboard"
+            break
+          case "rider":
+            redirectUrl = "/rider-dashboard"
+            break
+          case "admin":
+            redirectUrl = "/admin"
+            break
+          default:
+            redirectUrl = "/dashboard"
+        }
+        
+        console.log('🔄 Redirecting to:', redirectUrl, 'for role:', userRole)
+        
+        // Use router.push for better navigation
         try {
-          switch (userRole) {
-            case "customer":
-              console.log('🔄 Redirecting to customer dashboard')
-              await router.push("/dashboard")
-              break
-            case "vendor":
-              console.log('🔄 Redirecting to vendor dashboard')
-              await router.push("/vendor-dashboard")
-              break
-            case "rider":
-              console.log('🔄 Redirecting to rider dashboard')
-              await router.push("/rider-dashboard")
-              break
-            case "admin":
-              console.log('🔄 Redirecting to admin dashboard')
-              await router.push("/admin")
-              break
-            default:
-              console.log('🔄 Redirecting to customer dashboard (default)')
-              await router.push("/dashboard")
-          }
-        } catch (redirectError) {
-          console.error('❌ Redirect error:', redirectError)
-          // Fallback to window.location
-          window.location.href = userRole === 'vendor' ? '/vendor-dashboard' : 
-                                userRole === 'rider' ? '/rider-dashboard' : 
-                                userRole === 'admin' ? '/admin' : '/dashboard'
+          await router.push(redirectUrl)
+        } catch (routerError) {
+          console.error('Router push failed, using window.location:', routerError)
+          window.location.href = redirectUrl
         }
       } else {
         console.error('❌ No user data returned from Supabase')
         setError('Authentication failed. Please try again.')
       }
     } catch (err: any) {
-      console.error('❌ Login error:', err)
-      console.error('❌ Error details:', {
-        message: err.message,
-        name: err.name,
-        stack: err.stack
-      })
-      
-      if (err.message.includes('fetch') || err.message.includes('network')) {
-        setError('Network error. Please check your internet connection.')
-      } else {
-        setError(err.message || 'An error occurred during login')
-      }
+      console.error('Login error:', err)
+      setError(err.message || 'An error occurred during login')
     } finally {
       setIsLoading(false)
     }
@@ -425,3 +469,4 @@ export default function LoginPage() {
     </>
   )
 }
+

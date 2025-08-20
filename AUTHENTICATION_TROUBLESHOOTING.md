@@ -1,142 +1,292 @@
 # Authentication Troubleshooting Guide
 
-## Current Issues Identified
+## Overview
+This guide helps you troubleshoot common authentication issues in the Mboga Pap application.
 
-1. **Email verification not being sent**
-2. **User records not being created in database**
-3. **"Wrong credentials" error after signup**
+## Quick Fixes
 
-## Step-by-Step Fix Process
+### 1. Email Verification Link Infinite Loading
 
-### Step 1: Verify Supabase Project Configuration
+**Problem**: User clicks email verification link but page loads indefinitely.
 
-1. **Go to your Supabase Dashboard** (https://supabase.com/dashboard)
-2. **Select your project**
-3. **Go to Authentication > Settings**
-4. **Check the following:**
+**Solutions**:
+- ✅ **Fixed**: Updated auth callback route with better error handling
+- ✅ **Fixed**: Added proper session management
+- ✅ **Fixed**: Improved redirect logic
 
-   - **Site URL**: Should be `http://localhost:3000` (for development)
-   - **Redirect URLs**: Should include `http://localhost:3000/auth/callback`
-   - **Email Templates**: Ensure email confirmation is enabled
-   - **SMTP Settings**: Check if SMTP is configured (optional but recommended)
+**Manual Check**:
+1. Check browser console for errors
+2. Verify Supabase environment variables are set
+3. Ensure auth callback URL is correct in Supabase settings
 
-### Step 2: Run Database Schema Setup
+### 2. Login Page Getting Stuck
 
-1. **Go to SQL Editor in Supabase Dashboard**
-2. **Run the `database/ensure-schema.sql` script**
-3. **This will create all necessary tables and policies**
+**Problem**: User tries to login but gets stuck on login page.
 
-### Step 3: Test Database Connection
+**Solutions**:
+- ✅ **Fixed**: Simplified login logic
+- ✅ **Fixed**: Better error handling
+- ✅ **Fixed**: Improved redirect mechanism
 
-1. **Run the `database/test-connection.sql` script**
-2. **Check if all tables exist and are accessible**
-3. **Verify RLS policies are in place**
+**Manual Check**:
+1. Check if user profile exists in database
+2. Verify user role is correctly set
+3. Check browser console for authentication errors
 
-### Step 4: Check Environment Variables
+### 3. User Profile Creation Issues
 
-Ensure your `.env.local` file contains:
+**Problem**: Users are created but profiles are not properly set up.
 
+**Solutions**:
+- ✅ **Fixed**: Enhanced auth callback to create profiles properly
+- ✅ **Fixed**: Added role-specific profile creation
+- ✅ **Fixed**: Better error handling for profile creation
+
+**Manual Check**:
+1. Check `users` table for user records
+2. Verify role-specific tables (`customers`, `vendors`, `rider_profiles`)
+3. Ensure user metadata contains role information
+
+### 4. Logout Not Working
+
+**Problem**: Users can't log out properly.
+
+**Solutions**:
+- ✅ **Fixed**: Created logout API route
+- ✅ **Fixed**: Enhanced navbar logout function
+- ✅ **Fixed**: Added cookie cleanup
+
+**Manual Check**:
+1. Test logout button functionality
+2. Verify session is cleared
+3. Check if user is redirected to home page
+
+## Environment Variables
+
+### Required Variables
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=https://xdjyshmyeivebsrmrayj.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkanlzaG15ZWl2ZWJzcm1yYXlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQzMDQ2NzAsImV4cCI6MjA2OTg4MDY3MH0.B8qmQTcGKO3F3-BB19V36cTT6HUllN4S6LLaE7KbtCk
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkanlzaG15ZWl2ZWJzcm1yYXlqIiwicnNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NDMwNDY3MCwiZXhwIjoyMDY5ODgwNjcwfQ.dbqMB49qQmYFuXhCWts89rUFmkahX0-FeZ26R-YYz6U
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 ```
 
-### Step 5: Restart Development Server
-
+### Optional Variables
 ```bash
-# Stop the current server (Ctrl+C)
-# Then restart
-npm run dev
+NEXT_PUBLIC_APP_URL=your_app_url
+CRON_SECRET=your_cron_secret
 ```
 
-### Step 6: Test the Signup Flow
+## Supabase Configuration
 
-1. **Open browser console** (F12)
-2. **Try to sign up with a new email**
-3. **Check console logs for any errors**
-4. **Check network tab for failed requests**
+### 1. Auth Settings
+- **Site URL**: `http://localhost:3000` (dev) or `https://mbogapap.vercel.app` (prod)
+- **Redirect URLs**: 
+  - `http://localhost:3000/auth/callback`
+  - `https://mbogapap.vercel.app/auth/callback`
+- **Email Confirmation**: Must be enabled
 
-## Common Issues and Solutions
+### 2. Email Templates
+Configure email templates in Supabase Auth settings:
+- **Confirmation Email**: Should include verification link
+- **Reset Password**: Should include reset link
 
-### Issue 1: "Email verification not sent"
+### 3. Database Tables
+Ensure these tables exist with correct schemas:
+- `users` - Main user profiles
+- `customers` - Customer-specific data
+- `vendors` - Vendor-specific data
+- `rider_profiles` - Rider-specific data
 
-**Possible Causes:**
-- Supabase email service not configured
-- SMTP settings missing
-- Email templates disabled
+## Testing Commands
 
-**Solutions:**
-1. Check Supabase Authentication > Settings > Email Templates
-2. Enable "Confirm signup" email template
-3. Configure SMTP if needed (optional)
+### Run Comprehensive Test
+```bash
+node scripts/test-auth-complete.js
+```
 
-### Issue 2: "User record not created"
+### Run Basic Test
+```bash
+node scripts/test-auth-flow.js
+```
 
-**Possible Causes:**
-- Database tables don't exist
-- RLS policies blocking inserts
-- Foreign key constraint violations
+### Check Environment
+```bash
+npm run check-env
+```
 
-**Solutions:**
-1. Run the `ensure-schema.sql` script
-2. Check RLS policies are correct
-3. Verify table structure
+## Common Error Messages
 
-### Issue 3: "Wrong credentials error"
+### "Supabase client not available"
+**Solution**: Check environment variables in `.env.local`
 
-**Possible Causes:**
-- User profile not created in `public.users` table
-- Auth callback failed
-- Database connection issues
+### "Email not confirmed"
+**Solution**: User needs to click email verification link
 
-**Solutions:**
-1. Check if user exists in `auth.users` (Supabase internal)
-2. Check if user profile exists in `public.users`
-3. Run the test connection script
+### "Invalid login credentials"
+**Solution**: Check email/password or verify account exists
 
-## Debugging Steps
+### "Profile creation failed"
+**Solution**: Check database permissions and table schemas
 
-### Check Console Logs
+### "Session exchange error"
+**Solution**: Check auth callback URL configuration
 
-Look for these messages in the browser console:
-- `"Starting signup process for role: ..."`
-- `"Signup successful, user created: ..."`
-- Any error messages
+## Manual Testing Steps
+
+### 1. Test Signup Flow
+1. Go to `/signup`
+2. Select a role (customer/vendor/rider)
+3. Fill in registration form
+4. Submit and check for success message
+5. Check email for verification link
+
+### 2. Test Email Verification
+1. Click verification link in email
+2. Should redirect to appropriate dashboard
+3. Check if user profile is created in database
+
+### 3. Test Login Flow
+1. Go to `/login`
+2. Enter credentials
+3. Should redirect to appropriate dashboard
+4. Check if session is maintained
+
+### 4. Test Logout Flow
+1. Click logout button
+2. Should clear session and redirect to home
+3. Try accessing protected routes (should redirect to login)
+
+### 5. Test Demo Users
+Use these demo credentials:
+- Customer: `customer@demo.com` / `demo123`
+- Vendor: `vendor@demo.com` / `demo123`
+- Rider: `rider@demo.com` / `demo123`
+- Admin: `admin@demo.com` / `demo123`
+
+## Debug Mode
+
+### Enable Debug Logging
+Add to your `.env.local`:
+```bash
+DEBUG=true
+```
+
+### Check Browser Console
+Look for these log messages:
+- `🔐 Auth callback triggered`
+- `✅ Session created successfully`
+- `🆕 Creating new user profile`
+- `🔄 Redirecting to dashboard`
 
 ### Check Network Tab
+Monitor these requests:
+- `/auth/callback` - Email verification
+- `/api/auth/logout` - Logout process
+- Supabase auth endpoints
 
-Look for:
-- Failed requests to Supabase
-- Error responses from auth endpoints
-- Database operation failures
+## Database Schema Issues
 
-### Check Supabase Dashboard
+### Check Table Structure
+```sql
+-- Check users table
+SELECT column_name, data_type, is_nullable 
+FROM information_schema.columns 
+WHERE table_name = 'users';
 
-1. **Authentication > Users**: See if users are being created
-2. **Table Editor**: Check if records exist in `public.users`
-3. **Logs**: Check for any error messages
+-- Check if user exists
+SELECT * FROM users WHERE email = 'user@example.com';
 
-## Testing the Fix
+-- Check role-specific tables
+SELECT * FROM customers WHERE user_id = 'user_id';
+SELECT * FROM vendors WHERE user_id = 'user_id';
+SELECT * FROM rider_profiles WHERE user_id = 'user_id';
+```
 
-After applying all fixes:
+### Common Schema Issues
+1. **Missing columns**: Ensure all required columns exist
+2. **Wrong data types**: Check column types match expected values
+3. **Foreign key constraints**: Verify relationships are correct
+4. **Permissions**: Ensure RLS policies allow necessary operations
 
-1. **Clear browser cache and cookies**
-2. **Try signing up with a new email**
-3. **Check if verification email is received**
-4. **Click the verification link**
-5. **Try signing in**
-6. **Check if user profile was created**
+## Performance Issues
 
-## If Issues Persist
+### Slow Authentication
+1. Check Supabase connection
+2. Monitor database query performance
+3. Verify environment variables are loaded quickly
 
-1. **Check Supabase project status** (https://status.supabase.com)
-2. **Verify your project is not in maintenance mode**
-3. **Check if you've hit any rate limits**
-4. **Contact Supabase support if needed**
+### Memory Leaks
+1. Check for unclosed Supabase connections
+2. Monitor session cleanup
+3. Verify proper component unmounting
 
-## Additional Resources
+## Security Considerations
 
+### Environment Variables
+- Never commit `.env.local` to version control
+- Use different keys for development and production
+- Rotate keys regularly
+
+### Session Management
+- Sessions expire automatically
+- Logout clears all session data
+- Demo users have limited session duration
+
+### Data Protection
+- User passwords are hashed by Supabase
+- Sensitive data is encrypted
+- RLS policies protect user data
+
+## Getting Help
+
+### Check Logs
+1. Browser console for client-side errors
+2. Network tab for request/response issues
+3. Supabase dashboard for server-side logs
+
+### Common Resources
 - [Supabase Auth Documentation](https://supabase.com/docs/guides/auth)
-- [Supabase RLS Guide](https://supabase.com/docs/guides/auth/row-level-security)
-- [Next.js Auth Helpers](https://supabase.com/docs/guides/auth/auth-helpers/nextjs)
+- [Next.js Authentication](https://nextjs.org/docs/authentication)
+- [Supabase JavaScript Client](https://supabase.com/docs/reference/javascript)
+
+### Support
+If issues persist:
+1. Run the comprehensive test script
+2. Check this troubleshooting guide
+3. Review Supabase dashboard settings
+4. Check environment variables
+5. Verify database schema
+
+## Recent Fixes Applied
+
+### ✅ Auth Callback Route
+- Improved error handling
+- Better session management
+- Enhanced profile creation
+- Fixed redirect logic
+
+### ✅ Login Page
+- Simplified authentication flow
+- Better error messages
+- Improved redirect handling
+- Enhanced profile creation for new users
+
+### ✅ Signup Page
+- Added role-specific metadata
+- Better email confirmation handling
+- Improved error messages
+- Fixed redirect logic
+
+### ✅ Logout Functionality
+- Created dedicated logout API
+- Enhanced navbar logout
+- Added cookie cleanup
+- Improved session management
+
+### ✅ Verification Page
+- Created dedicated verification page
+- Better user experience
+- Proper error handling
+- Success state management
+
+All authentication issues should now be resolved. If you encounter any problems, follow this troubleshooting guide or run the test scripts to identify the issue.

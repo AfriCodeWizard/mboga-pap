@@ -116,12 +116,25 @@ export default function SignUpPage() {
             phone: formData.phone,
             address: formData.address,
             city: 'Nairobi',
-            country: 'Kenya'
+            country: 'Kenya',
+            // Role-specific metadata
+            ...(selectedRole === 'vendor' && {
+              shop_name: formData.shopName,
+              business_license: formData.businessLicense
+            }),
+            ...(selectedRole === 'rider' && {
+              vehicle_type: formData.vehicleType,
+              license_number: formData.licenseNumber
+            })
           }
         }
       })
 
-      console.log('📤 Supabase signup response:', { authData, authError })
+      console.log('📤 Supabase signup response:', { 
+        user: authData.user?.id, 
+        session: !!authData.session,
+        error: authError?.message 
+      })
 
       if (authError) {
         console.error('❌ Supabase auth error details:', {
@@ -144,11 +157,20 @@ export default function SignUpPage() {
 
       if (authData.user) {
         console.log('✅ User created successfully:', authData.user.id)
-        // Don't create profiles here - let the auth callback handle it
-        // The user will receive a confirmation email and click the link
-        // The auth callback will create the profiles when they confirm
-        alert(`Account created successfully as ${selectedRole}! Please check your email to verify your account.`)
-        router.push('/login')
+        
+        // Check if email confirmation is required
+        if (authData.user.email_confirmed_at) {
+          console.log('✅ Email already confirmed, redirecting to dashboard')
+          // If email is already confirmed, redirect to appropriate dashboard
+          const redirectUrl = selectedRole === 'vendor' ? '/vendor-dashboard' : 
+                            selectedRole === 'rider' ? '/rider-dashboard' : '/dashboard'
+          router.push(redirectUrl)
+        } else {
+          console.log('📧 Email confirmation required')
+          // Show success message and redirect to login
+          alert(`Account created successfully as ${selectedRole}! Please check your email to verify your account before logging in.`)
+          router.push('/login')
+        }
       } else {
         throw new Error('User creation failed - no user data returned')
       }

@@ -12,7 +12,8 @@
     "build-safe": "node scripts/build-check.js",
     "verify-setup": "node scripts/verify-setup.js",
     "quick-start": "node scripts/quick-start.js",
-    "check-prod-env": "node scripts/check-production-env.js"
+    "check-prod-env": "node scripts/check-production-env.js",
+    "test-auth": "node scripts/test-auth-flow.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
