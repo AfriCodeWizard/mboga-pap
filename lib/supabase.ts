@@ -1,6 +1,4 @@
 import { createBrowserClient } from '@supabase/ssr'
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
 import { getSupabaseConfig } from './env'
 
 // Global variables to store the singleton instances
@@ -45,37 +43,8 @@ const createSupabaseAdminClient = () => {
   }
 }
 
-// Singleton getter functions
+// Singleton getter functions (client-side only)
 export const getSupabaseClient = () => {
-  if (typeof window === 'undefined') {
-    // Server-side: create server client
-    const cookieStore = cookies()
-    const config = getSupabaseConfig()
-    
-    if (!config.url || !config.anonKey) {
-      return null
-    }
-    
-    return createServerClient(config.url, config.anonKey, {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll()
-        },
-        setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            )
-          } catch {
-            // The `setAll` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
-          }
-        },
-      },
-    })
-  }
-  
   // Client-side: use singleton
   if (!supabaseClient) {
     supabaseClient = createSupabaseClient()
@@ -85,35 +54,6 @@ export const getSupabaseClient = () => {
 }
 
 export const getAdminClient = () => {
-  if (typeof window === 'undefined') {
-    // Server-side: create server client with service key
-    const cookieStore = cookies()
-    const config = getSupabaseConfig()
-    
-    if (!config.url || !config.serviceKey) {
-      return null
-    }
-    
-    return createServerClient(config.url, config.serviceKey, {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll()
-        },
-        setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            )
-          } catch {
-            // The `setAll` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
-          }
-        },
-      },
-    })
-  }
-  
   // Client-side: use singleton
   if (!supabaseAdminClient) {
     supabaseAdminClient = createSupabaseAdminClient()
@@ -122,9 +62,9 @@ export const getAdminClient = () => {
   return supabaseAdminClient
 }
 
-// Clean exports for direct use (only for client-side)
-export const supabase = typeof window !== 'undefined' ? getSupabaseClient() : null
-export const supabaseAdmin = typeof window !== 'undefined' ? getAdminClient() : null
+// Clean exports for direct use (client-side only)
+export const supabase = getSupabaseClient()
+export const supabaseAdmin = getAdminClient()
 
 // Helper functions
 export const isAdminAvailable = () => !!getAdminClient()
