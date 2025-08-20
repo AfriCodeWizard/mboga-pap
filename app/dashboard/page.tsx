@@ -195,7 +195,50 @@ const DashboardContent = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isOnline, setIsOnline] = useState(true);
   const [notifications, setNotifications] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { points, addPoints, redeemPoints } = useLoyalty();
+
+  // Fetch user data
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const { getSupabaseClient } = await import('@/lib/supabase');
+        const supabase = getSupabaseClient();
+        if (supabase) {
+          const { data: { user } } = await supabase.auth.getUser();
+          setUser(user);
+        }
+      } catch (error) {
+        console.error('Error checking user:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkUser();
+  }, []);
+
+  // Helper function to get user's first name
+  const getUserFirstName = () => {
+    if (!user) return 'there';
+    
+    // Try to get first name from user metadata
+    const fullName = user.user_metadata?.full_name || user.user_metadata?.name || '';
+    if (fullName) {
+      const firstName = fullName.split(' ')[0];
+      return firstName;
+    }
+    
+    // Fallback to email prefix
+    const email = user.email || '';
+    if (email) {
+      const emailPrefix = email.split('@')[0];
+      return emailPrefix;
+    }
+    
+    return 'there';
+  };
   
   // Real-time delivery state
   const [activeDeliveries, setActiveDeliveries] = useState([
@@ -359,7 +402,9 @@ const DashboardContent = () => {
       <div className="container mx-auto px-4 py-6">
         {/* Header Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[color:var(--color-primary)] mb-2">Welcome back, Jane!</h1>
+          <h1 className="text-3xl font-bold text-[color:var(--color-primary)] mb-2">
+            Welcome back, {getUserFirstName()}!
+          </h1>
           <p className="text-gray-600">Discover fresh vegetables from local vendors</p>
         </div>
 
