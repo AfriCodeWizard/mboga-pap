@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { MapPin, Clock, DollarSign, Star, Navigation, Phone, CheckCircle, CreditCard, Camera, Save, User, Truck, HelpCircle, Settings, Zap, TrendingUp, Award, Target, Activity, Bike, AlertCircle, CheckCircle2, XCircle, Play, Pause, RotateCcw, Shield, Heart, Gift, Sparkles, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -25,7 +25,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useRouter } from "next/navigation"
-import Head from "next/head"
+import { getSupabaseClient } from "@/lib/supabase"
+import { useToast } from "@/hooks/use-toast"
 
 const availableDeliveries = [
   {
@@ -82,34 +83,138 @@ export default function RiderDashboard() {
   const [selectedDelivery, setSelectedDelivery] = useState<any>(null)
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
   const [isOnline, setIsOnline] = useState(true)
+  const [user, setUser] = useState<any>(null)
+  const [userProfile, setUserProfile] = useState<any>(null)
+  const [riderProfile, setRiderProfile] = useState<any>(null)
+  const [isLoading, setIsLoading] = useState(true)
   const [paymentRequest, setPaymentRequest] = useState({
     amount: "",
     bankName: "M-Pesa",
-    phoneNumber: "+254 700 123 456",
-    accountName: "Peter Ochieng",
+    phoneNumber: "",
+    accountName: "",
   })
 
   // Profile modal state
   const [profileOpen, setProfileOpen] = useState(false)
   const [profile, setProfile] = useState({
-    name: "Peter Ochieng",
-    email: "rider@demo.com",
-    phone: "+254 700 123 456",
-    address: "Nairobi, Kenya",
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
   })
 
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [motorbikeInfoOpen, setMotorbikeInfoOpen] = useState(false);
   const [motorbike, setMotorbike] = useState({
-    make: "Bajaj Boxer",
-    model: "2022",
-    color: "Red",
-    plate: "KDA 123A",
+    make: "",
+    model: "",
+    color: "",
+    plate: "",
   });
 
   const router = useRouter();
+  const { toast } = useToast();
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [toastVisible, setToastVisible] = useState(false);
+
+  // Fetch user data on component mount
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const supabase = getSupabaseClient()
+        if (!supabase) {
+          console.error('Supabase client not available')
+          router.push('/login')
+          return
+        }
+
+        // Get current user session
+        const { data: { user }, error: userError } = await supabase.auth.getUser()
+        
+        if (userError || !user) {
+          console.error('No authenticated user found:', userError)
+          router.push('/login')
+          return
+        }
+
+        setUser(user)
+
+        // Get user profile from users table
+        const { data: userProfileData, error: profileError } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', user.id)
+          .single()
+
+        if (profileError) {
+          console.error('Error fetching user profile:', profileError)
+        } else {
+          setUserProfile(userProfileData)
+          
+          // Update profile state with real user data
+          setProfile({
+            name: userProfileData.full_name || user.email?.split('@')[0] || 'User',
+            email: user.email || '',
+            phone: userProfileData.phone || '',
+            address: userProfileData.address || '',
+          })
+
+          // Update payment request with user data
+          setPaymentRequest(prev => ({
+            ...prev,
+            phoneNumber: userProfileData.phone || '',
+            accountName: userProfileData.full_name || user.email?.split('@')[0] || 'User',
+          }))
+        }
+
+        // Get rider-specific profile
+        const { data: riderProfileData, error: riderError } = await supabase
+          .from('rider_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .single()
+
+        if (riderError) {
+          console.error('Error fetching rider profile:', riderError)
+        } else {
+          setRiderProfile(riderProfileData)
+          
+          // Update motorbike info with rider data
+          setMotorbike({
+            make: riderProfileData.vehicle_type || 'Motorcycle',
+            model: '2022',
+            color: 'Red',
+            plate: riderProfileData.vehicle_number || 'N/A',
+          })
+        }
+
+      } catch (error) {
+        console.error('Error fetching user data:', error)
+        router.push('/login')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchUserData()
+  }, [router])
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-[color:var(--color-accent)]/10 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[color:var(--color-primary)] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading your rider dashboard...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Redirect if no user
+  if (!user) {
+    return null
+  }
 
   const handleAcceptDelivery = (delivery: any) => {
     setToastMsg(`🚀 Delivery ${delivery.id} accepted! You're on your way!`);
@@ -126,14 +231,34 @@ export default function RiderDashboard() {
     setPaymentRequest({ ...paymentRequest, amount: "" })
   }
 
-  const handleLogout = () => {
-    // Clear demo user cookies if they exist
-    if (typeof document !== 'undefined') {
-      document.cookie = 'demo-user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-      document.cookie = 'demo-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+  const handleLogout = async () => {
+    try {
+      const supabase = getSupabaseClient()
+      if (supabase) {
+        await supabase.auth.signOut()
+        
+        // Clear demo user cookies if they exist
+        if (typeof document !== 'undefined') {
+          document.cookie = 'demo-user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+          document.cookie = 'demo-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+        }
+        
+        toast({
+          title: "Logged out successfully",
+          description: "You have been logged out of your account.",
+        })
+        
+        // Redirect to home page
+        router.push('/')
+      }
+    } catch (error) {
+      console.error('Logout error:', error)
+      toast({
+        title: "Logout failed",
+        description: "There was an error logging out. Please try again.",
+        variant: "destructive",
+      })
     }
-    // Handle logout logic
-    window.location.href = "/"
   }
 
   const handleNavigate = (address: string) => {
@@ -158,20 +283,7 @@ export default function RiderDashboard() {
   };
 
   return (
-    <>
-      <Head>
-        <title>Rider Dashboard | Mboga Pap!</title>
-        <meta name="description" content="Manage your deliveries, earnings, and profile as a rider on Mboga Pap!" />
-        <meta property="og:title" content="Rider Dashboard | Mboga Pap!" />
-        <meta property="og:description" content="Manage your deliveries, earnings, and profile as a rider on Mboga Pap!" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://mbongapap.co.ke/rider-dashboard" />
-        <meta property="og:image" content="/placeholder.jpg" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Rider Dashboard | Mboga Pap!" />
-        <meta name="twitter:description" content="Manage your deliveries, earnings, and profile as a rider on Mboga Pap!" />
-      </Head>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-[color:var(--color-accent)]/10">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-[color:var(--color-accent)]/10">
         {/* Header */}
         <header className="bg-white border-b shadow-sm">
           <div className="container mx-auto px-4 py-4">
@@ -207,7 +319,9 @@ export default function RiderDashboard() {
                 </div>
                 
                 <div className="text-right">
-                  <p className="text-sm font-medium text-[color:var(--color-primary)]">Peter Ochieng</p>
+                  <p className="text-sm font-medium text-[color:var(--color-primary)]">
+                    {userProfile?.full_name || user.email?.split('@')[0] || 'Rider'}
+                  </p>
                   <p className="text-xs text-gray-600">Bodaboda Rider</p>
                 </div>
                 <DropdownMenu>
@@ -215,15 +329,19 @@ export default function RiderDashboard() {
                     <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                       <Avatar className="h-8 w-8">
                         <AvatarImage src="/placeholder-user.jpg" alt="Rider" />
-                        <AvatarFallback>PO</AvatarFallback>
+                        <AvatarFallback>
+                          {(userProfile?.full_name || user.email?.split('@')[0] || 'R').charAt(0).toUpperCase()}
+                        </AvatarFallback>
                       </Avatar>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56 bg-[color:var(--color-accent)]/95 border-2 border-[color:var(--color-primary)] shadow-lg backdrop-blur-sm" align="end" forceMount>
                     <DropdownMenuLabel className="font-normal bg-[color:var(--color-primary)] text-white">
                       <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">Peter Ochieng</p>
-                        <p className="text-xs leading-none text-white/80">rider@demo.com</p>
+                        <p className="text-sm font-medium leading-none">
+                          {userProfile?.full_name || user.email?.split('@')[0] || 'Rider'}
+                        </p>
+                        <p className="text-xs leading-none text-white/80">{user.email}</p>
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
@@ -852,7 +970,6 @@ export default function RiderDashboard() {
           </div>
         )}
       </div>
-    </>
   )
 }
 

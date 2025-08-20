@@ -65,11 +65,26 @@ export async function middleware(request: NextRequest) {
   const protectedRoutes = ['/dashboard', '/vendor-dashboard', '/rider-dashboard', '/admin']
   const isProtectedRoute = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
 
+  // Prioritize real user sessions over demo accounts
   if (isProtectedRoute && !session && !isDemoUser) {
     // Redirect to login if trying to access protected route without session or demo user
     const redirectUrl = new URL('/login', request.url)
     redirectUrl.searchParams.set('redirect', request.nextUrl.pathname)
     return NextResponse.redirect(redirectUrl)
+  }
+
+  // If user has a real session, clear any demo cookies to prevent conflicts
+  if (session && isDemoUser) {
+    console.log('🔐 Real user session detected, clearing demo cookies')
+    const response = NextResponse.next({
+      request,
+    })
+    
+    // Clear demo cookies
+    response.cookies.set('demo-user', '', { maxAge: 0 })
+    response.cookies.set('demo-role', '', { maxAge: 0 })
+    
+    return response
   }
 
   // If user is authenticated and trying to access login/signup, redirect to appropriate dashboard
