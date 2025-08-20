@@ -32,15 +32,9 @@ export async function middleware(request: NextRequest) {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    console.error('Missing Supabase environment variables in middleware')
-    console.error('Available env vars:', {
-      NEXT_PUBLIC_SUPABASE_URL: !!supabaseUrl,
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: !!supabaseAnonKey,
-      NODE_ENV: process.env.NODE_ENV
-    })
+    console.warn('Missing Supabase environment variables in middleware')
     
-    // In production, if environment variables are missing, skip middleware and continue
-    // This prevents the app from crashing completely
+    // In production, we might want to continue without middleware
     if (process.env.NODE_ENV === 'production') {
       console.warn('Production: Skipping middleware due to missing env vars')
       return supabaseResponse
