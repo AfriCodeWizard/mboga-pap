@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ArrowLeft, Mail, Lock, Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -11,13 +11,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import Head from "next/head";
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { getSupabaseClient } from "@/lib/supabase"
 import { getAuthCallbackUrl } from "@/lib/auth-config"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isCheckingSession, setIsCheckingSession] = useState(true)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -25,6 +26,55 @@ export default function LoginPage() {
   })
   const [error, setError] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Check for existing session on component mount
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const supabase = getSupabaseClient()
+        if (!supabase) {
+          setIsCheckingSession(false)
+          return
+        }
+
+        const { data: { session }, error } = await supabase.auth.getSession()
+        
+        if (error) {
+          console.error('Session check error:', error)
+          setIsCheckingSession(false)
+          return
+        }
+
+        if (session?.user) {
+          console.log('✅ User already authenticated:', session.user.email)
+          
+          // Get user role and redirect
+          const { data: profile } = await supabase
+            .from('users')
+            .select('role')
+            .eq('id', session.user.id)
+            .single()
+
+          const userRole = profile?.role || 'customer'
+          const redirectUrl = userRole === 'vendor' ? '/vendor-dashboard' : 
+                             userRole === 'rider' ? '/rider-dashboard' : 
+                             userRole === 'admin' ? '/admin' : '/dashboard'
+          
+          console.log('🔄 Redirecting authenticated user to:', redirectUrl)
+          router.replace(redirectUrl)
+          return
+        }
+
+        setIsCheckingSession(false)
+      } catch (error) {
+        console.error('Session check failed:', error)
+        setIsCheckingSession(false)
+      }
+    }
+
+    checkSession()
+  }, [router])
 
   // Function to set demo user cookie
   const setDemoUserCookie = (role: string) => {
@@ -288,6 +338,18 @@ export default function LoginPage() {
     } catch (err: any) {
       setError(err.message || 'An error occurred during OAuth sign in')
     }
+  }
+
+  // Show loading while checking session
+  if (isCheckingSession) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-2 text-gray-600">Checking authentication...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
