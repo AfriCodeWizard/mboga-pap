@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Plus, Package, TrendingUp, Clock, Star, Edit, Trash2, Eye, DollarSign, CreditCard, User, Settings, BarChart3, HelpCircle, MapPin, Phone, Mail, Camera, Save, Download, Calendar, Target, Award, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -28,6 +28,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
+import { useRouter } from "next/navigation"
+import { getSupabaseClient } from "@/lib/supabase"
+import { useToast } from "@/hooks/use-toast"
 
 const products = [
   {
@@ -63,6 +66,10 @@ export default function VendorDashboard() {
   const [selectedTab, setSelectedTab] = useState("dashboard")
   const [isAddProductOpen, setIsAddProductOpen] = useState(false)
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
+  const [user, setUser] = useState<any>(null)
+  const [userProfile, setUserProfile] = useState<any>(null)
+  const [vendorProfile, setVendorProfile] = useState<any>(null)
+  const [isLoading, setIsLoading] = useState(true)
   const [orders, setOrders] = useState([
   {
     id: "ORD-001",
@@ -99,27 +106,27 @@ export default function VendorDashboard() {
   const [paymentRequest, setPaymentRequest] = useState({
     amount: "",
     bankName: "Equity Bank",
-    accountNumber: "1234567890",
-    accountName: "Fresh Harvest",
-    phoneNumber: "+254 700 123 456",
+    accountNumber: "",
+    accountName: "",
+    phoneNumber: "",
   })
   
   // Profile state
   const [profile, setProfile] = useState({
-    name: "Fresh Harvest",
-    email: "grace@demo.com",
-    phone: "+254 700 123 456",
-    address: "Westlands Market, Nairobi",
-    bio: "Fresh vegetables and fruits from local farms. Quality guaranteed!",
-    businessLicense: "BL123456789",
-    yearsInBusiness: "8",
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    bio: "",
+    businessLicense: "",
+    yearsInBusiness: "",
   })
   
   // Shop settings state
   const [shopSettings, setShopSettings] = useState({
-    shopName: "Fresh Harvest Vegetables",
-    description: "Fresh vegetables and fruits from local farms",
-    location: "Westlands Market, Nairobi",
+    shopName: "",
+    description: "",
+    location: "",
     openingHours: "06:00-18:00",
     deliveryRadius: "5",
     autoAcceptOrders: true,
@@ -127,8 +134,8 @@ export default function VendorDashboard() {
     language: "English",
     paymentMethod: "Bank",
     bankName: "Equity Bank",
-    accountNumber: "1234567890",
-    accountName: "Fresh Harvest",
+    accountNumber: "",
+    accountName: "",
     mpesaNumber: "",
     mpesaName: "",
   })
@@ -138,6 +145,112 @@ export default function VendorDashboard() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [analyticsOpen, setAnalyticsOpen] = useState(false)
   const [helpOpen, setHelpOpen] = useState(false)
+
+  const router = useRouter()
+  const { toast } = useToast()
+
+  // Fetch user data on component mount
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const supabase = getSupabaseClient()
+        if (!supabase) {
+          console.error('Supabase client not available')
+          router.push('/login')
+          return
+        }
+
+        // Get current user session
+        const { data: { user }, error: userError } = await supabase.auth.getUser()
+        
+        if (userError || !user) {
+          console.error('No authenticated user found:', userError)
+          router.push('/login')
+          return
+        }
+
+        setUser(user)
+
+        // Get user profile from users table
+        const { data: userProfileData, error: profileError } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', user.id)
+          .single()
+
+        if (profileError) {
+          console.error('Error fetching user profile:', profileError)
+        } else {
+          setUserProfile(userProfileData)
+          
+          // Update profile state with real user data
+          setProfile({
+            name: userProfileData.full_name || user.email?.split('@')[0] || 'Vendor',
+            email: user.email || '',
+            phone: userProfileData.phone || '',
+            address: userProfileData.address || '',
+            bio: userProfileData.bio || 'Quality products from local vendors',
+            businessLicense: userProfileData.business_license || 'N/A',
+            yearsInBusiness: userProfileData.years_in_business || '1',
+          })
+
+          // Update payment request with user data
+          setPaymentRequest(prev => ({
+            ...prev,
+            accountName: userProfileData.full_name || user.email?.split('@')[0] || 'Vendor',
+            phoneNumber: userProfileData.phone || '',
+          }))
+        }
+
+        // Get vendor-specific profile
+        const { data: vendorProfileData, error: vendorError } = await supabase
+          .from('vendors')
+          .select('*')
+          .eq('user_id', user.id)
+          .single()
+
+        if (vendorError) {
+          console.error('Error fetching vendor profile:', vendorError)
+        } else {
+          setVendorProfile(vendorProfileData)
+          
+          // Update shop settings with vendor data
+          setShopSettings(prev => ({
+            ...prev,
+            shopName: vendorProfileData.business_name || userProfileData?.full_name || 'My Business',
+            description: vendorProfileData.description || 'Quality products from local vendors',
+            location: vendorProfileData.location || userProfileData?.address || 'Nairobi, Kenya',
+            accountName: vendorProfileData.business_name || userProfileData?.full_name || 'Vendor',
+          }))
+        }
+
+      } catch (error) {
+        console.error('Error fetching user data:', error)
+        router.push('/login')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchUserData()
+  }, [router])
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-[color:var(--color-accent)]/10 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[color:var(--color-primary)] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading your vendor dashboard...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Redirect if no user
+  if (!user) {
+    return null
+  }
 
   const handleAddProduct = () => {
     // Handle adding new product
@@ -163,14 +276,34 @@ export default function VendorDashboard() {
     alert("Shop settings updated successfully!")
   }
   
-  const handleLogout = () => {
-    // Clear demo user cookies if they exist
-    if (typeof document !== 'undefined') {
-      document.cookie = 'demo-user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-      document.cookie = 'demo-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+  const handleLogout = async () => {
+    try {
+      const supabase = getSupabaseClient()
+      if (supabase) {
+        await supabase.auth.signOut()
+        
+        // Clear demo user cookies if they exist
+        if (typeof document !== 'undefined') {
+          document.cookie = 'demo-user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+          document.cookie = 'demo-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+        }
+        
+        toast({
+          title: "Logged out successfully",
+          description: "You have been logged out of your account.",
+        })
+        
+        // Redirect to home page
+        router.push('/')
+      }
+    } catch (error) {
+      console.error('Logout error:', error)
+      toast({
+        title: "Logout failed",
+        description: "There was an error logging out. Please try again.",
+        variant: "destructive",
+      })
     }
-    // Handle logout logic
-    window.location.href = "/"
   }
 
   const handleMarkReady = (orderId: string) => {
@@ -206,23 +339,31 @@ export default function VendorDashboard() {
             
             <div className="flex items-center space-x-3">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-medium">Fresh Harvest Vegetables</p>
-                <p className="text-xs text-gray-600">Westlands, Nairobi</p>
+                <p className="text-sm font-medium">
+                  {shopSettings.shopName || userProfile?.full_name || 'My Business'}
+                </p>
+                <p className="text-xs text-gray-600">
+                  {shopSettings.location || userProfile?.address || 'Nairobi, Kenya'}
+                </p>
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src="/placeholder-user.jpg" alt="Vendor" />
-                      <AvatarFallback>MG</AvatarFallback>
+                      <AvatarFallback>
+                        {(userProfile?.full_name || user.email?.split('@')[0] || 'V').charAt(0).toUpperCase()}
+                      </AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56 bg-[color:var(--color-accent)]/95 border-2 border-[color:var(--color-primary)] shadow-lg backdrop-blur-sm" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal bg-[color:var(--color-primary)] text-white">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">Fresh Harvest</p>
-                      <p className="text-xs leading-none text-white/80">vendor@demo.com</p>
+                      <p className="text-sm font-medium leading-none">
+                        {userProfile?.full_name || user.email?.split('@')[0] || 'Vendor'}
+                      </p>
+                      <p className="text-xs leading-none text-white/80">{user.email}</p>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
