@@ -1,10 +1,33 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient({ cookies })
+    const cookieStore = await cookies()
+    
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return cookieStore.getAll()
+          },
+          setAll(cookiesToSet) {
+            try {
+              cookiesToSet.forEach(({ name, value, options }) =>
+                cookieStore.set(name, value, options)
+              )
+            } catch {
+              // The `setAll` method was called from a Server Component.
+              // This can be ignored if you have middleware refreshing
+              // user sessions.
+            }
+          },
+        },
+      }
+    )
     
     // Sign out the user
     const { error } = await supabase.auth.signOut()
@@ -26,10 +49,11 @@ export async function POST(request: NextRequest) {
     // Clear auth cookies
     response.cookies.delete('sb-access-token')
     response.cookies.delete('sb-refresh-token')
+    response.cookies.delete('demo-user')
     
     return response
   } catch (error) {
-    console.error('Unexpected logout error:', error)
+    console.error('Logout API error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
