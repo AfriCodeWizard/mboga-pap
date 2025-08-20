@@ -58,6 +58,12 @@ export async function GET(request: NextRequest) {
       }
 
       console.log('✅ Session created successfully for user:', data.session.user.email)
+      console.log('🔍 User metadata:', data.session.user.user_metadata)
+      console.log('🔍 URL role parameter:', role)
+
+      // Determine the correct role - prioritize URL parameter, then metadata, then default
+      let userRole = role || data.session.user.user_metadata?.role || 'customer'
+      console.log('🎯 Determined user role:', userRole)
 
       // Check if user profile exists
       const { data: existingUser, error: userError } = await supabase
@@ -72,22 +78,20 @@ export async function GET(request: NextRequest) {
 
       // Create user profile if it doesn't exist
       if (!existingUser) {
-        console.log('🆕 Creating new user profile for:', data.session.user.email)
+        console.log('🆕 Creating new user profile for:', data.session.user.email, 'with role:', userRole)
         
-        const userRole = role || data.session.user.user_metadata?.role || 'customer'
-        
-        // Create main user profile
+        // Create main user profile with the correct role
         const { error: profileError } = await supabase
           .from('users')
           .insert({
             id: data.session.user.id,
             email: data.session.user.email!,
             full_name: data.session.user.user_metadata?.full_name || data.session.user.email?.split('@')[0] || 'User',
-            role: userRole,
-            phone: data.session.user.phone || '+254700000000',
-            address: 'Nairobi, Kenya',
-            city: 'Nairobi',
-            country: 'Kenya',
+            role: userRole, // Use the determined role
+            phone: data.session.user.user_metadata?.phone || data.session.user.phone || '+254700000000',
+            address: data.session.user.user_metadata?.address || 'Nairobi, Kenya',
+            city: data.session.user.user_metadata?.city || 'Nairobi',
+            country: data.session.user.user_metadata?.country || 'Kenya',
             is_active: true,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString()
@@ -96,10 +100,10 @@ export async function GET(request: NextRequest) {
         if (profileError) {
           console.error('❌ Error creating user profile:', profileError)
         } else {
-          console.log('✅ User profile created successfully')
+          console.log('✅ User profile created successfully with role:', userRole)
         }
 
-        // Create role-specific profile
+        // Create role-specific profile based on the determined role
         try {
           if (userRole === 'customer') {
             const { error: customerError } = await supabase
@@ -122,7 +126,7 @@ export async function GET(request: NextRequest) {
               .from('vendors')
               .insert({
                 user_id: data.session.user.id,
-                business_name: data.session.user.user_metadata?.business_name || 'My Business',
+                business_name: data.session.user.user_metadata?.shop_name || data.session.user.user_metadata?.business_name || 'My Business',
                 business_type: 'grocery',
                 is_verified: false,
                 rating: 0,
@@ -141,8 +145,8 @@ export async function GET(request: NextRequest) {
               .from('rider_profiles')
               .insert({
                 user_id: data.session.user.id,
-                vehicle_type: 'motorcycle',
-                vehicle_number: 'N/A',
+                vehicle_type: data.session.user.user_metadata?.vehicle_type || 'motorcycle',
+                vehicle_number: data.session.user.user_metadata?.license_number || 'N/A',
                 is_available: true,
                 rating: 0,
                 total_deliveries: 0,
@@ -160,11 +164,12 @@ export async function GET(request: NextRequest) {
           console.error('❌ Error creating role-specific profile:', roleError)
         }
       } else {
-        console.log('✅ User profile already exists')
+        console.log('✅ User profile already exists with role:', existingUser.role)
+        // Use existing user's role if profile already exists
+        userRole = existingUser.role
       }
 
-      // Redirect to appropriate dashboard based on role
-      const userRole = existingUser?.role || role || data.session.user.user_metadata?.role || 'customer'
+      // Redirect to appropriate dashboard based on the final determined role
       let redirectUrl: string
 
       switch (userRole) {
@@ -181,7 +186,7 @@ export async function GET(request: NextRequest) {
           redirectUrl = '/dashboard'
       }
 
-      console.log('🔄 Redirecting to dashboard:', redirectUrl)
+      console.log('🔄 Redirecting to dashboard:', redirectUrl, 'for role:', userRole)
       return NextResponse.redirect(new URL(redirectUrl, request.url))
 
     } catch (error) {
