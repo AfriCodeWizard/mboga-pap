@@ -37,6 +37,12 @@ function LoginContent() {
           return
         }
 
+        // Clear any demo user cookies first
+        if (typeof document !== 'undefined') {
+          document.cookie = 'demo-user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+          document.cookie = 'demo-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+        }
+
         const { data: { session }, error } = await supabase.auth.getSession()
         
         if (error) {
