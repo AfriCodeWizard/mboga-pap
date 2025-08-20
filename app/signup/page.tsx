@@ -112,7 +112,7 @@ export default function SignUpPage() {
           emailRedirectTo: getAuthCallbackUrl(selectedRole),
           data: {
             full_name: `${formData.firstName} ${formData.lastName}`,
-            role: selectedRole,
+            role: selectedRole, // Ensure role is set in metadata
             phone: formData.phone,
             address: formData.address,
             city: 'Nairobi',
@@ -120,7 +120,8 @@ export default function SignUpPage() {
             // Role-specific metadata
             ...(selectedRole === 'vendor' && {
               shop_name: formData.shopName,
-              business_license: formData.businessLicense
+              business_license: formData.businessLicense,
+              business_name: formData.shopName // Add both for compatibility
             }),
             ...(selectedRole === 'rider' && {
               vehicle_type: formData.vehicleType,
@@ -133,7 +134,9 @@ export default function SignUpPage() {
       console.log('📤 Supabase signup response:', { 
         user: authData.user?.id, 
         session: !!authData.session,
-        error: authError?.message 
+        error: authError?.message,
+        userMetadata: authData.user?.user_metadata,
+        selectedRole: selectedRole
       })
 
       if (authError) {
@@ -382,10 +385,11 @@ export default function SignUpPage() {
                       <div
                       className={`w-16 h-16 bg-gradient-to-br ${roleOptions.find((r) => r.id === selectedRole)?.color} rounded-2xl flex items-center justify-center shadow-lg`}
                       >
-                        {roleOptions.find((r) => r.id === selectedRole)?.icon &&
-                          React.createElement(roleOptions.find((r) => r.id === selectedRole)?.icon, {
-                          className: "h-8 w-8 text-white",
-                          })}
+                        {(() => {
+                          const roleOption = roleOptions.find((r) => r.id === selectedRole)
+                          const IconComponent = roleOption?.icon
+                          return IconComponent ? <IconComponent className="h-8 w-8 text-white" /> : null
+                        })()}
                       </div>
                     </div>
                   <CardTitle className="text-3xl font-bold text-[color:var(--color-primary)]">
