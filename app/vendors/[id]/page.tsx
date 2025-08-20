@@ -14,6 +14,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Button as UIButton } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import CustomerNavbar from "@/components/CustomerNavbar";
+import CartDrawer from "@/components/CartDrawer";
 import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Head from "next/head";
@@ -199,6 +200,7 @@ export default function VendorItemsPage() {
   const [sortOrder, setSortOrder] = useState("asc");
   const [favorites, setFavorites] = useState<number[]>([]);
   const [showVendorInfo, setShowVendorInfo] = useState(false);
+  const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
   const router = useRouter();
   const fromDashboard = searchParams.get('from') === 'dashboard';
 
@@ -279,6 +281,19 @@ export default function VendorItemsPage() {
     });
 
   const cartItemCount = Object.values(quantities).reduce((sum, qty) => sum + qty, 0);
+
+  // Listen for cart drawer open events
+  useEffect(() => {
+    const handleOpenCart = () => {
+      setCartDrawerOpen(true);
+    };
+
+    window.addEventListener('openCartDrawer', handleOpenCart);
+
+    return () => {
+      window.removeEventListener('openCartDrawer', handleOpenCart);
+    };
+  }, []);
 
   return (
     <>
@@ -594,6 +609,8 @@ export default function VendorItemsPage() {
           )}
         </div>
       </div>
+
+      <CartDrawer open={cartDrawerOpen} onClose={() => setCartDrawerOpen(false)} />
     </>
   );
 } 
