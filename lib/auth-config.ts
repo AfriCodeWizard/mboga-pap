@@ -1,6 +1,12 @@
 // Auth configuration for different environments
 export const getAuthRedirectUrl = (path: string = '/auth/callback') => {
-  // Check for production environment variables first
+  // Force production URLs if we're in production environment
+  if (process.env.NODE_ENV === 'production' || process.env.VERCEL_URL) {
+    // Always use production URL in production
+    return `https://mbogapap.vercel.app${path}`
+  }
+  
+  // Check for production environment variables
   const productionUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.VERCEL_URL
   
   // In production, use the production URL
@@ -32,6 +38,11 @@ export const getSignupUrl = () => {
 
 // Helper function to get the correct base URL for email templates
 export const getBaseUrl = () => {
+  // Force production URL if we're in production
+  if (process.env.NODE_ENV === 'production' || process.env.VERCEL_URL) {
+    return 'https://mbogapap.vercel.app'
+  }
+  
   const productionUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.VERCEL_URL
   
   if (process.env.NODE_ENV === 'production' || productionUrl) {
@@ -39,5 +50,10 @@ export const getBaseUrl = () => {
   }
   
   return 'http://localhost:3000'
+}
+
+// Function to check if we should force production URLs
+export const shouldForceProductionUrls = () => {
+  return process.env.NODE_ENV === 'production' || process.env.VERCEL_URL
 }
 
