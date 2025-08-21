@@ -24,7 +24,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
   const total = getCartTotal();
   const pointsEarned = getLoyaltyPointsEarned();
 
-  const handleRemove = (itemId, vendorId) => {
+  const handleRemove = (itemId: number, vendorId: number) => {
     try {
       removeFromCart(itemId, vendorId);
     } catch (e) {
@@ -40,7 +40,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
     }
   };
 
-  const isLoggedIn = false; // TODO: Replace with real auth check (simulate logged out)
   return (
     <>
       <Dialog open={open} onOpenChange={onClose}>
@@ -51,36 +50,40 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
               <span className="text-lg font-semibold">Your Cart</span>
             </DialogTitle>
           </DialogHeader>
+          
           <div className="flex-1 overflow-hidden">
             <div className="h-full flex flex-col">
               <div className="flex-1 overflow-y-auto">
                 <div className="divide-y divide-gray-200">
-              {cart.length === 0 ? (
-                <div className="p-4 text-center text-gray-500">Your cart is empty.</div>
-              ) : (
-                cart.map((item) => (
-                  <div key={item.itemId} className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors">
-                    <div className="flex-1">
-                      <div className="font-semibold text-gray-900">{item.name}</div>
-                      <div className="text-sm text-gray-600">x{item.quantity} @ KSh {item.price}</div>
-                      <div className="text-xs text-gray-500 mt-1">Vendor: {item.vendorName}</div>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <span className="text-[color:var(--color-primary)] font-bold text-lg">KSh {(parseFloat(item.price) * item.quantity).toFixed(0)}</span>
-                      <Button 
-                        size="sm" 
-                        variant="ghost" 
-                        onClick={() => removeFromCart(item.itemId, item.vendorId)}
-                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))
-              )}
+                  {cart.length === 0 ? (
+                    <div className="p-4 text-center text-gray-500">Your cart is empty.</div>
+                  ) : (
+                    cart.map((item) => (
+                      <div key={item.itemId} className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors">
+                        <div className="flex-1">
+                          <div className="font-semibold text-gray-900">{item.name}</div>
+                          <div className="text-sm text-gray-600">x{item.quantity} @ KSh {item.price}</div>
+                          <div className="text-xs text-gray-500 mt-1">Vendor: {item.vendorName}</div>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <span className="text-[color:var(--color-primary)] font-bold text-lg">KSh {(parseFloat(item.price) * item.quantity).toFixed(0)}</span>
+                          <Button 
+                            size="sm" 
+                            variant="ghost" 
+                            onClick={() => removeFromCart(item.itemId, item.vendorId)}
+                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
             </div>
           </div>
+          
           <div className="border-t bg-white sticky bottom-0">
             {cart.length > 0 && (
               <>
