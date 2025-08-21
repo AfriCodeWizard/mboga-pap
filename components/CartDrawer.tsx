@@ -81,9 +81,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ open, onClose }) => {
               )}
             </div>
           </div>
-              </div>
-            </div>
-          </div>
           <div className="border-t bg-white sticky bottom-0">
             {cart.length > 0 && (
               <>
