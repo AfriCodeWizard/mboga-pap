@@ -247,15 +247,15 @@ export default function AdminDashboard() {
               <button className="md:hidden mr-2 p-2 rounded hover:bg-gray-100 min-w-[48px] min-h-[48px] flex items-center justify-center" onClick={() => setDrawerOpen(true)}>
                 <Menu className="h-6 w-6" />
               </button>
-              {/* ... existing logo and badge ... */}
-              <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-[color:var(--color-primary)] to-[color:var(--color-primary)] rounded-xl flex items-center justify-center transform rotate-12 shadow-lg min-w-[40px] min-h-[40px]">
-                  <span className="text-[color:var(--color-accent)] font-bold text-lg transform -rotate-12">🥬</span>
-                </div>
-                <div className="max-w-[120px] sm:max-w-none truncate">
-                  <span className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-primary)] bg-clip-text text-transparent">
-                    Mboga Pap!
-                  </span>
+              {/* Logo Container - Independent and Fixed */}
+                             <div className="flex-shrink-0" style={{ width: '130px', height: '56px', display: 'flex', alignItems: 'center' }}>
+                <div className="flex items-center">
+                  <img 
+                    src="/mbogapap-logo-crop.png" 
+                    alt="Mboga Pap logo" 
+                    className="object-contain"
+                    style={{ height: '130px', width: '130px' }}
+                  />
                 </div>
               </div>
               <Badge className="bg-[color:var(--color-primary)] text-[color:var(--color-accent)] text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-1.5">Admin Dashboard</Badge>
