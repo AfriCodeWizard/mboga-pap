@@ -237,11 +237,11 @@ export default function RiderDashboard() {
       if (supabase) {
         await supabase.auth.signOut()
         
-        // Clear demo user cookies if they exist
-        if (typeof document !== 'undefined') {
-          document.cookie = 'demo-user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-          document.cookie = 'demo-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-        }
+    // Clear demo user cookies if they exist
+    if (typeof document !== 'undefined') {
+      document.cookie = 'demo-user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      document.cookie = 'demo-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+    }
         
         toast({
           title: "Logged out successfully",
@@ -283,21 +283,21 @@ export default function RiderDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-[color:var(--color-accent)]/10">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-[color:var(--color-accent)]/10">
         {/* Header */}
         <header className="bg-white border-b shadow-sm">
-          <div className="container mx-auto px-4 py-4">
+          <div className="container mx-auto px-4 py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-[color:var(--color:var(--color-primary)] to-[color:var(--color-primary)] rounded-xl flex items-center justify-center transform rotate-12 shadow-lg border-2 border-[color:var(--color-accent)]">
-                    <span className="text-[color:var(--color-accent)] font-bold text-lg transform -rotate-12">🥬</span>
-                  </div>
-                  <div>
-                    <span className="text-2xl font-bold bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-primary)] bg-clip-text text-transparent">
-                      Mboga Pap
-                    </span>
-                    <p className="text-xs text-gray-500 -mt-1">Fresh And Fast 🏍️</p>
+                {/* Logo Container - Independent and Fixed */}
+                <div className="flex-shrink-0" style={{ width: '130px', height: '56px', display: 'flex', alignItems: 'center' }}>
+                  <div className="flex items-center space-x-3">
+                    <img 
+                      src="/mbogapap-logo-crop.png" 
+                      alt="Mboga Pap logo" 
+                      className="object-contain"
+                      style={{ height: '130px', width: '130px' }}
+                    />
                   </div>
                 </div>
                 <Badge className="bg-blue-500 text-white">Rider Dashboard</Badge>
@@ -369,7 +369,7 @@ export default function RiderDashboard() {
           </div>
         </header>
 
-        <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-6">
+        <div className="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
           {/* Enhanced Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6 mb-6">
             <Card className="border-2 border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-green-50 to-green-100">
@@ -972,4 +972,7 @@ export default function RiderDashboard() {
       </div>
   )
 }
+
+
+
 
