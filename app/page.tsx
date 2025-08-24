@@ -543,7 +543,7 @@ export default function HomePage() {
             "@type": "Organization",
             "name": "Mboga Pap",
             "url": "https://mbogapap.co.ke/",
-            "logo": "/placeholder-logo.png",
+            "logo": "/mbogapap-logo-crop.png",
             "sameAs": [
               "https://facebook.com/mbogapap",
               "https://instagram.com/mbogapap",
@@ -1026,15 +1026,15 @@ export default function HomePage() {
           <div className="grid md:grid-cols-6 gap-8 mb-12">
             {/* Brand Section */}
             <div className="md:col-span-2">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-[color:var(--color-primary)] to-[color:var(--color-primary)] rounded-xl flex items-center justify-center shadow-lg border-2 border-[color:var(--color-accent)] transform rotate-12">
-                  <span className="text-[color:var(--color-accent)] font-bold text-xl transform -rotate-12">🥬</span>
-                </div>
-                <div>
-                  <span className="text-3xl font-bold bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-primary)] bg-clip-text text-transparent">
-                    Mboga Pap
-                  </span>
-                  <p className="text-xs text-gray-400 -mt-1">Fresh And Fast 🏍️</p>
+              <div className="flex items-center mb-6">
+                {/* Logo Container - Independent and Fixed */}
+                <div className="flex-shrink-0" style={{ width: '130px', height: '56px', display: 'flex', alignItems: 'center' }}>
+                  <img 
+                    src="/mbogapap-logo-crop.png" 
+                    alt="Mboga Pap logo" 
+                    className="object-contain"
+                    style={{ height: '130px', width: '130px' }}
+                  />
                 </div>
               </div>
               <p className="text-gray-300 mb-6 leading-relaxed">{t.footer.tagline}</p>
