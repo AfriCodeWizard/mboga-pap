@@ -53,44 +53,43 @@ export default function Navbar() {
 
   return (
     <header className="border-b border-gray-200 bg-white sticky top-0 z-50 shadow-lg">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2 text-[color:var(--color-primary)] font-bold text-lg sm:text-xl">
-          <span className="text-[color:var(--color-accent)] font-bold text-sm sm:text-lg transform -rotate-12" aria-label="Mboga Pap logo">🥬</span>
-          <div className="flex flex-col">
-            <span className="hidden sm:inline">Mboga Pap</span>
-            <span className="sm:hidden">Mboga Pap</span>
-            <div className="flex items-center space-x-1 text-xs font-normal text-[color:var(--color-accent)]">
-              <span>Fresh & Fast</span>
-              <span className="text-sm">🏍️</span>
-            </div>
-          </div>
-        </Link>
+      <div className="container mx-auto px-4 py-4 flex items-center justify-between relative">
+        {/* Logo Container - Independent and Fixed */}
+        <div className="flex-shrink-0" style={{ width: '130px', height: '56px', display: 'flex', alignItems: 'center' }}>
+          <Link href="/" className="flex items-center">
+            <img 
+              src="/mbogapap-logo-crop.png" 
+              alt="Mboga Pap logo" 
+              className="object-contain"
+              style={{ height: '130px', width: '130px' }}
+            />
+          </Link>
+        </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          <Link href="/#jinsi-inavyofanya" className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors">
+        {/* Desktop Navigation - Centered and Independent */}
+        <nav className="hidden md:flex items-center space-x-4 lg:space-x-6 flex-1 justify-center">
+          <Link href="/#jinsi-inavyofanya" className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors whitespace-nowrap">
             {t.header.howItWorks}
           </Link>
-          <Link href="/#bei" className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors">
+          <Link href="/#bei" className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors whitespace-nowrap">
             {t.header.pricing}
           </Link>
-          <Link href="/#vendors" className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors">
+          <Link href="/#vendors" className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors whitespace-nowrap">
             {t.header.vendors}
           </Link>
-          <Link href="/#riders" className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors">
+          <Link href="/#riders" className="nav-link text-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] font-bold transition-colors whitespace-nowrap">
             {t.header.riders}
           </Link>
         </nav>
 
-        {/* Desktop Actions */}
-        <div className="hidden md:flex items-center space-x-3">
+        {/* Desktop Actions - Right Side and Independent */}
+        <div className="hidden md:flex items-center space-x-3 flex-shrink-0" style={{ minWidth: '200px', justifyContent: 'flex-end' }}>
           {/* Language Toggle */}
           <Button
             variant="ghost"
             size="sm"
             onClick={toggleLanguage}
-            className="flex items-center space-x-2 text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] transition-colors font-bold"
+            className="flex items-center space-x-2 text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] transition-colors font-bold whitespace-nowrap"
           >
             <Globe className="h-4 w-4" />
             <span className="font-medium">{language === "en" ? "SW" : "EN"}</span>
@@ -105,7 +104,7 @@ export default function Navbar() {
                   {cart.length}
                 </span>
               )}
-              <span className="ml-2 text-[color:var(--color-primary)] font-semibold text-sm hidden sm:inline group-hover:text-[color:var(--color-accent)]">KSh {cartTotal.toFixed(0)}</span>
+              <span className="ml-2 text-[color:var(--color-primary)] font-semibold text-sm hidden lg:inline group-hover:text-[color:var(--color-accent)]">KSh {cartTotal.toFixed(0)}</span>
             </Button>
             <AnimatePresence>
               {cartPreviewOpen && (
@@ -176,20 +175,20 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Actions */}
-        <div className="flex md:hidden items-center space-x-2">
+        <div className="flex md:hidden items-center space-x-1">
           {/* Language Toggle */}
           <Button
             variant="ghost"
             size="sm"
             onClick={toggleLanguage}
-            className="p-2 text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] transition-colors"
+            className="p-2 text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] transition-colors min-w-[40px]"
           >
             <Globe className="h-4 w-4" />
           </Button>
           
           {/* Cart Icon */}
           <div className="relative">
-            <Button variant="ghost" className="relative p-2 text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-[color:var(--color-accent)]" onClick={() => setCartPreviewOpen((v) => !v)} aria-label="Open cart">
+            <Button variant="ghost" className="relative p-2 text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] min-w-[40px]" onClick={() => setCartPreviewOpen((v) => !v)} aria-label="Open cart">
               <ShoppingCart className="h-5 w-5 text-[color:var(--color-primary)]" />
               {cart.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-[color:var(--color-accent)] text-black text-xs rounded-full px-1.5 py-0.5 font-bold">
@@ -255,7 +254,7 @@ export default function Navbar() {
             variant="ghost"
             size="sm"
             onClick={toggleMobileMenu}
-            className="p-2 text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] transition-colors"
+            className="p-2 text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-[color:var(--color-accent)] transition-colors min-w-[40px]"
             aria-label="Toggle mobile menu"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
