@@ -282,11 +282,11 @@ export default function VendorDashboard() {
       if (supabase) {
         await supabase.auth.signOut()
         
-        // Clear demo user cookies if they exist
-        if (typeof document !== 'undefined') {
-          document.cookie = 'demo-user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-          document.cookie = 'demo-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-        }
+    // Clear demo user cookies if they exist
+    if (typeof document !== 'undefined') {
+      document.cookie = 'demo-user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      document.cookie = 'demo-role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+    }
         
         toast({
           title: "Logged out successfully",
@@ -322,19 +322,19 @@ export default function VendorDashboard() {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white border-b sticky top-0 z-30 shadow-sm">
-        <div className="container mx-auto px-4 py-3">
+        <div className="container mx-auto px-4 py-2">
           <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-[color:var(--color-primary)] to-[color:var(--color-primary)] rounded-xl flex items-center justify-center transform rotate-12 shadow-lg border-2 border-[color:var(--color-accent)]">
-                  <span className="text-[color:var(--color-accent)] font-bold text-lg transform -rotate-12">🥬</span>
+              {/* Logo Container - Independent and Fixed */}
+              <div className="flex-shrink-0" style={{ width: '130px', height: '56px', display: 'flex', alignItems: 'center' }}>
+                <div className="flex items-center space-x-3">
+                  <img 
+                    src="/mbogapap-logo-crop.png" 
+                    alt="Mboga Pap logo" 
+                    className="object-contain"
+                    style={{ height: '130px', width: '130px' }}
+                  />
+                  <Badge className="bg-orange-500 text-white text-xs">Vendor Dashboard</Badge>
                 </div>
-                <div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-[color:var(--color-primary)] to-[color:var(--color-primary)] bg-clip-text text-transparent">
-                    Mboga Pap
-                  </span>
-                  <p className="text-xs text-gray-500 -mt-1">Fresh And Fast 🏍️</p>
-                </div>
-                <Badge className="bg-orange-500 text-white text-xs">Vendor Dashboard</Badge>
               </div>
             
             <div className="flex items-center space-x-3">
